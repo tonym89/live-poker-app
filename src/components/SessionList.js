@@ -1,49 +1,33 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ListView, View, Text } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import { sessionsFetch } from '../actions';
+import ListItem from './ListItem';
 
 class SessionList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.sessionsFetch();
-
-    this.createDataSource(this.props);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.sessions.length !== this.props.sessions.length) {
+      this.props.sessionsFetch();
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.createDataSource(nextProps);
-  }
-
-  createDataSource({ sessions }) {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-
-    this.dataSource = ds.cloneWithRows(sessions);
-  }
 
   render() {
-    console.log(this.props);
-
     return (
-      <View>
-        <Text>Session list</Text>
-        <Text>Session list</Text>
-        <Text>Session list</Text>
-        <Text>Session list</Text>
-        <Text>Session list</Text>
-      </View>
+      <FlatList data={this.props.sessions} renderItem={({item}) => <ListItem session={item}/>}/>
     );
-  }
+  };
 }
 
 const mapStateToProps = state => {
   const sessions = _.map(state.sessions, (val, uid) => {
-    return { ...val, uid };
+    return { ...val, uid }
   });
-
   return { sessions };
-};
+}
 
 export default connect(mapStateToProps, { sessionsFetch })(SessionList);
