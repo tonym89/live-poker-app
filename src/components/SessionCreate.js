@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Picker, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { sessionUpdate, sessionCreate } from '../actions';
-import { Card, CardSection, Input, Button } from './common';
+import { Card, CardSection, Button, NumericInput } from './common';
 
 class SessionCreate extends Component {
-
   onButtonPress() {
     const { buyin, cashedout, time } = this.props;
 
@@ -18,7 +17,7 @@ class SessionCreate extends Component {
     return (
       <Card>
         <CardSection>
-          <Input
+          <NumericInput
             label="Buy In"
             placeholder="$1000"
             value={this.props.buyin}
@@ -27,7 +26,7 @@ class SessionCreate extends Component {
         </CardSection>
 
         <CardSection>
-          <Input
+          <NumericInput
             label="Cashed out"
             placeholder="$2000"
             value={this.props.cashedout}
