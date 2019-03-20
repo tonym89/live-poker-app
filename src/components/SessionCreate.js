@@ -10,34 +10,57 @@ class SessionCreate extends Component {
   constructor() {
     super();
     this.state = {
-      isVisible: false,
+      isStartVisible: false,
+      isEndVisible: false,
       chosenDate: ''
     };
   }
 
   onButtonPress() {
-    const { buyin, cashedout, time, sessionstart } = this.props;
+    const { buyin, cashedout, time, sessionstart, sessionend } = this.props;
 
-    this.props.sessionCreate({ buyin, cashedout, sessionstart, time: time || 'Monday' });
+    this.props.sessionCreate({ buyin, cashedout, sessionstart, sessionend, time: time || 'Monday' });
   }
 
-  handlePicker = (datetime) => {
-    const value = datetime.toISOString();
+  startDateHandler = (starttime) => {
+    console.log('A start date has been picked: ', starttime);
+    const value = starttime.toISOString();
     this.props.sessionUpdate({ prop: 'sessionstart', value });
     this.setState({
-        isVisible: false,
+        isStartVisible: false,
     });
   }
 
   showPicker = () => {
     this.setState({
-        isVisible: true
+        isStartVisible: true
     })
   }
 
   hidePicker = () => {
     this.setState({
-        isVisible: false
+        isStartVisible: false
+    })
+  }
+
+  handleEndPicker = (endtime) => {
+    console.log('An end date has been picked: ', endtime);
+    const value = endtime.toISOString();
+    this.props.sessionUpdate({ prop: 'sessionend', value });
+    this.setState({
+        isEndVisible: false,
+    });
+  }
+
+  showEndPicker = () => {
+    this.setState({
+        isEndVisible: true
+    })
+  }
+
+  hideEndPicker = () => {
+    this.setState({
+        isEndVisible: false
     })
   }
 
@@ -52,9 +75,22 @@ class SessionCreate extends Component {
           </TouchableOpacity>
 
           <DateTimePicker
-             isVisible={this.state.isVisible}
-             onConfirm={this.handlePicker}
+             isVisible={this.state.isStartVisible}
+             onConfirm={this.startDateHandler}
              onCancel={this.hidePicker}
+             mode={'datetime'}
+          />
+        </CardSection>
+
+        <CardSection>
+          <TouchableOpacity style={styles.startButton} onPress={this.showEndPicker}>
+              <Text style={styles.startText}>end</Text>
+          </TouchableOpacity>
+
+          <DateTimePicker
+             isVisible={this.state.isEndVisible}
+             onConfirm={this.handleEndPicker}
+             onCancel={this.hideEndPicker}
              mode={'datetime'}
           />
         </CardSection>
@@ -125,9 +161,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { buyin, cashedout, time, sessionstart } = state.sessionForm;
+  const { buyin, cashedout, time, sessionstart, sessionend } = state.sessionForm;
 
-  return { buyin, cashedout, time, sessionstart };
+  return { buyin, cashedout, time, sessionstart, sessionend };
 };
 
 export default connect(mapStateToProps, {

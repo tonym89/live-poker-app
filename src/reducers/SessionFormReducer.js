@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   buyin: '',
   cashedout: '',
   sessionstart: '',
+  sessionend: '',
   time: ''
 };
 

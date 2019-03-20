@@ -13,12 +13,12 @@ export const sessionUpdate = ({ prop, value }) => {
   };
 };
 
-export const sessionCreate = ({ buyin, cashedout, time, sessionstart }) => {
+export const sessionCreate = ({ buyin, cashedout, time, sessionstart, sessionend }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
   firebase.database().ref(`users/${currentUser.uid}/sessions`)
-    .push({ buyin, cashedout, time, sessionstart })
+    .push({ buyin, cashedout, time, sessionstart, sessionend })
     .then(() => {
     dispatch({ type: SESSION_CREATE });
     Actions.pop();
