@@ -6,6 +6,7 @@ import {
 const INITIAL_STATE = {
   buyin: '',
   cashedout: '',
+  sessionstart: '',
   time: ''
 };
 
