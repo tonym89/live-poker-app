@@ -8,10 +8,11 @@ class ListItem extends Component {
     const { cashedout } = this.props.session;
     const { buyin } = this.props.session;
     const { sessionstart } = this.props.session;
+    const { sessionend } = this.props.session;
 
     return (
       <CardSection>
-          <Text style={styles.titleStyle}> {time} result: {cashedout - buyin} start: {sessionstart}</Text>
+          <Text style={styles.titleStyle}> {time} result: {cashedout - buyin} start: {sessionstart} end: {sessionend}</Text>
       </CardSection>
     );
   }
