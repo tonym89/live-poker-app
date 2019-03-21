@@ -10,9 +10,27 @@ class ListItem extends Component {
     const { sessionstart } = this.props.session;
     const { sessionend } = this.props.session;
 
+    const dateNewer = new Date(sessionstart);
+    const dateOlder = new Date(sessionend);
+
+    const differenceInMs = dateOlder - dateNewer;
+
+    function msToTime(duration) {
+  var milliseconds = parseInt((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return hours + ":" + minutes;
+}
+
     return (
       <CardSection>
-          <Text style={styles.titleStyle}> {time} result: {cashedout - buyin} start: {sessionstart} end: {sessionend}</Text>
+          <Text style={styles.titleStyle}> {time} result: {cashedout - buyin} time: {msToTime(differenceInMs)}</Text>
       </CardSection>
     );
   }
