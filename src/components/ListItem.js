@@ -30,7 +30,8 @@ class ListItem extends Component {
 
     return (
       <CardSection>
-          <Text style={styles.titleStyle}> {time} result: {cashedout - buyin} time: {msToTime(differenceInMs)}</Text>
+          <Text style={styles.timeStyle}> {time} </Text>
+          <Text style={styles.titleStyle}> result: {cashedout - buyin} time: {msToTime(differenceInMs)}</Text>
       </CardSection>
     );
   }
@@ -38,6 +39,11 @@ class ListItem extends Component {
 
 const styles = {
   titleStyle: {
+    fontSize: 18,
+    paddingRight: 15
+  },
+  timeStyle: {
+    color: 'red',
     fontSize: 18,
     paddingLeft: 15
   }
