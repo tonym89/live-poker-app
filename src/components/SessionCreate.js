@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Picker, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Picker, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { sessionUpdate, sessionCreate } from '../actions';

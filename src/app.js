@@ -39,7 +39,7 @@ const styles = StyleSheet.create ({
       color: '#41cdf4',
    },
    background: {
-      padding: 40,
+      padding: 0,
       flex: 1,
       backgroundColor: '#FFF'
    },
