@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FlatList, View, Text } from 'react-native';
 import { sessionsFetch } from '../actions';
 import ListItem from './ListItem';
+import HomeGraph from './HomeGraph';
 
 class SessionList extends Component {
   componentDidMount() {
@@ -18,9 +19,20 @@ class SessionList extends Component {
 
   render() {
     return (
-      <FlatList data={this.props.sessions} renderItem={({item}) => <ListItem session={item}/>}/>
+      <View style={styles.mainViewStyle}>
+        <HomeGraph/>
+        <FlatList data={this.props.sessions} renderItem={({item}) => <ListItem session={item}/>}/>
+      </View>
     );
   };
+}
+
+const styles = {
+  mainViewStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white'
+  }
 }
 
 const mapStateToProps = state => {
