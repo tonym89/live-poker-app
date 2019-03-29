@@ -49,13 +49,7 @@ const verticalPadding = 5;
 const cursorRadius = 10;
 const labelWidth = 100;
 
-function createData(sessionsData) {
-let graphData = [];
-for (let i=0; i<sessionsData.length; i+=1) {
-graphData.push({x: new Date(sessionsData[i].sessionstart), y: parseFloat(sessionsData[i].cashedout)});
-}
-return graphData;
-}
+
 
 function getFormattedDate(date) {
  var year = date.getFullYear();
@@ -82,7 +76,16 @@ export default class Chart extends React.Component {
   };
 
   moveCursor(value) {
-    const scaleX = scaleTime().domain([new Date(2018, 9, 1), new Date(2018, 10, 17)]).range([0, width]);
+
+      const { data } = this.props;
+      const dates = data.map(a => a.x);
+      const results = data.map(a => a.y);
+      const maxDate=new Date(Math.max.apply(null,dates));
+      const minDate=new Date(Math.min.apply(null,dates));
+      const yMax = Math.max.apply(null, results);
+      const yMin = Math.min.apply(null, results);
+
+    const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
     const { x, y } = this.properties.getPointAtLength(this.lineLength - value);
     if (this.cursor.current) {
       this.cursor.current.setNativeProps({ top: y - cursorRadius, left: x - cursorRadius });
@@ -99,9 +102,16 @@ export default class Chart extends React.Component {
 
   componentDidMount() {
     const { data } = this.props;
-    const scaleX = scaleTime().domain([new Date(2018, 9, 1), new Date(2018, 10, 17)]).range([0, width]);
-    this.scaleY = scaleLinear().domain([-100, 300]).range([height - verticalPadding, verticalPadding]);
-    this.scaleLabel = scaleQuantile().domain([-100, 300]).range([-100, 0, 200, 300]);
+    const dates = data.map(a => a.x);
+    const results = data.map(a => a.y);
+    const maxDate=new Date(Math.max.apply(null,dates));
+    const minDate=new Date(Math.min.apply(null,dates));
+    const yMax = Math.max.apply(null, results);
+    const yMin = Math.min.apply(null, results);
+
+    const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
+    this.scaleY = scaleLinear().domain([yMin, yMax]).range([height - verticalPadding, verticalPadding]);
+    this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range([-100, 0, 200, 300]);
     this.line = d3.shape.line()
       .x(d => scaleX(d.x))
       .y(d => this.scaleY(d.y))
