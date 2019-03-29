@@ -28,9 +28,21 @@ class ListItem extends Component {
   return hours + ":" + minutes;
 }
 
+function getFormattedDate(date) {
+ var year = date.getFullYear();
+
+ var month = (1 + date.getMonth()).toString();
+ month = month.length > 1 ? month : '0' + month;
+
+ var day = date.getDate().toString();
+ day = day.length > 1 ? day : '0' + day;
+
+ return month + '/' + day + '/' + year;
+}
+
     return (
       <CardSection>
-          <Text style={styles.timeStyle}> {time} </Text>
+          <Text style={styles.timeStyle}> { getFormattedDate(new Date(sessionstart)) } </Text>
           <Text style={styles.titleStyle}> result: {cashedout - buyin} time: {msToTime(differenceInMs)}</Text>
       </CardSection>
     );

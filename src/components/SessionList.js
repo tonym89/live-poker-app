@@ -33,7 +33,7 @@ class SessionList extends Component {
 
     console.log(graphData);
 
-    const testData=
+    const testData =
       [
       { x: new Date(2018, 9, 1), y: 0 },
       { x: new Date(2018, 9, 16), y: -100 },
@@ -58,15 +58,21 @@ class SessionList extends Component {
     ];
     console.log(testData);
 
+    const dates = testData.map(a => a.x);
+
+var maxDate=new Date(Math.max.apply(null,dates));
+var minDate=new Date(Math.min.apply(null,dates));
+
+const results = testData.map(a => a.y);
+const ymax = Math.max.apply(null, results);
 
     return (
       <View style={styles.mainViewStyle}>
       { this.props && this.props.sessions[0] &&
-        <Chart data={ graphData } style={styles.homeGraphStyle}/>
+        <Chart data={ testData } style={styles.homeGraphStyle}/>
           }
-        <FlatList data={sessionsData} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
+          <FlatList data={sessionsData} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
 
-                <Text>{ JSON.stringify(graphData) }</Text>
 
       </View>
     );
