@@ -5,6 +5,8 @@
  * @format
  * @flow
  */
+
+
  import Svg,{
      Circle,
      Ellipse,
@@ -33,7 +35,7 @@
  import { Svg } from 'expo';
  const { Circle, Rect } = Svg;
  */
- import React from 'react';
+ import React, { Component } from 'react';
 import {
   StyleSheet, View, SafeAreaView, Dimensions, Animated, TextInput,
 } from 'react-native';
@@ -54,7 +56,7 @@ import {
  const { width } = Dimensions.get('window');
  const verticalPadding = 5;
  const cursorRadius = 10;
- const labelWidth = 75;
+ const labelWidth = 300;
 
  const data = [
    { x: new Date(2018, 9, 1), y: 0 },
@@ -89,6 +91,7 @@ import {
  const properties = path.svgPathProperties(line);
  const lineLength = properties.getTotalLength();
 
+
  function getFormattedDate(date) {
   var year = date.getFullYear();
 
@@ -103,21 +106,34 @@ import {
 
 
 class HomeGraph extends React.Component {
-   cursor = React.createRef();
 
+  static getDerivedStateFromProps(nextProps) {
+  return {
+    values: nextProps.values,
+  }
+}
+
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      x: new Animated.Value(0),
+      values: JSON.stringify(this.props),
+    };
+  }
+
+
+   cursor = React.createRef();
    label = React.createRef();
    xdate = React.createRef();
-
-   state = {
-     x: new Animated.Value(0),
-   };
 
    moveCursor(value) {
      const { x, y } = properties.getPointAtLength(lineLength - value);
      this.cursor.current.setNativeProps({ top: y - cursorRadius, left: x - cursorRadius });
      const label = scaleLabel(scaleY.invert(y));
      const datevalue = getFormattedDate(scaleX.invert(x));
-     this.label.current.setNativeProps({ text: `$${label}USD`});
+
+     this.label.current.setNativeProps({ text: `$${label}USD ${this.state.values}`});
      this.xdate.current.setNativeProps({ text: `${datevalue}`});
    }
 
@@ -126,7 +142,9 @@ class HomeGraph extends React.Component {
      this.moveCursor(0);
    }
 
+
    render() {
+
      const { x } = this.state;
      const translateX = x.interpolate({
        inputRange: [0, lineLength],
@@ -135,8 +153,6 @@ class HomeGraph extends React.Component {
      });
      return (
        <SafeAreaView style={styles.root}>
-
-
 
          <View style={styles.container}>
 
@@ -153,8 +169,10 @@ class HomeGraph extends React.Component {
              <View ref={this.cursor} style={styles.cursor} />
            </Svg>
            <Animated.View style={[styles.label, { transform: [{ translateX }] }]}>
+
              <TextInput ref={this.label} />
-             <TextInput ref={this.xdate}/>
+             <TextInput ref={this.xdate} />
+
            </Animated.View>
            <Animated.ScrollView
              style={StyleSheet.absoluteFill}
@@ -174,12 +192,6 @@ class HomeGraph extends React.Component {
              )}
              horizontal
            />
-           <View style={styles.bottomhalf}>
-             <Text style={styles.bottomhalf}>
-             Hello
-             { data.keys }
-             </Text>
-           </View>
          </View>
        </SafeAreaView>
      );
@@ -205,10 +217,13 @@ class HomeGraph extends React.Component {
    },
    label: {
      position: 'absolute',
-     top: -65,
+     top: -60,
      left: 0,
-     backgroundColor: '#CDE3F8',
+     backgroundColor: 'lightgreen',
+     borderBottomLeftRadius: 5,
+     borderBottomRightRadius: 5,
      width: labelWidth,
+     color: 'white'
    },
    bottomhalf: {
      backgroundColor: 'red',
