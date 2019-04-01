@@ -64,16 +64,28 @@ function getFormattedDate(date) {
 }
 
 export default class Chart extends React.Component {
+  constructor(props){
+    super();
+    this.state={
+      data: [],
+      x: new Animated.Value(0),
+      ready: false,
+    }
+  }
+
+
+
+
+
+
+
+
   cursor = React.createRef();
 
   label = React.createRef();
 
   xdate = React.createRef();
 
-  state = {
-    x: new Animated.Value(0),
-    ready: false,
-  };
 
   moveCursor(value) {
 
@@ -101,7 +113,12 @@ export default class Chart extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({data: this.props.data });
+    console.log(this.state.data);
     const { data } = this.props;
+
+            console.log(data);
+
     const dates = data.map(a => a.x);
     const results = data.map(a => a.y);
     const maxDate=new Date(Math.max.apply(null,dates));
@@ -121,10 +138,44 @@ export default class Chart extends React.Component {
     this.setState({ ready: true }, () => {
       this.state.x.addListener(({ value }) => this.moveCursor(value));
       this.moveCursor(0);
+
+        console.log("component mounted");
     });
   }
 
+  componentWillReceiveProps(nextProps){
+        if(nextProps.data !== this.props.data){
+            this.setState({data:nextProps.data});
+            const { data } = this.props;
+
+                    console.log(data);
+
+            const dates = data.map(a => a.x);
+            const results = data.map(a => a.y);
+            const maxDate=new Date(Math.max.apply(null,dates));
+            const minDate=new Date(Math.min.apply(null,dates));
+            const yMax = Math.max.apply(null, results);
+            const yMin = Math.min.apply(null, results);
+
+            const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
+            this.scaleY = scaleLinear().domain([yMin, yMax]).range([height - verticalPadding, verticalPadding]);
+            this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range([-100, 0, 200, 300]);
+            this.line = d3.shape.line()
+              .x(d => scaleX(d.x))
+              .y(d => this.scaleY(d.y))
+              .curve(d3.shape.curveBasis)(data);
+            this.properties = path.svgPathProperties(this.line);
+            this.lineLength = this.properties.getTotalLength();
+            this.setState({ ready: true }, () => {
+              this.state.x.addListener(({ value }) => this.moveCursor(value));
+              this.moveCursor(0);
+
+            });
+        }
+    }
+
   render() {
+    console.log(this.state.data);
     const { line, lineLength } = this;
     const { ready, x } = this.state;
     if (!ready) {
@@ -135,6 +186,8 @@ export default class Chart extends React.Component {
       outputRange: [width - labelWidth, 0],
       extrapolate: 'clamp',
     });
+
+    console.log("Chart rendering")
     return (
       <View style={styles.container}>
         <Svg {...{ width, height }}>

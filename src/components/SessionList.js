@@ -8,8 +8,9 @@ import HomeGraph from './HomeGraph';
 import Chart from './Chart';
 
 class SessionList extends Component {
+
+
   componentDidMount() {
-    const self = this;
     this.props.sessionsFetch();
   }
   componentDidUpdate(prevProps) {
@@ -20,6 +21,7 @@ class SessionList extends Component {
 
 
   render() {
+
     const sessionsData = this.props.sessions;
 
     function createData(sessionsData) {
@@ -69,11 +71,9 @@ const ymax = Math.max.apply(null, results);
     return (
       <View style={styles.mainViewStyle}>
       { this.props && this.props.sessions[0] &&
-        <Chart data={ testData } style={styles.homeGraphStyle}/>
+        <Chart data={ graphData } style={styles.homeGraphStyle}/>
           }
           <FlatList data={sessionsData} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
-
-
       </View>
     );
   };
