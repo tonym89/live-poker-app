@@ -40,10 +40,11 @@ function getFormattedDate(date) {
  return month + '/' + day + '/' + year;
 }
 
+
     return (
       <CardSection>
           <Text style={styles.timeStyle}> { getFormattedDate(new Date(sessionstart)) } </Text>
-          <Text style={styles.titleStyle}> result: {cashedout - buyin} time: {msToTime(differenceInMs)}</Text>
+          <Text style={styles.titleStyle}> result: {cashedout} time: {msToTime(differenceInMs)}</Text>
       </CardSection>
     );
   }
