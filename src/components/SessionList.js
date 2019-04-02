@@ -22,7 +22,12 @@ class SessionList extends Component {
 
   render() {
 
-    const sessionsData = this.props.sessions;
+    function sortByDate(sessionsData) {
+  let sortedSessions = sessionsData.sort(function(a,b){return new Date(a.sessionstart)<new Date(b.sessionstart) ? -1 : new Date(a.sessionstart)>new Date(b.sessionstart) ? 1 : 0 ;})
+  return sortedSessions;
+}
+
+    const sessionsData = sortByDate(this.props.sessions);
 
     function createData(sessionsData) {
   let graphData = [];
@@ -71,9 +76,9 @@ const ymax = Math.max.apply(null, results);
     return (
       <View style={styles.mainViewStyle}>
       { this.props && this.props.sessions[0] &&
-        <Chart data={ graphData } style={styles.homeGraphStyle}/>
+        <Chart data={graphData} style={styles.homeGraphStyle}/>
           }
-          <FlatList data={sessionsData} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
+          <FlatList data={sessionsData.reverse()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
       </View>
     );
   };
