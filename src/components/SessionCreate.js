@@ -113,22 +113,6 @@ class SessionCreate extends Component {
           />
         </CardSection>
 
-        <CardSection style={{ flexDirection: 'column' }}>
-          <Text style={styles.pickerTextStyle}>Day of the week</Text>
-          <Picker
-            selectedValue={this.props.time}
-            onValueChange={value => this.props.sessionUpdate({ prop: 'time', value })}
-          >
-            <PickerItem label="Monday" value="Monday" />
-            <PickerItem label="Tuesday" value="Tuesday" />
-            <PickerItem label="Wednesday" value="Wednesday" />
-            <PickerItem label="Thursday" value="Thursday" />
-            <PickerItem label="Friday" value="Friday" />
-            <PickerItem label="Saturday" value="Saturday" />
-            <PickerItem label="Sunday" value="Sunday" />
-          </Picker>
-        </CardSection>
-
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>
             Save Session
