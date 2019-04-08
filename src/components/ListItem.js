@@ -9,6 +9,11 @@ class ListItem extends Component {
     const { buyin } = this.props.session;
     const { sessionstart } = this.props.session;
     const { sessionend } = this.props.session;
+    const { gametype } = this.props.session;
+    const { bigblind } = this.props.session;
+    const { smallblind } = this.props.session;
+    const { location } = this.props.session;
+    const { limit } = this.props.session;
 
     const dateNewer = new Date(sessionstart);
     const dateOlder = new Date(sessionend);
@@ -44,7 +49,7 @@ function getFormattedDate(date) {
     return (
       <CardSection>
           <Text style={styles.timeStyle}> { getFormattedDate(new Date(sessionstart)) } </Text>
-          <Text style={styles.titleStyle}> result: {cashedout} time: {msToTime(differenceInMs)}</Text>
+          <Text style={styles.titleStyle}> {location} {limit} result: {cashedout} {smallblind} {bigblind} game: {gametype} time: {msToTime(differenceInMs)}</Text>
       </CardSection>
     );
   }
