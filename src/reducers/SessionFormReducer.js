@@ -8,7 +8,12 @@ const INITIAL_STATE = {
   cashedout: '',
   sessionstart: '',
   sessionend: '',
-  time: ''
+  time: '',
+  gametype: '',
+  bigblind: '',
+  smallblind: '',
+  location: '',
+  limit: ''
 };
 
 export default (state = INITIAL_STATE, action) => {

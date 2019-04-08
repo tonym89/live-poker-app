@@ -1,5 +1,7 @@
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
+import { Fonts } from '../../utils/Fonts';
+
 
 const NumericInput = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
   const { inputStyle, labelStyle, containerStyle } = styles;
@@ -27,15 +29,20 @@ const styles = {
     paddingLeft: 5,
     fontSize: 18,
     lineHeight: 23,
-    flex: 2
+    width: 100,
+    borderColor: '#2D6BEC',
+    borderWidth: 0.2,
+    borderRadius: 5,
+    marginRight: 20,
   },
   labelStyle: {
+    fontFamily: Fonts.Cabin,
     fontSize: 18,
     paddingLeft: 20,
     flex: 1
   },
   containerStyle: {
-    height: 40,
+    height: 25,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center'
