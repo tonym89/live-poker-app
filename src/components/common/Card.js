@@ -1,5 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
+
+const { height } = Dimensions.get('screen');
+const screenHeight = height - 200;
 
 const Card = (props) => {
   return (
@@ -18,7 +21,8 @@ const styles = {
     elevation: 1,
     marginLeft: 5,
     marginRight: 5,
-    marginTop: 10
+    marginTop: 10,
+    height: screenHeight
   }
 };
 

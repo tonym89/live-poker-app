@@ -36,13 +36,14 @@ const styles = {
   },
   labelStyle: {
     fontFamily: Fonts.Cabin,
-    fontSize: 18,
+    fontSize: 20,
     paddingLeft: 20,
+    width: 200,
     flex: 1
   },
   containerStyle: {
     height: 25,
-    flex: 1,
+    width: 200,
     flexDirection: 'row',
     alignItems: 'center'
   }
