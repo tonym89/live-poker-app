@@ -8,7 +8,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { sessionUpdate, sessionCreate } from '../actions';
 import { Card, CardSection, Button, NumericInput, NumericInputSb, Input } from './common';
 import { Fonts } from '../utils/Fonts';
-
 const { width } = Dimensions.get('window');
 
 
@@ -19,6 +18,7 @@ class SessionCreate extends Component {
       isStartVisible: false,
       isEndVisible: false,
       isModalVisible: false,
+      isLimitModalVisible: false,
       chosenDate: '',
       startTime: new Date().getTime(),
       endTime: (new Date().getTime() + 3.6e+6),
@@ -27,6 +27,10 @@ class SessionCreate extends Component {
 
   _toggleModal = () =>
     this.setState({ isModalVisible: !this.state.isModalVisible });
+
+
+      _toggleLimitModal = () =>
+        this.setState({ isLimitModalVisible: !this.state.isLimitModalVisible });
 
 
 
@@ -43,7 +47,7 @@ class SessionCreate extends Component {
       bigblind,
       smallblind,
       location,
-      limit,
+      limit: limit || 'No Limit',
     });
   }
 
@@ -220,8 +224,8 @@ class SessionCreate extends Component {
 
         <CardSection>
         <NumericInputSb
-          label="Blinds"
-          style={styles.input}
+          label="Blinds:   "
+          style={{marginRight: 20}}
           placeholder="5"
           value={this.props.smallblind}
           onChangeText={value => this.props.sessionUpdate({ prop: 'smallblind', value })}
@@ -244,19 +248,74 @@ class SessionCreate extends Component {
         />
         </CardSection>
 
+
         <CardSection>
-        <Input
-          label="Limit:"
-          placeholder="No Limit"
-          value={this.props.limit}
-          onChangeText={value => this.props.sessionUpdate({ prop: 'limit', value })}
-        />
+                <TouchableOpacity onPress={this._toggleLimitModal}>
+                <View style={{flexDirection:'row', justifyContent: 'space-between', width: width - 45 }}>
+                  <View style={{justifyContent: 'flex-start'}}>
+                   <Text style={styles.gameTypeText}>Limit:</Text>
+                  </View>
+                  <View style={{justifyContent: 'flex-end'}}>
+                    <Text style={{
+                      fontFamily: Fonts.Cabin,
+                       fontSize: 18,
+                       paddingLeft: 20,
+                       }}
+                       >
+                     {this.props.limit ? this.props.limit : 'No Limit'}
+                     </Text>
+                  </View>
+                </View>
+                </TouchableOpacity>
+
+
+                <Modal isVisible={this.state.isLimitModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
+                    marginBottom: 100
+                 }}>
+                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                  <View style={{ width: 200,
+            height: 200, bottom: 0, justifyContent: 'flex-end',
+                margin: 20, }}>
+
+      <Picker
+        selectedValue={this.props.limit}
+        onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
+        itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+      >
+        <PickerItem label="No Limit" value='No Limit' />
+        <PickerItem label="Pot Limit" value="Pot Limit" />
+        <PickerItem label="Fixed Limit" value="Fixed Limit" />
+      </Picker>
+
+      <TouchableOpacity onPress={this._toggleLimitModal}>
+        <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+      </TouchableOpacity>
+
+                    </View>
+                  </View>
+                </Modal>
         </CardSection>
+
 
         <CardSection>
                 <TouchableOpacity onPress={this._toggleModal}>
-                  <Text>Game Type: {this.props.gametype ? this.props.gametype : 'Hold em'}</Text>
+                <View style={{flexDirection:'row', justifyContent: 'space-between', width: width - 45 }}>
+                  <View style={{justifyContent: 'flex-start'}}>
+                   <Text style={styles.gameTypeText}>Game Type:</Text>
+                  </View>
+                  <View style={{justifyContent: 'flex-end'}}>
+                    <Text style={{
+                      fontFamily: Fonts.Cabin,
+                       fontSize: 18,
+                       paddingLeft: 20,
+                       }}
+                       >
+                     {this.props.gametype ? this.props.gametype : 'Hold em'}
+                     </Text>
+                  </View>
+                </View>
                 </TouchableOpacity>
+
 
 
                 <Modal isVisible={this.state.isModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
@@ -284,8 +343,7 @@ class SessionCreate extends Component {
                     </View>
                   </View>
                 </Modal>
-          </CardSection>
-
+        </CardSection>
 
       </Card>
 
@@ -339,7 +397,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#330066',
     borderRadius: 15,
     justifyContent: 'center',
-
+    bottom: 0
   },
   startText: {
     fontFamily: Fonts.CabinBold,
@@ -358,10 +416,11 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: Fonts.CabinBold,
-    fontSize: 18,
+    fontSize: 20,
     color: 'black',
     textAlign: 'left',
-    marginLeft: 2
+    marginLeft: 2,
+    marginBottom: 5
   },
   linearGradient: {
    flex: 1,
@@ -379,15 +438,26 @@ const styles = StyleSheet.create({
  },
  timePlayedText: {
    fontFamily: Fonts.Cabin,
-   fontSize: 15,
+   fontSize: 20,
    color: 'black',
    textAlign: 'center',
+   marginBottom: 5,
+   marginTop: 5
  },
  green: {
+   fontSize: 20,
+   fontFamily: Fonts.CabinBold,
    color: 'green'
  },
  red: {
+   fontSize: 20,
+   fontFamily: Fonts.CabinBold,
    color: '#ff0000'
+ },
+ gameTypeText: {
+   fontFamily: Fonts.Cabin,
+   fontSize: 20,
+   paddingLeft: 20
  }
 });
 

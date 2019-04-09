@@ -37,7 +37,7 @@ const styles = {
   },
   labelStyle: {
     fontFamily: Fonts.Cabin,
-    fontSize: 18,
+    fontSize: 20,
     paddingLeft: 20,
     flex: 1
   },
