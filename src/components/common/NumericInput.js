@@ -30,7 +30,7 @@ const styles = {
     fontSize: 18,
     lineHeight: 23,
     width: 100,
-    borderColor: '#2D6BEC',
+    borderColor: '#13233B',
     borderWidth: 0.2,
     borderRadius: 5,
     marginRight: 20,

@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { sessionUpdate, sessionCreate } from '../actions';
-import { Card, CardSection, Button, NumericInput, NumericInputSb, Input } from './common';
+import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionCard, FormSectionBottomCard } from './common';
 import { Fonts } from '../utils/Fonts';
 const { width } = Dimensions.get('window');
 
@@ -97,7 +97,7 @@ class SessionCreate extends Component {
 
   render() {
     const PickerItem = Picker.Item;
-    let netResult = this.props.cashedout - this.props.buyin;
+    const netResult = this.props.cashedout - this.props.buyin;
 
 
     const differenceInMs = new Date(this.state.endTime) - new Date(this.state.startTime);
@@ -150,6 +150,7 @@ class SessionCreate extends Component {
         <KeyboardAwareScrollView>
       <Card>
 
+      <FormSectionCard>
         <CardSection>
           <Text style={styles.headerText}>Session Time</Text>
         </CardSection>
@@ -191,6 +192,11 @@ class SessionCreate extends Component {
         </CardSection>
 
 
+        </FormSectionCard>
+
+
+        <FormSectionCard>
+
         <CardSection>
           <Text style={styles.headerText}>Session Results</Text>
         </CardSection>
@@ -217,142 +223,144 @@ class SessionCreate extends Component {
           <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult : '-$' + Math.abs(netResult) }</Text>
         </CardSection>
 
+        </FormSectionCard>
 
-        <CardSection>
-           <Text style={styles.headerText}>More Details</Text>
-        </CardSection>
+        <FormSectionBottomCard>
+          <CardSection>
+             <Text style={styles.headerText}>More Details</Text>
+          </CardSection>
 
-        <CardSection>
-        <NumericInputSb
-          label="Blinds:   "
-          style={{marginRight: 20}}
-          placeholder="5"
-          value={this.props.smallblind}
-          onChangeText={value => this.props.sessionUpdate({ prop: 'smallblind', value })}
-        />
-        <NumericInput
-          placeholder="10"
-          value={this.props.bigblind}
-          onChangeText={value => this.props.sessionUpdate({ prop: 'bigblind', value })}
-        />
+          <CardSection>
+          <NumericInputSb
+            label="Blinds:   "
+            style={{marginRight: 20}}
+            placeholder="5"
+            value={this.props.smallblind}
+            onChangeText={value => this.props.sessionUpdate({ prop: 'smallblind', value })}
+          />
+          <NumericInput
+            placeholder="10"
+            value={this.props.bigblind}
+            onChangeText={value => this.props.sessionUpdate({ prop: 'bigblind', value })}
+          />
 
-        </CardSection>
-
-
-        <CardSection>
-        <Input
-          label="Location:"
-          placeholder="Barcelona"
-          value={this.props.location}
-          onChangeText={value => this.props.sessionUpdate({ prop: 'location', value })}
-        />
-        </CardSection>
+          </CardSection>
 
 
-        <CardSection>
-                <TouchableOpacity onPress={this._toggleLimitModal}>
-                <View style={{flexDirection:'row', justifyContent: 'space-between', width: width - 45 }}>
-                  <View style={{justifyContent: 'flex-start'}}>
-                   <Text style={styles.gameTypeText}>Limit:</Text>
-                  </View>
-                  <View style={{justifyContent: 'flex-end'}}>
-                    <Text style={{
-                      fontFamily: Fonts.Cabin,
-                       fontSize: 18,
-                       paddingLeft: 20,
-                       }}
-                       >
-                     {this.props.limit ? this.props.limit : 'No Limit'}
-                     </Text>
-                  </View>
-                </View>
-                </TouchableOpacity>
+          <CardSection>
+          <Input
+            label="Location:"
+            placeholder="Barcelona"
+            value={this.props.location}
+            onChangeText={value => this.props.sessionUpdate({ prop: 'location', value })}
+          />
+          </CardSection>
 
 
-                <Modal isVisible={this.state.isLimitModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
-                    marginBottom: 100
-                 }}>
-                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                  <View style={{ width: 200,
-            height: 200, bottom: 0, justifyContent: 'flex-end',
-                margin: 20, }}>
-
-      <Picker
-        selectedValue={this.props.limit}
-        onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
-        itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
-      >
-        <PickerItem label="No Limit" value='No Limit' />
-        <PickerItem label="Pot Limit" value="Pot Limit" />
-        <PickerItem label="Fixed Limit" value="Fixed Limit" />
-      </Picker>
-
-      <TouchableOpacity onPress={this._toggleLimitModal}>
-        <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
-      </TouchableOpacity>
-
+          <CardSection>
+                  <TouchableOpacity onPress={this._toggleLimitModal}>
+                  <View style={{flexDirection:'row', justifyContent: 'space-between', width: width - 45 }}>
+                    <View style={{justifyContent: 'flex-start'}}>
+                     <Text style={styles.gameTypeText}>Limit:</Text>
+                    </View>
+                    <View style={{justifyContent: 'flex-end'}}>
+                      <Text style={{
+                        fontFamily: Fonts.Cabin,
+                         fontSize: 18,
+                         paddingLeft: 20,
+                         }}
+                         >
+                       {this.props.limit ? this.props.limit : 'No Limit'}
+                       </Text>
                     </View>
                   </View>
-                </Modal>
-        </CardSection>
+                  </TouchableOpacity>
 
 
-        <CardSection>
-                <TouchableOpacity onPress={this._toggleModal}>
-                <View style={{flexDirection:'row', justifyContent: 'space-between', width: width - 45 }}>
-                  <View style={{justifyContent: 'flex-start'}}>
-                   <Text style={styles.gameTypeText}>Game Type:</Text>
-                  </View>
-                  <View style={{justifyContent: 'flex-end'}}>
-                    <Text style={{
-                      fontFamily: Fonts.Cabin,
-                       fontSize: 18,
-                       paddingLeft: 20,
-                       }}
-                       >
-                     {this.props.gametype ? this.props.gametype : 'Hold em'}
-                     </Text>
-                  </View>
-                </View>
-                </TouchableOpacity>
+                  <Modal isVisible={this.state.isLimitModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
+                      marginBottom: 100
+                   }}>
+                   <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ width: 200,
+              height: 200, bottom: 0, justifyContent: 'flex-end',
+                  margin: 20, }}>
+
+        <Picker
+          selectedValue={this.props.limit}
+          onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
+          itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+        >
+          <PickerItem label="No Limit" value='No Limit' />
+          <PickerItem label="Pot Limit" value="Pot Limit" />
+          <PickerItem label="Fixed Limit" value="Fixed Limit" />
+        </Picker>
+
+        <TouchableOpacity onPress={this._toggleLimitModal}>
+          <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+        </TouchableOpacity>
+
+                      </View>
+                    </View>
+                  </Modal>
+          </CardSection>
 
 
-
-                <Modal isVisible={this.state.isModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
-                    marginBottom: 100
-                 }}>
-                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                  <View style={{ width: 200,
-            height: 200, bottom: 0, justifyContent: 'flex-end',
-                margin: 20, }}>
-
-      <Picker
-        selectedValue={this.props.gametype}
-        onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
-        itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
-      >
-        <PickerItem label="Hold em" value='Hold em' />
-        <PickerItem label="Omaha" value="Omaha" />
-        <PickerItem label="Razz" value="Razz" />
-      </Picker>
-
-      <TouchableOpacity onPress={this._toggleModal}>
-        <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
-      </TouchableOpacity>
-
+          <CardSection>
+                  <TouchableOpacity onPress={this._toggleModal}>
+                  <View style={{flexDirection:'row', justifyContent: 'space-between', width: width - 45 }}>
+                    <View style={{justifyContent: 'flex-start'}}>
+                     <Text style={styles.gameTypeText}>Game Type:</Text>
+                    </View>
+                    <View style={{justifyContent: 'flex-end'}}>
+                      <Text style={{
+                        fontFamily: Fonts.Cabin,
+                         fontSize: 18,
+                         paddingLeft: 20,
+                         }}
+                         >
+                       {this.props.gametype ? this.props.gametype : 'Hold em'}
+                       </Text>
                     </View>
                   </View>
-                </Modal>
-        </CardSection>
+                  </TouchableOpacity>
 
+
+
+                  <Modal isVisible={this.state.isModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
+                      marginBottom: 100
+                   }}>
+                   <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ width: 200,
+              height: 200, bottom: 0, justifyContent: 'flex-end',
+                  margin: 20, }}>
+
+        <Picker
+          selectedValue={this.props.gametype}
+          onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
+          itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+        >
+          <PickerItem label="Hold em" value='Hold em' />
+          <PickerItem label="Omaha" value="Omaha" />
+          <PickerItem label="Razz" value="Razz" />
+        </Picker>
+
+        <TouchableOpacity onPress={this._toggleModal}>
+          <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+        </TouchableOpacity>
+
+                      </View>
+                    </View>
+                  </Modal>
+          </CardSection>
+          </FormSectionBottomCard>
       </Card>
 
       <CardSection style={ {alignItems: 'center', justifyContent: 'center', bottom: 0} }>
-        <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-          <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
-              <Text style={styles.startText}>Save Session</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
+  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+      <Text style={styles.startText}>Save Session</Text>
+  </LinearGradient>
+</TouchableOpacity>
       </CardSection>
 
         </KeyboardAwareScrollView>
@@ -417,7 +425,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: Fonts.CabinBold,
     fontSize: 20,
-    color: 'black',
+    color: '#13233B',
     textAlign: 'left',
     marginLeft: 2,
     marginBottom: 5
@@ -458,7 +466,8 @@ const styles = StyleSheet.create({
    fontFamily: Fonts.Cabin,
    fontSize: 20,
    paddingLeft: 20
- }
+ },
+
 });
 
 const mapStateToProps = (state) => {

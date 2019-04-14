@@ -6,3 +6,5 @@ export * from './Input';
 export * from './Spinner';
 export * from './NumericInput';
 export * from './NumericInputSb';
+export * from './FormSectionCard';
+export * from './FormSectionBottomCard';

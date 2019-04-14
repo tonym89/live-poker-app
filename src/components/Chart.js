@@ -26,6 +26,8 @@ import Svg,{
 import { Svg } from 'expo';
 const { Circle, Rect } = Svg;
 */
+import LinearGradient2 from 'react-native-linear-gradient';
+
 import React, { Component } from 'react';
 import {
  StyleSheet, View, SafeAreaView, Dimensions, Animated, TextInput,
@@ -38,6 +40,7 @@ import {
   scaleLinear,
   scaleQuantile,
 } from 'd3-scale';
+import { Fonts } from '../utils/Fonts';
 
 const d3 = {
   shape,
@@ -47,7 +50,7 @@ const height = 200;
 const { width } = Dimensions.get('window');
 const verticalPadding = 5;
 const cursorRadius = 10;
-const labelWidth = 100;
+const labelWidth = 400;
 
 
 
@@ -104,7 +107,7 @@ export default class Chart extends React.Component {
     }
     if (this.label.current) {
       const label = this.scaleLabel(this.scaleY.invert(y));
-      this.label.current.setNativeProps({ text: `${label} USD` });
+      this.label.current.setNativeProps({ text: `$${label}` });
     }
     if (this.xdate.current) {
       const datevalue = getFormattedDate(scaleX.invert(x));
@@ -202,9 +205,12 @@ export default class Chart extends React.Component {
           <Path d={`${line} L ${width} ${height} L 0 ${height}`} fill="url(#gradient)" />
           <View ref={this.cursor} style={styles.cursor} />
         </Svg>
-        <Animated.View style={[styles.label, { transform: [{ translateX }] }]}>
-          <TextInput ref={this.label} />
-          <TextInput ref={this.xdate} />
+        <Animated.View style={[styles.label]}>
+
+          <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
+            <TextInput ref={this.label} style={styles.labelText}/>
+            <TextInput ref={this.xdate} style={styles.labelText}/>
+          </LinearGradient2>
         </Animated.View>
         <Animated.ScrollView
           style={StyleSheet.absoluteFill}
@@ -250,13 +256,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -60,
     left: 0,
-    backgroundColor: 'lightgreen',
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     width: labelWidth,
-    color: 'white'
   },
   bottomhalf: {
     backgroundColor: 'red',
+  },
+  linearGradient: {
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5
+  },
+  labelText: {
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: Fonts.CabinBold
   }
 });
