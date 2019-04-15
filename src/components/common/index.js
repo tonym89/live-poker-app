@@ -8,3 +8,7 @@ export * from './NumericInput';
 export * from './NumericInputSb';
 export * from './FormSectionCard';
 export * from './FormSectionBottomCard';
+export * from './TimerSvg';
+export * from './OmahaSvg';
+export * from './ChipsSvg';
+export * from './HoldEmSvg';
