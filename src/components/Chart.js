@@ -46,11 +46,11 @@ const d3 = {
   shape,
 };
 
-const height = 200;
+const height = 250;
 const { width } = Dimensions.get('window');
-const verticalPadding = 5;
+const verticalPadding = 45;
 const cursorRadius = 10;
-const labelWidth = 400;
+const labelWidth = width;
 
 
 
@@ -64,6 +64,40 @@ function getFormattedDate(date) {
  day = day.length > 1 ? day : '0' + day;
 
  return month + '/' + day + '/' + year;
+}
+
+function getTextDate(date) {
+
+
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+  ];
+
+   var year = date.getFullYear().toString().substring(2);
+
+   var month = (1 + date.getMonth()).toString();
+   month = month.length > 1 ? month : '0' + month;
+
+   var day = date.getDate().toString();
+   day = day;
+
+   var hours = date.getHours().toString();
+
+   var minutes = date.getMinutes().toString();
+
+   var time = date.toTimeString().substr(0,5);
+
+   var monthName = monthNames[date.getMonth()];
+
+   var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+   var dayOfWeek = dayNames[ date.getDay() ];
+
+   var todaysDate = new Date();
+
+   var yesterdaysDate =  new Date(Date.now() - 864e5);
+
+   return ' ' + day + ' ' + monthName + ' ' + year;
 }
 
 export default class Chart extends React.Component {
@@ -110,7 +144,7 @@ export default class Chart extends React.Component {
       this.label.current.setNativeProps({ text: `$${label}` });
     }
     if (this.xdate.current) {
-      const datevalue = getFormattedDate(scaleX.invert(x));
+      const datevalue = getTextDate(scaleX.invert(x));
       this.xdate.current.setNativeProps({ text: `${datevalue}` });
     }
   }
@@ -207,10 +241,17 @@ export default class Chart extends React.Component {
         </Svg>
         <Animated.View style={[styles.label]}>
 
-          <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
-            <TextInput ref={this.label} style={styles.labelText}/>
-            <TextInput ref={this.xdate} style={styles.labelText}/>
-          </LinearGradient2>
+
+            <View style={{flexDirection: 'row', padding: 10}}>
+              <View style={{flex:0.5}}>
+                <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+                <TextInput ref={this.label} style={styles.resultText}/>
+                <TextInput ref={this.xdate} style={styles.dateText}/>
+                </LinearGradient2>
+              </View>
+              <View style={{flex:0.5}}>
+              </View>
+            </View>
         </Animated.View>
         <Animated.ScrollView
           style={StyleSheet.absoluteFill}
@@ -264,12 +305,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   linearGradient: {
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
+    borderRadius: 5,
+    width: 130,
+    padding: 5
   },
-  labelText: {
-    color: 'white',
+  resultText: {
+    color: '#FCFDFC',
     textAlign: 'center',
+    fontSize: 26,
+    fontFamily: Fonts.CabinBold
+  },
+  dateText: {
+    color: '#98BDF0',
+    textAlign: 'center',
+    fontSize: 14,
     fontFamily: Fonts.CabinBold
   }
 });
