@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { CardSection } from './common';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { CardSection, TimerSvg, OmahaSvg, ChipsSvg, HoldEmSvg } from './common';
 import { Fonts } from '../utils/Fonts';
+
 
 class ListItem extends Component {
   render() {
@@ -31,8 +34,15 @@ class ListItem extends Component {
     const days = Math.floor((duration / (1000 * 60 * 60 * 24)) );
     const totalhours = ((days * 24) + hours);
 
-      return totalhours + ' hours ' + minutes + ' minutes ';
+
+    if (hours === 1) {
+      return totalhours + ' hour ' + minutes + ' minutes';
     }
+    else {
+      return totalhours + ' hours ' + minutes + ' minutes';
+    }
+    }
+
 
     function msToTime(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
@@ -80,7 +90,21 @@ function getTextDate(date) {
 
    var monthName = monthNames[date.getMonth()];
 
-   return 'Sunday, ' + day + ' ' + monthName;
+   var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+   var dayOfWeek = dayNames[ date.getDay() ];
+
+   var todaysDate = new Date();
+
+   var yesterdaysDate =  new Date(Date.now() - 864e5);
+
+   if(date.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+    return 'Today'
+}
+  if(date.setHours(0,0,0,0) == yesterdaysDate.setHours(0,0,0,0)) {
+   return 'Yesterday'
+  }
+   return dayOfWeek + ' ' + day + ' ' + monthName;
 }
 
 
@@ -92,18 +116,50 @@ function getTextDate(date) {
             <Text style={styles.locationStyle}>{location} </Text>
           </View>
         </View>
-        <CardSection>
-            <View style={{flexDirection: 'row', padding: 5}}>
-              <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult + '   ': '-$' + Math.abs(netResult) + '   '}</Text>
-              <Text style={styles.titleStyle}>{smallblind}-{bigblind} {limit} {gametype} </Text>
+        <View style={{flexDirection:'row', padding: 5}}>
+        <View style={{flex: 0.7, paddingLeft: 15}}>
+
+
+              <View style={{flexDirection:'row'}}>
+                <ChipsSvg />
+                <Text style={styles.titleStyle}>  ${smallblind} / ${bigblind}</Text>
+              </View>
+
+              { gametype === 'Hold em' &&
+
+              <View style={{flexDirection:'row'}}>
+                <HoldEmSvg />
+                <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+              </View>
+
+            }
+
+            { gametype === 'Omaha' &&
+            <View style={{flexDirection:'row'}}>
+              <OmahaSvg />
+              <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
             </View>
-        </CardSection>
-        <CardSection>
-            <View style={{flexDirection: 'row', padding: 5}}>
-              <Text style={styles.green}> </Text>
-              <Text style={styles.titleStyle}>{msToTimeWords(new Date(differenceInMs))}played</Text>
-            </View>
-        </CardSection>
+          }
+
+          { gametype === 'Razz' &&
+          <View style={{flexDirection:'row'}}>
+            <OmahaSvg />
+            <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+          </View>
+        }
+
+              <View style={{flexDirection:'row'}}>
+                <TimerSvg />
+                <Text style={styles.titleStyle}>  {msToTimeWords(new Date(differenceInMs))}</Text>
+              </View>
+        </View>
+
+          <View style={{flex: 0.3, justifyContent: 'center', alignItems: 'center'}}>
+               <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult + '   ': '-$' + Math.abs(netResult) + '   '}</Text>
+          </View>
+
+        </View>
+
       </View>
     );
   }
@@ -111,7 +167,7 @@ function getTextDate(date) {
 
 const styles = {
   titleStyle: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: Fonts.Cabin,
     paddingRight: 15
   },
@@ -136,13 +192,11 @@ const styles = {
     borderColor: 'grey'
   },
   green: {
-    width: 100,
     fontSize: 20,
     fontFamily: Fonts.CabinBold,
     color: 'green'
   },
   red: {
-    width: 100,
     fontSize: 20,
     fontFamily: Fonts.CabinBold,
     color: '#ff0000'

@@ -6,6 +6,8 @@ import { sessionsFetch } from '../actions';
 import ListItem from './ListItem';
 import HomeGraph from './HomeGraph';
 import Chart from './Chart';
+import { TimerSvg } from './common'
+
 
 class SessionList extends Component {
 
