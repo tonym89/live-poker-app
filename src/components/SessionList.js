@@ -6,7 +6,6 @@ import { sessionsFetch } from '../actions';
 import ListItem from './ListItem';
 import HomeGraph from './HomeGraph';
 import Chart from './Chart';
-import { TimerSvg } from './common'
 
 
 class SessionList extends Component {
@@ -79,7 +78,7 @@ const ymax = Math.max.apply(null, results);
       <View style={styles.mainViewStyle}>
       { this.props && this.props.sessions[0] &&
      <Chart data={graphData} style={styles.homeGraphStyle}/>
-     }
+     } 
          <FlatList data={sessionsData.reverse()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
       </View>
     );

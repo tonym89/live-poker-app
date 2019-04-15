@@ -116,18 +116,18 @@ function getTextDate(date) {
             <Text style={styles.locationStyle}>{location} </Text>
           </View>
         </View>
-        <View style={{flexDirection:'row', padding: 5}}>
-        <View style={{flex: 0.7, paddingLeft: 15}}>
+        <View style={{flexDirection:'row'}}>
+        <View style={{flex: 0.7, padding: 4, paddingLeft: 15}}>
 
 
-              <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'row', padding: 2}}>
                 <ChipsSvg />
                 <Text style={styles.titleStyle}>  ${smallblind} / ${bigblind}</Text>
               </View>
 
               { gametype === 'Hold em' &&
 
-              <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'row', padding: 2}}>
                 <HoldEmSvg />
                 <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
               </View>
@@ -135,20 +135,20 @@ function getTextDate(date) {
             }
 
             { gametype === 'Omaha' &&
-            <View style={{flexDirection:'row'}}>
+            <View style={{flexDirection:'row', padding: 2}}>
               <OmahaSvg />
               <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
             </View>
           }
 
           { gametype === 'Razz' &&
-          <View style={{flexDirection:'row'}}>
+          <View style={{flexDirection:'row', padding: 2}}>
             <OmahaSvg />
             <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
           </View>
         }
 
-              <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'row', padding: 2}}>
                 <TimerSvg />
                 <Text style={styles.titleStyle}>  {msToTimeWords(new Date(differenceInMs))}</Text>
               </View>
@@ -169,18 +169,19 @@ const styles = {
   titleStyle: {
     fontSize: 20,
     fontFamily: Fonts.Cabin,
-    paddingRight: 15
+    paddingRight: 15,
+    color: '#030303'
   },
   timeStyle: {
     fontSize: 18,
     paddingLeft: 15,
-    color: '#13233B'
+    color: '#030303'
   },
   locationStyle: {
     fontSize: 18,
     paddingLeft: 15,
     paddingRight: 15,
-    color: '#13233B'
+    color: '#030303'
   },
   dateViewStyle: {
     height: 40,
