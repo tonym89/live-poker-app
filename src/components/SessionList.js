@@ -39,6 +39,19 @@ class SessionList extends Component {
 }
   const graphData = createData(sessionsData);
 
+
+
+  function createCumulativeData(graphData) {
+    let cumulativeData = [];
+    for (let i=0; i<graphData.length; i+=1)  if(i===0){
+      cumulativeData.push({x: graphData[i].x, y: graphData[i].y })
+    } else {
+      cumulativeData.push({x: graphData[i].x, y: graphData[i].y + cumulativeData[i-1].y})
+    }
+    return cumulativeData;
+  }
+
+
     console.log(graphData);
 
     const testData =
@@ -66,6 +79,9 @@ class SessionList extends Component {
     ];
     console.log(testData);
 
+
+      const cumulativeData = createCumulativeData(graphData)
+
     const dates = testData.map(a => a.x);
 
 var maxDate=new Date(Math.max.apply(null,dates));
@@ -77,8 +93,8 @@ const ymax = Math.max.apply(null, results);
     return (
       <View style={styles.mainViewStyle}>
       { this.props && this.props.sessions[0] &&
-     <Chart data={graphData} style={styles.homeGraphStyle}/>
-     } 
+     <Chart data={cumulativeData} style={styles.homeGraphStyle}/>
+     }
          <FlatList data={sessionsData.reverse()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
       </View>
     );
