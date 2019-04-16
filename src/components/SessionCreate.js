@@ -96,6 +96,7 @@ class SessionCreate extends Component {
   }
 
   render() {
+    console.log(this.props.session);
     const PickerItem = Picker.Item;
     const netResult = this.props.cashedout - this.props.buyin;
 
@@ -358,7 +359,7 @@ class SessionCreate extends Component {
       <CardSection style={ {alignItems: 'center', justifyContent: 'center', bottom: 0} }>
       <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
   <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
-      <Text style={styles.startText}>Save Session</Text>
+      <Text style={styles.saveText}>Save Session</Text>
   </LinearGradient>
 </TouchableOpacity>
       </CardSection>
@@ -412,15 +413,12 @@ const styles = StyleSheet.create({
     fontSize: 27,
     color: '#FCFDFC',
     textAlign: 'center',
-    paddingLeft: 5,
-    paddingTop: 10
   },
   dateText: {
     fontFamily: Fonts.CabinBold,
     fontSize: 12,
     color: '#FCFDFC',
     textAlign: 'center',
-    paddingLeft: 5
   },
   headerText: {
     fontFamily: Fonts.CabinBold,
@@ -434,7 +432,9 @@ const styles = StyleSheet.create({
    flex: 1,
    paddingLeft: 15,
    paddingRight: 15,
-   borderRadius: 10
+   borderRadius: 10,
+   justifyContent: 'center',
+   alignItems: 'center'
  },
  buttonText: {
    fontSize: 18,
@@ -466,6 +466,12 @@ const styles = StyleSheet.create({
    fontFamily: Fonts.Cabin,
    fontSize: 20,
    paddingLeft: 20
+ },
+ saveText: {
+   fontFamily: Fonts.CabinBold,
+   fontSize: 27,
+   color: '#FCFDFC',
+   textAlign: 'center',
  },
 
 });
