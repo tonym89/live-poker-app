@@ -52,6 +52,28 @@ const verticalPadding = 45;
 const cursorRadius = 10;
 const labelWidth = width;
 
+function getLabelResult(date, testData){
+  let result = ''
+    if (date.getTime() >= testData[testData.length-1].x.getTime()){
+      result = testData[testData.length-1].y
+    }
+
+  for (let i=0; i<testData.length; i+=1)
+    if(i < testData.length-1 && date.getTime() < testData[i+1].x.getTime() && date.getTime() >= testData[i].x.getTime()) {
+      result = testData[i].y
+   }
+   return result
+  }
+
+
+function createLabelData(graphData) {
+  let labelData = []
+  for (let i=0; i<graphData.length; i+=1) {
+   labelData.push(graphData[i].y);
+  }
+  return labelData;
+}
+
 
 
 function getFormattedDate(date) {
@@ -67,8 +89,6 @@ function getFormattedDate(date) {
 }
 
 function getTextDate(date) {
-
-
   const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
   ];
@@ -140,13 +160,15 @@ export default class Chart extends React.Component {
       this.cursor.current.setNativeProps({ top: y - cursorRadius, left: x - cursorRadius });
     }
     if (this.label.current) {
-      const label = this.scaleLabel(this.scaleY.invert(y));
+      const label = getLabelResult(scaleX.invert(x), data);
       this.label.current.setNativeProps({ text: `$${label}` });
     }
     if (this.xdate.current) {
       const datevalue = getTextDate(scaleX.invert(x));
       this.xdate.current.setNativeProps({ text: `${datevalue}` });
     }
+
+    console.log(scaleX.invert(x))
   }
 
   componentDidMount() {
@@ -165,7 +187,7 @@ export default class Chart extends React.Component {
 
     const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
     this.scaleY = scaleLinear().domain([yMin, yMax]).range([height - verticalPadding, verticalPadding]);
-    this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range([-100, 0, 200, 300]);
+    this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range(createLabelData(data));
     this.line = d3.shape.line()
       .x(d => scaleX(d.x))
       .y(d => this.scaleY(d.y))
@@ -176,7 +198,7 @@ export default class Chart extends React.Component {
       this.state.x.addListener(({ value }) => this.moveCursor(value));
       this.moveCursor(0);
 
-        console.log("component mounted");
+        console.log(dates);
     });
   }
 
@@ -185,7 +207,7 @@ export default class Chart extends React.Component {
             this.setState({data:nextProps.data});
             const { data } = this.props;
 
-                    console.log(data);
+                    console.log(createLabelData(data));
 
             const dates = data.map(a => a.x);
             const results = data.map(a => a.y);
@@ -196,7 +218,7 @@ export default class Chart extends React.Component {
 
             const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
             this.scaleY = scaleLinear().domain([yMin, yMax]).range([height - verticalPadding, verticalPadding]);
-            this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range([-100, 0, 200, 300]);
+            this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range(createLabelData(data));
             this.line = d3.shape.line()
               .x(d => scaleX(d.x))
               .y(d => this.scaleY(d.y))

@@ -33,11 +33,13 @@ class SessionList extends Component {
     function createData(sessionsData) {
   let graphData = [];
   for (let i=0; i<sessionsData.length; i+=1) {
-   graphData.push({x: new Date(sessionsData[i].sessionstart), y: parseFloat(sessionsData[i].cashedout)});
+   graphData.push({x: new Date(sessionsData[i].sessionstart), y: parseFloat(sessionsData[i].cashedout) - parseFloat(sessionsData[i].buyin)});
   }
   return graphData;
 }
+
   const graphData = createData(sessionsData);
+
 
 
 
@@ -50,6 +52,7 @@ class SessionList extends Component {
     }
     return cumulativeData;
   }
+
 
 
     console.log(graphData);
