@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Actions } from 'react-native-router-flux'
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { CardSection, TimerSvg, OmahaSvg, ChipsSvg, HoldEmSvg } from './common';
@@ -7,6 +8,10 @@ import { Fonts } from '../utils/Fonts';
 
 
 class ListItem extends Component {
+  onRowPress() {
+    Actions.sessionReport({ session: this.props.session });
+  };
+
   render() {
     const { time } = this.props.session;
     const { cashedout } = this.props.session;
@@ -26,6 +31,7 @@ class ListItem extends Component {
 
     const netResult = cashedout - buyin;
 
+
     function msToTimeWords(duration) {
     const milliseconds = parseInt((duration % 1000) / 100);
     const seconds = Math.floor((duration / 1000) % 60);
@@ -35,7 +41,7 @@ class ListItem extends Component {
     const totalhours = ((days * 24) + hours);
 
 
-    if (hours === 1) {
+    if (totalhours === 1) {
       return totalhours + ' hour ' + minutes + ' minutes';
     }
     else {
@@ -109,6 +115,7 @@ function getTextDate(date) {
 
 
     return (
+      <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
       <View>
         <View style={styles.dateViewStyle}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -161,6 +168,7 @@ function getTextDate(date) {
         </View>
 
       </View>
+    </TouchableWithoutFeedback>
     );
   }
 }

@@ -3,6 +3,7 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import SessionList from './components/SessionList';
 import SessionCreate from './components/SessionCreate';
+import SessionReport from './components/SessionReport';
 
 
 const RouterComponent = () => {
@@ -23,7 +24,9 @@ const RouterComponent = () => {
           title="Sessions"
           initial
           />
-        <Scene key="sessionCreate" component={SessionCreate} title="Create Session" />
+        <Scene key="sessionCreate" component={SessionCreate} title="Add Session" />
+
+        <Scene key="sessionReport" component={SessionReport} title="Session Report" />
         </Scene>
 
       </Scene>
