@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { Text, View, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
+const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
+const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
 
 class SessionReport extends Component {
   render(){
@@ -15,6 +19,7 @@ class SessionReport extends Component {
     const { limit } = this.props.session;
 
     const netResult = cashedout - buyin;
+
 
 
     const dateNewer = new Date(sessionstart);
@@ -74,6 +79,8 @@ class SessionReport extends Component {
        return dayOfWeek + ' ' + day + ' ' + monthName;
     }
 
+    const hourly = (netResult/msToHours(new Date(differenceInMs))).toFixed(2);
+
     return(
         <View style={styles.mainViewStyle}>
 
@@ -101,7 +108,7 @@ class SessionReport extends Component {
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}>Result:</Text>
-            <Text style={styles.locationStyle}>${netResult}</Text>
+            <Text style={styles.locationStyle}>{( netResult>= 0) ? '$' + netResult: '-$' + Math.abs(netResult)}</Text>
           </View>
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -116,7 +123,7 @@ class SessionReport extends Component {
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}>$/hour:</Text>
-            <Text style={styles.locationStyle}>${(netResult/msToHours(new Date(differenceInMs))).toFixed(2)}</Text>
+            <Text style={styles.locationStyle}>{( hourly>= 0) ? '$' + hourly: '-$' + Math.abs(hourly)}</Text>
           </View>
 
 

@@ -161,7 +161,7 @@ export default class Chart extends React.Component {
     }
     if (this.label.current) {
       const label = getLabelResult(scaleX.invert(x), data);
-      this.label.current.setNativeProps({ text: `$${label}` });
+      this.label.current.setNativeProps({ text: `${( label>= 0) ? '$' + label + '   ': '-$' + Math.abs(label) + '   '}` });
     }
     if (this.xdate.current) {
       const datevalue = getTextDate(scaleX.invert(x));
