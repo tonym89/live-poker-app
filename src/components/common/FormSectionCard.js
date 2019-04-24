@@ -14,8 +14,6 @@ const FormSectionCard = (props) => {
 
 const styles = {
   containerStyle: {
-    borderBottomWidth: 3,
-    borderColor: '#13233B',
     padding: 5,
     marginBottom: 15
   }

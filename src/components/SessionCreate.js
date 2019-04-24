@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import LinearGradient from 'react-native-linear-gradient';
+import { Actions } from 'react-native-router-flux'
 import Modal from 'react-native-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
 import { sessionUpdate, sessionCreate } from '../actions';
-import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionCard, FormSectionBottomCard } from './common';
+import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionCard, FormSectionBottomCard, ProfitsSvgLarge, ChipsSvgLarge } from './common';
 import { Fonts } from '../utils/Fonts';
 const { width } = Dimensions.get('window');
 
@@ -96,7 +99,6 @@ class SessionCreate extends Component {
   }
 
   render() {
-    console.log(this.props.session);
     const PickerItem = Picker.Item;
     const netResult = this.props.cashedout - this.props.buyin;
 
@@ -148,59 +150,22 @@ class SessionCreate extends Component {
 
     return (
         <View style={styles.mainViewStyle}>
-        <KeyboardAwareScrollView>
-      <Card>
-
-      <FormSectionCard>
-        <CardSection>
-          <Text style={styles.headerText}>Session Time</Text>
-        </CardSection>
-
-        <CardSection style={{flexDirection: 'row'}}>
-
-          <TouchableOpacity style={styles.startButton} onPress={this.showPicker}>
-              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
-                  <Text style={styles.startText}>Start</Text>
-                  <Text style={styles.dateText}>{getFormattedDate(new Date(this.state.startTime))}</Text>
-              </LinearGradient>
-          </TouchableOpacity>
-
-          <DateTimePicker
-             isVisible={this.state.isStartVisible}
-             onConfirm={this.startDateHandler}
-             onCancel={this.hidePicker}
-             mode={'datetime'}
-          />
+        <KeyboardAwareScrollView keyBoardPersistsTaps='always' style={{flex: 0.9, backgroundColor: '#FDFDFD', }}>
 
 
-          <TouchableOpacity style={styles.endButton} onPress={this.showEndPicker}>
-              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#F4873D', '#EC165A']} style={styles.linearGradient}>
-                  <Text style={styles.startText}>Finish</Text>
-                  <Text style={styles.dateText}>{getFormattedDate(new Date(this.state.endTime))}</Text>
-              </LinearGradient>
-          </TouchableOpacity>
-
-          <DateTimePicker
-             isVisible={this.state.isEndVisible}
-             onConfirm={this.handleEndPicker}
-             onCancel={this.hideEndPicker}
-             mode={'datetime'}
-          />
-        </CardSection>
-
-        <CardSection style={{justifyContent: 'center'}}>
-          <Text style={styles.timePlayedText}>{msToTime(new Date(differenceInMs))} played</Text>
-        </CardSection>
+      <Card style={{backgroundColor: '#FDFDFD'}}>
 
 
-        </FormSectionCard>
+
 
 
         <FormSectionCard>
 
-        <CardSection>
-          <Text style={styles.headerText}>Session Results</Text>
-        </CardSection>
+        <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 10}}>
+          <Text style={styles.headerText}>Results  </Text>
+          <ProfitsSvgLarge />
+        </View>
+
 
         <CardSection>
           <NumericInput
@@ -227,9 +192,11 @@ class SessionCreate extends Component {
         </FormSectionCard>
 
         <FormSectionBottomCard>
-          <CardSection>
-             <Text style={styles.headerText}>More Details</Text>
-          </CardSection>
+
+        <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 10}}>
+          <Text style={styles.headerText}>Game Details  </Text>
+          <ChipsSvgLarge />
+        </View>
 
           <CardSection>
           <NumericInputSb
@@ -248,14 +215,8 @@ class SessionCreate extends Component {
           </CardSection>
 
 
-          <CardSection>
-          <Input
-            label="Location:"
-            placeholder="Barcelona"
-            value={this.props.location}
-            onChangeText={value => this.props.sessionUpdate({ prop: 'location', value })}
-          />
-          </CardSection>
+
+
 
 
           <CardSection>
@@ -356,7 +317,10 @@ class SessionCreate extends Component {
           </FormSectionBottomCard>
       </Card>
 
-      <CardSection style={ {alignItems: 'center', justifyContent: 'center', bottom: 0} }>
+
+              </KeyboardAwareScrollView>
+
+      <CardSection style={ {flex: 0.1, alignItems: 'center', justifyContent: 'center', bottom: 0, backgroundColor: '#FDFDFD' } }>
       <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
   <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
       <Text style={styles.saveText}>Save Session</Text>
@@ -364,7 +328,6 @@ class SessionCreate extends Component {
 </TouchableOpacity>
       </CardSection>
 
-        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -406,7 +369,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#330066',
     borderRadius: 15,
     justifyContent: 'center',
-    bottom: 0
+    bottom: 40
   },
   startText: {
     fontFamily: Fonts.CabinBold,
@@ -422,11 +385,9 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: Fonts.CabinBold,
-    fontSize: 20,
+    fontSize: 30,
     color: '#13233B',
-    textAlign: 'left',
-    marginLeft: 2,
-    marginBottom: 5
+    textAlign: 'center',
   },
   linearGradient: {
    flex: 1,

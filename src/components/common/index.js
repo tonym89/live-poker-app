@@ -12,3 +12,7 @@ export * from './TimerSvg';
 export * from './OmahaSvg';
 export * from './ChipsSvg';
 export * from './HoldEmSvg';
+export * from './TimerSvgLarge';
+export * from './EarthSvg';
+export * from './ProfitsSvgLarge';
+export * from './ChipsSvgLarge';

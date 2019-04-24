@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Dimensions } from 'react-native';
 
 const { height } = Dimensions.get('screen');
-const screenHeight = height - 200;
+const screenHeight = height - 100;
 
 const Card = (props) => {
   return (
