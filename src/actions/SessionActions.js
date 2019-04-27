@@ -13,15 +13,15 @@ export const sessionUpdate = ({ prop, value }) => {
   };
 };
 
-export const sessionCreate = ({ buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit }) => {
+export const sessionCreate = ({ buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
   firebase.database().ref(`users/${currentUser.uid}/sessions`)
-    .push({ buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit })
+    .push({ buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails })
     .then(() => {
     dispatch({ type: SESSION_CREATE });
-    Actions.pop();
+    Actions.main();
    });
   };
 };
