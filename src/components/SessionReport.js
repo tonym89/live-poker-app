@@ -17,6 +17,9 @@ class SessionReport extends Component {
     const { smallblind } = this.props.session;
     const { location } = this.props.session;
     const { limit } = this.props.session;
+    const { venue } = this.props.session;
+
+    console.log(this.props);
 
     const netResult = cashedout - buyin;
 
@@ -83,6 +86,11 @@ class SessionReport extends Component {
 
     return(
         <View style={styles.mainViewStyle}>
+
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.timeStyle}>Venue:</Text>
+          <Text style={styles.locationStyle}>{ JSON.stringify(venue) }</Text>
+        </View>
 
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

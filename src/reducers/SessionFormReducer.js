@@ -13,7 +13,8 @@ const INITIAL_STATE = {
   bigblind: '',
   smallblind: '',
   location: '',
-  limit: ''
+  limit: '',
+  venue: ''
 };
 
 export default (state = INITIAL_STATE, action) => {

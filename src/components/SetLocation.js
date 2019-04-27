@@ -24,11 +24,13 @@ class SetLocation extends Component {
       chosenDate: '',
       startTime: new Date().getTime(),
       endTime: (new Date().getTime() + 3.6e+6),
+      venue: '',
+      venueDetails: ''
     };
   }
 
   onNextPress() {
-    Actions.sessionCreate();
+    Actions.sessionCreate({ venue: this.state.venue, venueDetails: this.state.venueDetails, sessionBegin: this.state.startTime, sessionEnd: this.state.endTime  });
   };
 
   startDateHandler = (starttime) => {
@@ -151,7 +153,11 @@ class SetLocation extends Component {
           fetchDetails={true}
           renderDescription={row => row.description} // custom description render
           onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-          console.log(data, details);
+              this.setState({
+                  venue: data,
+                  venueDetails: details
+              });
+              console.log(this.state.venue)
           }}
 
           getDefaultValue={() => ''}

@@ -38,19 +38,24 @@ class SessionCreate extends Component {
 
 
   onButtonPress() {
-    const { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit } = this.props;
+    const { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails, sessionBegin, sessionEnd } = this.props;
+
+    console.log(venue);
+    console.log('hello');
 
     this.props.sessionCreate({
-      buyin: buyin || 5000,
-      cashedout: cashedout || 10000,
-      sessionstart: sessionstart || this.state.startTime,
-      sessionend: sessionend || this.state.endTime,
+      buyin: buyin || 0,
+      cashedout: cashedout || 0,
+      sessionstart: sessionBegin,
+      sessionend: sessionEnd,
       gametype: gametype || 'Hold em',
       time: time || 'Monday',
       bigblind,
       smallblind,
       location,
       limit: limit || 'No Limit',
+      venue,
+      venueDetails
     });
   }
 
@@ -99,6 +104,7 @@ class SessionCreate extends Component {
   }
 
   render() {
+    console.log(this.props)
     const PickerItem = Picker.Item;
     const netResult = this.props.cashedout - this.props.buyin;
 
