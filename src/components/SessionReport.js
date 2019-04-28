@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { Map } from './Map';
 
 const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
 const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
 
 class SessionReport extends Component {
-  render(){
+  render() {
     const { time } = this.props.session;
     const { cashedout } = this.props.session;
     const { buyin } = this.props.session;
@@ -18,6 +19,7 @@ class SessionReport extends Component {
     const { location } = this.props.session;
     const { limit } = this.props.session;
     const { venue } = this.props.session;
+    const { venueDetails } = this.props.session;
 
     console.log(this.props);
 
@@ -87,9 +89,15 @@ class SessionReport extends Component {
     return(
         <View style={styles.mainViewStyle}>
 
+        <View style={{flex: 0.4}}>
+          <Map data={this.props.session.venueDetails.geometry.location}/>
+        </View>
+
+        <View style={{flex: 0.6}}>
+
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.timeStyle}>Venue:</Text>
-          <Text style={styles.locationStyle}>{ JSON.stringify(venue) }</Text>
+          <Text style={styles.locationStyle}>{ venueDetails.name }</Text>
         </View>
 
 
@@ -134,6 +142,7 @@ class SessionReport extends Component {
             <Text style={styles.locationStyle}>{( hourly>= 0) ? '$' + hourly: '-$' + Math.abs(hourly)}</Text>
           </View>
 
+          </View>
 
         </View>
       )
