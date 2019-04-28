@@ -16,3 +16,4 @@ export * from './TimerSvgLarge';
 export * from './EarthSvg';
 export * from './ProfitsSvgLarge';
 export * from './ChipsSvgLarge';
+export * from './EarthSvgSmall';
