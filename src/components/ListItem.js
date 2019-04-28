@@ -3,7 +3,7 @@ import { Actions } from 'react-native-router-flux'
 import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import { CardSection, TimerSvg, OmahaSvg, ChipsSvg, HoldEmSvg } from './common';
+import { CardSection, TimerSvg, OmahaSvg, ChipsSvg, HoldEmSvg, EarthSvgSmall } from './common';
 import { Fonts } from '../utils/Fonts';
 
 
@@ -23,6 +23,8 @@ class ListItem extends Component {
     const { smallblind } = this.props.session;
     const { location } = this.props.session;
     const { limit } = this.props.session;
+    const { venue } = this.props.session;
+    const { venueDetails } = this.props.session;
 
     const dateNewer = new Date(sessionstart);
     const dateOlder = new Date(sessionend);
@@ -120,7 +122,7 @@ function getTextDate(date) {
         <View style={styles.dateViewStyle}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}> { getTextDate(new Date(sessionstart)) }</Text>
-            <Text style={styles.locationStyle}>{location} </Text>
+            <Text style={styles.locationStyle}></Text>
           </View>
         </View>
         <View style={{flexDirection:'row'}}>
@@ -158,6 +160,11 @@ function getTextDate(date) {
               <View style={{flexDirection:'row', padding: 2}}>
                 <TimerSvg />
                 <Text style={styles.titleStyle}>  {msToTimeWords(new Date(differenceInMs))}</Text>
+              </View>
+
+              <View style={{flexDirection:'row', padding: 2}}>
+                <EarthSvgSmall />
+                <Text style={styles.titleStyle}>  { venueDetails.name }</Text>
               </View>
         </View>
 
