@@ -5,6 +5,8 @@ import SessionList from './components/SessionList';
 import SessionCreate from './components/SessionCreate';
 import SessionReport from './components/SessionReport';
 import SetLocation from './components/SetLocation';
+import SessionEdit from './components/SessionEdit';
+import EditLocation from './components/EditLocation';
 
 
 const RouterComponent = () => {
@@ -29,8 +31,11 @@ const RouterComponent = () => {
 
         <Scene key="sessionReport" component={SessionReport} title="Session Report" />
 
+        <Scene key="setLocation" component={SetLocation} title="Set Location" />
 
-          <Scene key="setLocation" component={SetLocation} title="Set Location" />
+        <Scene key="editLocation" component={EditLocation} title="Edit Session" />
+
+        <Scene key="sessionEdit" component={SessionEdit} title="Edit Session" />
         </Scene>
 
 

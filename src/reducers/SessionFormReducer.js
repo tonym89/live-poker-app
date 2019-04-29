@@ -1,6 +1,7 @@
 import {
   SESSION_UPDATE,
-  SESSION_CREATE
+  SESSION_CREATE,
+  SESSION_SAVE_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -22,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
     case SESSION_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
     case SESSION_CREATE:
+      return INITIAL_STATE;
+    case SESSION_SAVE_SUCCESS:
       return INITIAL_STATE;
     default:
       return state;

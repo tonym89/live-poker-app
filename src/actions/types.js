@@ -6,3 +6,4 @@ export const LOGIN_USER = 'login_user';
 export const SESSION_UPDATE = 'session_update';
 export const SESSION_CREATE = 'session_create';
 export const SESSIONS_FETCH_SUCCESS = 'sessions_fetch_success';
+export const SESSION_SAVE_SUCCESS = 'session_save_success';
