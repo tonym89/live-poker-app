@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import LinearGradient from 'react-native-linear-gradient';
+import { Actions } from 'react-native-router-flux';
 import { Map } from './Map';
+import { Fonts } from '../utils/Fonts';
+import { CardSection } from './common';
 
 const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
 const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
 
 class SessionReport extends Component {
+
+  onButtonPress() {
+    Actions.editLocation({ session: this.props.session });
+  };
+
   render() {
     const { time } = this.props.session;
     const { cashedout } = this.props.session;
@@ -91,13 +100,16 @@ class SessionReport extends Component {
 
         <View style={{flex: 0.4}}>
           <Map data={this.props.session.venueDetails.geometry.location}/>
+          <View style={{flexDirection: 'row', width: 400, backgroundColor: '#13223C', paddingVertical: 6 }}>
+            <Text style={styles.venueStyle}>{ venueDetails.name }</Text>
+          </View>
         </View>
 
         <View style={{flex: 0.6}}>
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.timeStyle}>Venue:</Text>
-          <Text style={styles.locationStyle}>{ venueDetails.name }</Text>
+
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult: '-$' + Math.abs(netResult)}</Text>
         </View>
 
 
@@ -106,11 +118,6 @@ class SessionReport extends Component {
           <Text style={styles.locationStyle}>{ getTextDate(new Date(sessionstart)) }</Text>
         </View>
 
-
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.timeStyle}>Location:</Text>
-            <Text style={styles.locationStyle}>{location}</Text>
-          </View>
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}>Buy in:</Text>
@@ -124,7 +131,7 @@ class SessionReport extends Component {
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}>Result:</Text>
-            <Text style={styles.locationStyle}>{( netResult>= 0) ? '$' + netResult: '-$' + Math.abs(netResult)}</Text>
+            <Text style={styles.locationStyle}>{( netResult>= 0) ? '+$' + netResult: '-$' + Math.abs(netResult)}</Text>
           </View>
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -139,8 +146,16 @@ class SessionReport extends Component {
 
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}>$/hour:</Text>
-            <Text style={styles.locationStyle}>{( hourly>= 0) ? '$' + hourly: '-$' + Math.abs(hourly)}</Text>
+            <Text style={styles.locationStyle}>{( hourly>= 0) ? '+$' + hourly: '-$' + Math.abs(hourly)}</Text>
           </View>
+
+          <CardSection style={ {flex: 0.1, alignItems: 'center', justifyContent: 'center', bottom: 0, backgroundColor: '#FDFDFD' } }>
+            <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
+              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+                  <Text style={styles.saveText}>Edit Session</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </CardSection>
 
           </View>
 
@@ -166,6 +181,24 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     color: '#030303'
   },
+  venueStyle: {
+    fontFamily: Fonts.CabinBold,
+    fontSize: 24,
+    paddingLeft: 15,
+    color: 'white',
+    backgroundColor: '#13223C'
+  },
+  green: {
+    fontSize: 28,
+    fontFamily: Fonts.CabinBold,
+    color: 'green'
+  },
+  red: {
+    fontSize: 28,
+    fontFamily: Fonts.CabinBold,
+    color: '#ff0000'
+  },
+
 });
 
 export default SessionReport;

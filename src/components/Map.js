@@ -17,8 +17,8 @@ class Map extends Component {
     return (
       <GoogleStaticMap
           style={styles.map}
-          latitude={this.props.data.lat}
-          longitude={this.props.data.lng}
+          latitude={this.props.data.lat.toString()}
+          longitude={this.props.data.lng.toString()}
           zoom={15}
           size={{ width: 400, height: 240 }}
           apiKey={'AIzaSyDkIWixhcpMisJ3Ua73U1G5HcEsEq-mzQs'}
