@@ -83,7 +83,7 @@ class SessionList extends Component {
     console.log(testData);
 
 
-      const cumulativeData = createCumulativeData(graphData)
+      const cumulativeData = createCumulativeData(testData)
 
     const dates = testData.map(a => a.x);
 
