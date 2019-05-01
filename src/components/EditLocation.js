@@ -8,7 +8,6 @@ import { Actions } from 'react-native-router-flux'
 import Modal from 'react-native-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
 import { sessionUpdate, sessionCreate } from '../actions';
 import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg } from './common';
 import { Fonts } from '../utils/Fonts';
@@ -154,7 +153,7 @@ class SetLocation extends Component {
 
 
           <GooglePlacesAutocomplete
-          placeholder={this.props.session.venueDetails.name}
+          placeholder={this.props.session.venue.description}
           minLength={2} // minimum length of text to search
           autoFocus={false}
           returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype

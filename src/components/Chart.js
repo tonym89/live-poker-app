@@ -257,7 +257,7 @@ export default class Chart extends React.Component {
               <Stop stopColor="#FEFFFF" offset="100%" />
             </LinearGradient>
           </Defs>
-          <Path d={line} fill="transparent" stroke="#367be2" strokeWidth={5} />
+          <Path d={line} fill="transparent" stroke="#274272" strokeWidth={5} />
           <Path d={`${line} L ${width} ${height} L 0 ${height}`} fill="url(#gradient)" />
           <View ref={this.cursor} style={styles.cursor} />
         </Svg>
@@ -266,7 +266,7 @@ export default class Chart extends React.Component {
 
             <View style={{flexDirection: 'row', padding: 10}}>
               <View style={{flex:0.5}}>
-                <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+                <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#DE4150', '#FA7E7E', '#FFA8B0']} style={styles.linearGradient}>
                 <TextInput ref={this.label} style={styles.resultText}/>
                 <TextInput ref={this.xdate} style={styles.dateText}/>
                 </LinearGradient2>
@@ -311,9 +311,9 @@ const styles = StyleSheet.create({
     width: cursorRadius * 2,
     height: cursorRadius * 2,
     borderRadius: cursorRadius,
-    borderColor: '#367be2',
+    borderColor: '#FA7E7E',
     borderWidth: 3,
-    backgroundColor: 'white',
+    backgroundColor: '#FA7E7E',
   },
   label: {
     position: 'absolute',

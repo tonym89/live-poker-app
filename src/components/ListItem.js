@@ -113,19 +113,26 @@ function getTextDate(date) {
    return 'Yesterday'
   }
    return dayOfWeek + ' ' + day + ' ' + monthName;
+
 }
+
 
 
     return (
       <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
-      <View>
+      <View style={{margin: 10, borderWidth: 0.2, borderRadius: 5, shadowColor: '#ccc',
+
+    shadowOpacity: 1,
+    shadowRadius: 5,
+ }}>
+        <View style={{shadowOpacity: 0}}>
         <View style={styles.dateViewStyle}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={styles.timeStyle}> { getTextDate(new Date(sessionstart)) }</Text>
             <Text style={styles.locationStyle}></Text>
           </View>
         </View>
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'row', backgroundColor: 'white', borderBottomLeftRadius: 5, borderBottomRightRadius: 5}}>
         <View style={{flex: 0.7, padding: 4, paddingLeft: 15}}>
 
 
@@ -172,6 +179,8 @@ function getTextDate(date) {
                <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult + '   ': '-$' + Math.abs(netResult) + '   '}</Text>
           </View>
 
+          </View>
+
         </View>
 
       </View>
@@ -185,12 +194,13 @@ const styles = {
     fontSize: 20,
     fontFamily: Fonts.Cabin,
     paddingRight: 15,
-    color: '#030303'
+    color: '#030303',
+    shadowOpacity: 0,
   },
   timeStyle: {
     fontSize: 18,
     paddingLeft: 15,
-    color: '#030303'
+    color: 'white'
   },
   locationStyle: {
     fontSize: 18,
@@ -203,19 +213,24 @@ const styles = {
     fontFamily: Fonts.Cabin,
     fontSize: 20,
     justifyContent: 'center',
-    backgroundColor: '#F7F7F7',
+    backgroundColor: '#274272',
     borderWidth: 0.2,
-    borderColor: 'grey'
+    borderColor: 'grey',
+    shadowOpacity: 0,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
   },
   green: {
     fontSize: 20,
     fontFamily: Fonts.CabinBold,
-    color: 'green'
+    color: 'green',
+    shadowOpacity: 0
   },
   red: {
     fontSize: 20,
     fontFamily: Fonts.CabinBold,
-    color: '#ff0000'
+    color: '#ff0000',
+    shadowOpacity: 0
   },
 };
 
