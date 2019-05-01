@@ -266,7 +266,7 @@ export default class Chart extends React.Component {
 
             <View style={{flexDirection: 'row', padding: 10}}>
               <View style={{flex:0.5}}>
-                <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#DE4150', '#FA7E7E', '#FFA8B0']} style={styles.linearGradient}>
+                <LinearGradient2 start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
                 <TextInput ref={this.label} style={styles.resultText}/>
                 <TextInput ref={this.xdate} style={styles.dateText}/>
                 </LinearGradient2>
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.CabinBold
   },
   dateText: {
-    color: '#98BDF0',
+    color: '#CEFFF8',
     textAlign: 'center',
     fontSize: 14,
     fontFamily: Fonts.CabinBold
