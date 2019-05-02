@@ -327,11 +327,11 @@ class SessionCreate extends Component {
               </KeyboardAwareScrollView>
 
       <CardSection style={ {flex: 0.1, alignItems: 'center', justifyContent: 'center', bottom: 0, backgroundColor: '#FDFDFD' } }>
-      <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
-      <Text style={styles.saveText}>Save Session</Text>
-  </LinearGradient>
-</TouchableOpacity>
+        <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
+          <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+              <Text style={styles.saveText}>Save Session</Text>
+          </LinearGradient>
+        </TouchableOpacity>
       </CardSection>
 
       </View>

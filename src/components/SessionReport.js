@@ -100,7 +100,7 @@ class SessionReport extends Component {
 
         <View style={{flex: 0.4}}>
           <Map data={this.props.session.venueDetails.geometry.location}/>
-          <View style={{flexDirection: 'row', width: 400, backgroundColor: '#13223C', paddingVertical: 6 }}>
+          <View style={{flexDirection: 'row', width: 400, backgroundColor: '#274272', paddingVertical: 6 }}>
             <Text style={styles.venueStyle}>{ venueDetails.name }</Text>
           </View>
         </View>
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     paddingLeft: 15,
     color: 'white',
-    backgroundColor: '#13223C'
+    backgroundColor: '#274272'
   },
   green: {
     fontSize: 28,
