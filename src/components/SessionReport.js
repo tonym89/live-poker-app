@@ -98,64 +98,73 @@ class SessionReport extends Component {
     return(
         <View style={styles.mainViewStyle}>
 
-        <View style={{flex: 0.4}}>
+        <View style={{flex: 0.3}}>
+
+
+
+
+
           <Map data={this.props.session.venueDetails.geometry.location}/>
-          <View style={{flexDirection: 'row', width: 400, backgroundColor: '#274272', paddingVertical: 6 }}>
-            <Text style={styles.venueStyle}>{ venueDetails.name }</Text>
-          </View>
+          <Text style={styles.mapTextStyle}> { venueDetails.name }</Text>
+
+
         </View>
 
-        <View style={{flex: 0.6}}>
+        <View style={{flex: 0.7}}>
+
+        <View style={styles.detailsCard}>
+
+        <View style={styles.venueBoxStyle}>
+          <Text style={styles.dateStyle}>{ getTextDate(new Date(sessionstart)) }</Text>
 
 
+        </View>
+
+        <View style={styles.detailsBoxStyle}>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult: '-$' + Math.abs(netResult)}</Text>
         </View>
 
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={styles.timeStyle}>Date:</Text>
-          <Text style={styles.locationStyle}>{ getTextDate(new Date(sessionstart)) }</Text>
-        </View>
 
-
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.sessionDetailsRow}>
             <Text style={styles.timeStyle}>Buy in:</Text>
             <Text style={styles.locationStyle}>${buyin}</Text>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.sessionDetailsRow}>
             <Text style={styles.timeStyle}>Cashed out:</Text>
             <Text style={styles.locationStyle}>${cashedout}</Text>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.timeStyle}>Result:</Text>
-            <Text style={styles.locationStyle}>{( netResult>= 0) ? '+$' + netResult: '-$' + Math.abs(netResult)}</Text>
-          </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.sessionDetailsRow}>
             <Text style={styles.timeStyle}>Stakes:</Text>
             <Text style={styles.locationStyle}>${smallblind}/{bigblind}</Text>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.sessionDetailsRow}>
             <Text style={styles.timeStyle}>Session length:</Text>
             <Text style={styles.locationStyle}>{msToTimeWords(new Date(differenceInMs))}</Text>
           </View>
 
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={styles.sessionDetailsRow}>
             <Text style={styles.timeStyle}>$/hour:</Text>
             <Text style={styles.locationStyle}>{( hourly>= 0) ? '+$' + hourly: '-$' + Math.abs(hourly)}</Text>
           </View>
 
-          <CardSection style={ {flex: 0.1, alignItems: 'center', justifyContent: 'center', bottom: 0, backgroundColor: '#FDFDFD' } }>
+          <View style={{alignItems: 'center'}}>
             <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#DE4150', '#FF6978', '#DE4150']} style={styles.linearGradient}>
                   <Text style={styles.saveText}>Edit Session</Text>
               </LinearGradient>
             </TouchableOpacity>
-          </CardSection>
+          </View>
+
+
+          </View>
+
+          </View>
 
           </View>
 
@@ -170,23 +179,61 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#FDFDFD',
   },
+  sessionDetailsRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  borderBottomWidth: 0.2,
+  borderColor: '#F1F2F4',
+  padding: 5
+  },
   timeStyle: {
-    fontSize: 18,
+    fontSize: 20,
     paddingLeft: 15,
     color: '#030303'
   },
   locationStyle: {
-    fontSize: 18,
+    fontSize: 20,
     paddingLeft: 15,
     paddingRight: 15,
-    color: '#030303'
+    color: '#030303',
   },
-  venueStyle: {
+  venueBoxStyle: {
+    height: 40,
+    fontFamily: Fonts.Cabin,
+    fontSize: 20,
+    justifyContent: 'space-between',
+    backgroundColor: '#274272',
+    borderWidth: 0.2,
+    borderColor: 'grey',
+    shadowOpacity: 0,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    justifyContent: 'center',
+  },
+  detailsBoxStyle: {
+    paddingVertical: 20,
+    fontFamily: Fonts.Cabin,
+    fontSize: 20,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderWidth: 0.2,
+    borderColor: 'grey',
+    shadowOpacity: 0,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+  },
+  dateStyle: {
+      fontSize: 18,
+      paddingLeft: 15,
+      color: '#FCFDFC'
+  },
+  mapTextStyle: {
     fontFamily: Fonts.CabinBold,
     fontSize: 24,
-    paddingLeft: 15,
-    color: 'white',
-    backgroundColor: '#274272'
+    padding: 10,
+    color: '#030303',
+    backgroundColor: '#FDFDFD',
+    textAlign: 'center'
   },
   green: {
     fontSize: 28,
@@ -198,7 +245,43 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.CabinBold,
     color: '#ff0000'
   },
-
+  mapCard: {
+    margin: 10,
+    borderRadius: 10,
+    shadowColor: '#ccc',
+    shadowOpacity: 1,
+    shadowRadius: 5,
+  },
+  detailsCard: {
+    margin: 10,
+    marginTop: 90,
+    borderWidth: 0.2,
+    borderRadius: 5,
+    shadowColor: '#ccc',
+    shadowOpacity: 1,
+    shadowRadius: 5,
+  },
+  saveButton: {
+    width: 180,
+    height: 50,
+    borderRadius: 15,
+    justifyContent: 'center',
+  },
+  linearGradient: {
+   flex: 1,
+   paddingLeft: 15,
+   paddingRight: 15,
+   borderRadius: 10,
+   justifyContent: 'center',
+   alignItems: 'center',
+   margin: 10
+ },
+ saveText: {
+   fontFamily: Fonts.CabinBold,
+   fontSize: 22,
+   color: '#FCFDFC',
+   textAlign: 'center',
+ },
 });
 
 export default SessionReport;

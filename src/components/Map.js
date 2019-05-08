@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import GoogleStaticMap from './GoogleStaticMap';
 
 
 
 
+const { width } = Dimensions.get('window');
+const mapWidth = width;
 
 
 class Map extends Component {
@@ -20,7 +22,7 @@ class Map extends Component {
           latitude={this.props.data.lat.toString()}
           longitude={this.props.data.lng.toString()}
           zoom={15}
-          size={{ width: 400, height: 240 }}
+          size={{ width: mapWidth, height: 240 }}
           apiKey={'AIzaSyDkIWixhcpMisJ3Ua73U1G5HcEsEq-mzQs'}
       />
     );

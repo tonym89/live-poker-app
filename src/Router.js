@@ -11,7 +11,7 @@ import EditLocation from './components/EditLocation';
 
 const RouterComponent = () => {
   return (
-    <Router navigationBarStyle={{ backgroundColor: '#274272', color: 'white' }} titleStyle={{color: '#FCFDFC'}} >
+    <Router navigationBarStyle={{ backgroundColor: '#274272', color: '#FCFDFC', }} titleStyle={{color: '#FCFDFC'}} tintColor='#FCFDFC' >
       <Scene key="root" hideNavBar>
 
         <Scene key="auth">

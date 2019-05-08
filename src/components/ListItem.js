@@ -200,7 +200,7 @@ const styles = {
   timeStyle: {
     fontSize: 18,
     paddingLeft: 15,
-    color: 'white'
+    color: '#FCFDFC'
   },
   locationStyle: {
     fontSize: 18,
