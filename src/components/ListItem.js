@@ -9,7 +9,7 @@ import { Fonts } from '../utils/Fonts';
 
 class ListItem extends Component {
   onRowPress() {
-    Actions.sessionReport({ session: this.props.session });
+    Actions.sessionReport({ session: this.props.session, title: this.props.session.venueDetails.name });
   };
 
   render() {
