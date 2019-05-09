@@ -2,7 +2,7 @@ import React from 'react'
 import Svg, { G, Path, Circle } from 'react-native-svg'
 
 const ProfitsSvgLarge = props => (
-  <Svg viewBox="0 0 512 512" width={35} height={35} {...props}>
+  <Svg viewBox="0 0 512 512" width={20} height={20} {...props}>
     <G fill="#444966">
       <Path d="M150.561 144.549a7.548 7.548 0 0 1-3.86-1.06L52.164 87.532a7.593 7.593 0 1 1 7.735-13.069l94.537 55.957a7.593 7.593 0 0 1-3.875 14.129z" />
       <Path d="M150.568 144.548H47.842a7.593 7.593 0 1 1 0-15.186h102.727a7.593 7.593 0 0 1-.001 15.186z" />

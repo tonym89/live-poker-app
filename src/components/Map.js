@@ -5,8 +5,16 @@ import GoogleStaticMap from './GoogleStaticMap';
 
 
 
-const { width } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 const mapWidth = width;
+
+let mapHeight;
+
+if (height > 800) {
+   mapHeight = 270
+} else {
+   mapHeight = 220
+}
 
 
 class Map extends Component {
@@ -22,7 +30,7 @@ class Map extends Component {
           latitude={this.props.data.lat.toString()}
           longitude={this.props.data.lng.toString()}
           zoom={15}
-          size={{ width: mapWidth, height: 240 }}
+          size={{ width: mapWidth, height: mapHeight }}
           apiKey={'AIzaSyDkIWixhcpMisJ3Ua73U1G5HcEsEq-mzQs'}
       />
     );

@@ -2,7 +2,7 @@ import React from 'react'
 import Svg, { Path, Circle, G } from 'react-native-svg'
 
 const ChipsSvgLarge = props => (
-  <Svg width={40} height={40} viewBox="0 0 512 512" {...props}>
+  <Svg width={20} height={20} viewBox="0 0 512 512" {...props}>
     <Path
       fill="#5c87bd"
       d="M305.009 120.999H179.994l-20.001 22.5 20.001 30h125.015z"

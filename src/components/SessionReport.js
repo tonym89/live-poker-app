@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Map } from './Map';
 import { Fonts } from '../utils/Fonts';
 import { CardSection } from './common';
+
+const { height, width } = Dimensions.get('window');
+const detailsHeight = height / 3
 
 const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
 const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818, lng: 2.2940881 } }};
@@ -102,7 +105,7 @@ class SessionReport extends Component {
     return(
         <View style={styles.mainViewStyle}>
 
-        <View style={{flex: 0.3}}>
+        <View style={{flex: 0.4}}>
 
 
 
@@ -113,7 +116,7 @@ class SessionReport extends Component {
 
         </View>
 
-        <View style={{flex: 0.7}}>
+        <View style={{flex: 0.6}}>
 
         <View style={styles.detailsCard}>
 
@@ -257,7 +260,7 @@ const styles = StyleSheet.create({
   },
   detailsCard: {
     margin: 10,
-    marginTop: 50,
+    marginTop: 0,
     borderWidth: 0.2,
     borderRadius: 5,
     shadowColor: '#ccc',

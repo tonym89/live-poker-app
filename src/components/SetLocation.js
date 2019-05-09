@@ -11,7 +11,10 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { sessionUpdate, sessionCreate } from '../actions';
 import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg, EarthSvgSmall } from './common';
 import { Fonts } from '../utils/Fonts';
-const { width } = Dimensions.get('window');
+
+const { height, width } = Dimensions.get('window');
+const detailsHeight = height / 4
+
 
 class SetLocation extends Component {
   constructor() {
@@ -387,7 +390,7 @@ const styles = StyleSheet.create({
    shadowOpacity: 0,
    borderBottomLeftRadius: 5,
    borderBottomRightRadius: 5,
-   height: 200
+   height: detailsHeight
  },
  timeBoxStyle: {
    paddingVertical: 20,
@@ -400,7 +403,7 @@ const styles = StyleSheet.create({
    shadowOpacity: 0,
    borderBottomLeftRadius: 5,
    borderBottomRightRadius: 5,
-   height: 200
+   height: detailsHeight
  },
  detailsCard: {
    margin: 10,
