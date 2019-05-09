@@ -16,7 +16,11 @@ class SessionReport extends Component {
     Actions.editLocation({ session: this.props.session });
   };
 
+  componentDidMount(){
+  }
+
   render() {
+
     const { time } = this.props.session;
     const { cashedout } = this.props.session;
     const { buyin } = this.props.session;
@@ -105,7 +109,6 @@ class SessionReport extends Component {
 
 
           <Map data={this.props.session.venueDetails.geometry.location}/>
-          <Text style={styles.mapTextStyle}> { venueDetails.name }</Text>
 
 
         </View>
@@ -254,7 +257,7 @@ const styles = StyleSheet.create({
   },
   detailsCard: {
     margin: 10,
-    marginTop: 90,
+    marginTop: 50,
     borderWidth: 0.2,
     borderRadius: 5,
     shadowColor: '#ccc',

@@ -2,7 +2,7 @@ import React from 'react'
 import Svg, { Path, Circle, G } from 'react-native-svg'
 
 const TimerSvgLarge = props => (
-  <Svg viewBox="0 0 511.992 511.992" width={35} height={35} {...props}>
+  <Svg viewBox="0 0 511.992 511.992" width={20} height={20} {...props}>
     <Path fill="#d5f5fb" d="M275.641 68.262h68.414v39.476h-68.414z" />
     <Path
       d="M273.848 68.262h72c13.255 0 24-10.745 24-24s-10.745-24-24-24h-72c-13.255 0-24 10.745-24 24s10.745 24 24 24z"

@@ -29,9 +29,9 @@ const RouterComponent = () => {
           />
         <Scene key="sessionCreate" component={SessionCreate} title="Add Session" />
 
-        <Scene key="sessionReport" component={SessionReport} title="Session Report" />
+        <Scene key="sessionReport" component={SessionReport} title="Session Report"/>
 
-        <Scene key="setLocation" component={SetLocation} title="Set Location" />
+        <Scene key="setLocation" component={SetLocation} title="Add Session" />
 
         <Scene key="editLocation" component={EditLocation} title="Edit Session" />
 
