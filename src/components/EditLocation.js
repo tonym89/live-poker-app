@@ -9,9 +9,11 @@ import Modal from 'react-native-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { sessionUpdate, sessionCreate } from '../actions';
-import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg } from './common';
+import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg, EarthSvgSmall } from './common';
 import { Fonts } from '../utils/Fonts';
-const { width } = Dimensions.get('window');
+
+const { height, width } = Dimensions.get('window');
+const detailsHeight = height / 4
 
 class SetLocation extends Component {
   constructor() {
@@ -142,17 +144,18 @@ class SetLocation extends Component {
 
       <View style={styles.mainViewStyle}>
 
-      <View style={{flex: 0.4}}>
-      <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 10, marginTop: 10}}>
+      <View style={{flex: 0.3}}>
+      <View style={styles.detailsCard}>
 
-              <Text style={styles.headerText}>Location  </Text>
-        <EarthSvg />
+      <View style={styles.venueBoxStyle}>
+        <Text style={styles.dateStyle}>Location  </Text>
+        <EarthSvgSmall />
+
       </View>
 
-
-
-
-          <GooglePlacesAutocomplete
+      <View style={styles.detailsBoxStyle}>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <GooglePlacesAutocomplete
           placeholder={this.props.session.venue.description}
           minLength={2} // minimum length of text to search
           autoFocus={false}
@@ -172,8 +175,7 @@ class SetLocation extends Component {
           }}
 
           getDefaultValue={() => ''}
-
-          query={{
+      query={{
           // available options: https://developers.google.com/places/web-service/autocomplete
           key: 'AIzaSyDkIWixhcpMisJ3Ua73U1G5HcEsEq-mzQs',
           language: 'en', // language of the results
@@ -181,71 +183,95 @@ class SetLocation extends Component {
           }}
           styles={{
           container: {
+          width: 300,
+          shadowOpacity: 0,
           flex: 0,
           marginLeft: 10,
-          marginRight: 10
+          marginRight: 10,
+          top: 0,
           },
           listView: {
             height: 100
-          }
+          },
+          textInputContainer: {
+          backgroundColor: '#FA7E7E',
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+          borderRadius: 5
+          },
 
           }}
           />
+      </View>
+
+      </View>
+      </View>
+
+      <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 10, shadowOpacity: 0}}>
+
+
+      </View>
+
+
+
+
           </View>
 
-          <View style={{flex: 0.7, justifyContent: 'center'}}>
+
+          <View style={{flex: 0.8, justifyContent: 'center'}}>
+          <View style={styles.detailsCard}>
+
+          <View style={styles.venueBoxStyle}>
+            <Text style={styles.dateStyle}>Time  </Text>
+            <TimerSvgLarge />
+
+          </View>
+
+          <View style={styles.timeBoxStyle}>
 
 
-            <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: 10}}>
-              <Text style={styles.headerText}>Time </Text>
-              <TimerSvgLarge />
-            </View>
+          <CardSection style={{flexDirection: 'row'}}>
+
+            <TouchableOpacity style={styles.startButton} onPress={this.showPicker}>
+                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
+                    <Text style={styles.startText}>Start</Text>
+                    <Text style={styles.dateText}>{getFormattedDate(new Date(this.state.startTime))}</Text>
+                </LinearGradient>
+            </TouchableOpacity>
+
+            <DateTimePicker
+               isVisible={this.state.isStartVisible}
+               onConfirm={this.startDateHandler}
+               onCancel={this.hidePicker}
+               mode={'datetime'}
+            />
+
+
+            <TouchableOpacity style={styles.endButton} onPress={this.showEndPicker}>
+                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#F4873D', '#EC165A']} style={styles.linearGradient}>
+                    <Text style={styles.startText}>Finish</Text>
+                    <Text style={styles.dateText}>{getFormattedDate(new Date(this.state.endTime))}</Text>
+                </LinearGradient>
+            </TouchableOpacity>
+
+            <DateTimePicker
+               isVisible={this.state.isEndVisible}
+               onConfirm={this.handleEndPicker}
+               onCancel={this.hideEndPicker}
+               mode={'datetime'}
+            />
+          </CardSection>
+
+          <CardSection style={{justifyContent: 'center'}}>
+            <Text style={styles.timePlayedText}>{msToTime(new Date(differenceInMs))} played</Text>
+          </CardSection>
+
+          </View>
+          </View>
 
 
 
 
-          <View style={{flex: 0.5}}>
-            <CardSection style={{flexDirection: 'row'}}>
-
-              <TouchableOpacity style={styles.startButton} onPress={this.showPicker}>
-                  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
-                      <Text style={styles.startText}>Start</Text>
-                      <Text style={styles.dateText}>{getFormattedDate(new Date(this.state.startTime))}</Text>
-                  </LinearGradient>
-              </TouchableOpacity>
-
-              <DateTimePicker
-                 isVisible={this.state.isStartVisible}
-                 onConfirm={this.startDateHandler}
-                 onCancel={this.hidePicker}
-                 mode={'datetime'}
-              />
-
-
-              <TouchableOpacity style={styles.endButton} onPress={this.showEndPicker}>
-                  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#F4873D', '#EC165A']} style={styles.linearGradient}>
-                      <Text style={styles.startText}>Finish</Text>
-                      <Text style={styles.dateText}>{getFormattedDate(new Date(this.state.endTime))}</Text>
-                  </LinearGradient>
-              </TouchableOpacity>
-
-              <DateTimePicker
-                 isVisible={this.state.isEndVisible}
-                 onConfirm={this.handleEndPicker}
-                 onCancel={this.hideEndPicker}
-                 mode={'datetime'}
-              />
-            </CardSection>
-
-            </View>
-
-            <View style={{flex: 0.3}}>
-
-              <CardSection style={{justifyContent: 'center'}}>
-                <Text style={styles.timePlayedText}>{msToTime(new Date(differenceInMs))} played</Text>
-              </CardSection>
-
-            </View>
 
             </View>
 
@@ -288,7 +314,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 5,
     position: 'absolute',
-    marginRight: 10,
+    marginRight: 15,
     right: 0
   },
   startText: {
@@ -338,6 +364,68 @@ const styles = StyleSheet.create({
    fontSize: 27,
    color: '#FCFDFC',
    textAlign: 'center',
+ },
+ locationCard: {
+   margin: 10,
+   borderWidth: 0.2,
+   borderRadius: 5,
+   shadowColor: '#ccc',
+   shadowOpacity: 1,
+   shadowRadius: 5,
+ },
+ venueBoxStyle: {
+   flexDirection: 'row',
+   height: 40,
+   fontFamily: Fonts.Cabin,
+   fontSize: 20,
+   justifyContent: 'center',
+   alignItems: 'center',
+   backgroundColor: '#274272',
+   borderWidth: 0.2,
+   borderColor: 'grey',
+   shadowOpacity: 0,
+   borderTopLeftRadius: 5,
+   borderTopRightRadius: 5,
+ },
+ detailsBoxStyle: {
+   paddingVertical: 20,
+   fontFamily: Fonts.Cabin,
+   fontSize: 20,
+   justifyContent: 'flex-start',
+   alignItems: 'center',
+   backgroundColor: 'white',
+   borderWidth: 0.2,
+   borderColor: 'grey',
+   shadowOpacity: 0,
+   borderBottomLeftRadius: 5,
+   borderBottomRightRadius: 5,
+   height: detailsHeight
+ },
+ timeBoxStyle: {
+   paddingVertical: 20,
+   fontFamily: Fonts.Cabin,
+   fontSize: 20,
+   justifyContent: 'space-between',
+   backgroundColor: 'white',
+   borderWidth: 0.2,
+   borderColor: 'grey',
+   shadowOpacity: 0,
+   borderBottomLeftRadius: 5,
+   borderBottomRightRadius: 5,
+   height: detailsHeight
+ },
+ detailsCard: {
+   margin: 10,
+   marginTop: 20,
+   borderWidth: 0.2,
+   borderRadius: 5,
+   shadowColor: '#ccc',
+   shadowOpacity: 1,
+   shadowRadius: 5,
+ },
+ dateStyle: {
+     fontSize: 20,
+     color: '#FCFDFC'
  },
 });
 
