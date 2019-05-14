@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, StatusBar } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import SessionList from './components/SessionList';
@@ -11,37 +12,39 @@ import EditLocation from './components/EditLocation';
 
 const RouterComponent = () => {
   return (
-    <Router navigationBarStyle={{ backgroundColor: '#274272', color: '#FCFDFC', }} titleStyle={{color: '#FCFDFC'}} tintColor='#FCFDFC' >
-      <Scene key="root" hideNavBar>
+    <View style={{flex: 1}}>
+      <StatusBar barStyle="light-content" />
+        <Router navigationBarStyle={{ backgroundColor: '#274272', color: '#FCFDFC', }} titleStyle={{color: '#FCFDFC'}} tintColor='#FCFDFC' >
+          <Scene key="root" hideNavBar>
 
-        <Scene key="auth">
-          <Scene key="login" component={LoginForm} title="Please Login" initial />
-        </Scene>
+            <Scene key="auth">
+              <Scene key="login" component={LoginForm} title="Please Login" initial />
+            </Scene>
 
-        <Scene key="main">
-          <Scene
-          onRight={() => Actions.setLocation()}
-          rightTitle="Add"
-          key="sessionList"
-          component={SessionList}
-          title="Sessions"
-          initial
-          />
-        <Scene key="sessionCreate" component={SessionCreate} title="Add Session" />
+            <Scene key="main">
+              <Scene
+              onRight={() => Actions.setLocation()}
+              rightTitle="Add"
+              key="sessionList"
+              component={SessionList}
+              title="Sessions"
+              initial
+              />
+            <Scene key="sessionCreate" component={SessionCreate} title="Add Session" />
 
-        <Scene key="sessionReport" component={SessionReport} title="Session Report"/>
+            <Scene key="sessionReport" component={SessionReport} title="Session Report" />
 
-        <Scene key="setLocation" component={SetLocation} title="Add Session" />
+            <Scene key="setLocation" component={SetLocation} title="Add Session" />
 
-        <Scene key="editLocation" component={EditLocation} title="Edit Session" />
+            <Scene key="editLocation" component={EditLocation} title="Edit Session" />
 
-        <Scene key="sessionEdit" component={SessionEdit} title="Edit Session" />
-        </Scene>
+            <Scene key="sessionEdit" component={SessionEdit} title="Edit Session" />
+            </Scene>
 
+          </Scene>
+        </Router>
 
-
-      </Scene>
-    </Router>
+</View>
   );
 };
 
