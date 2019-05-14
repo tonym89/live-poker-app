@@ -213,7 +213,7 @@ const styles = {
     fontFamily: Fonts.Cabin,
     fontSize: 20,
     justifyContent: 'center',
-    backgroundColor: '#274272',
+    backgroundColor: '#3B5889',
     borderWidth: 0.2,
     borderColor: 'grey',
     shadowOpacity: 0,

@@ -1,14 +1,16 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, ScrollView } from 'react-native';
 import { sessionsFetch } from '../actions';
 import ListItem from './ListItem';
 import HomeGraph from './HomeGraph';
 import Chart from './Chart';
+import { Fonts } from '../utils/Fonts';
+import LinearGradient from 'react-native-linear-gradient';
 
 
-class SessionList extends Component {
+class Statistics extends Component {
 
 
   componentDidMount() {
@@ -53,6 +55,14 @@ class SessionList extends Component {
     return cumulativeData;
   }
 
+  function totalHoursPlayed(sessionsData) {
+let totalHours = '';
+for (let i=0; i<sessionsData.length; i+=1) {
+ graphData.push({x: new Date(sessionsData[i].sessionstart), y: parseFloat(sessionsData[i].cashedout) - parseFloat(sessionsData[i].buyin)});
+}
+return graphData;
+}
+
 
 
     console.log(graphData);
@@ -85,6 +95,8 @@ class SessionList extends Component {
 
       const cumulativeData = createCumulativeData(graphData)
 
+      const totalResults = cumulativeData[(cumulativeData.length - 1)].y
+
     const dates = testData.map(a => a.x);
 
 var maxDate=new Date(Math.max.apply(null,dates));
@@ -95,11 +107,54 @@ const ymax = Math.max.apply(null, results);
 
     return (
       <View style={styles.mainViewStyle}>
-      { this.props && this.props.sessions[0] &&
-     <Chart data={cumulativeData} style={styles.homeGraphStyle}/>
-     }
-      <Text> HELLO HELLO HELLO </TEXT>
-            </View>
+      <View style={styles.totalResultsCard}>
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
+        <Text style={styles.headingText}>Total Profit:</Text>
+        <Text style={styles.resultText}>+${totalResults}</Text>
+        </LinearGradient>
+      </View>
+
+
+      <ScrollView style={{flex: 0.8}}>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Net Profit</Text>
+          <Text style={styles.statTextStyle}>+${totalResults}</Text>
+        </View>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Total Hours Played</Text>
+          <Text style={styles.statTextStyle}>150 hours</Text>
+        </View>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>$/Hour</Text>
+          <Text style={styles.statTextStyle}>$40</Text>
+        </View>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Big Blinds/Hour</Text>
+          <Text style={styles.statTextStyle}>4.2</Text>
+        </View>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Sessions Played</Text>
+          <Text style={styles.statTextStyle}>15</Text>
+        </View>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Winning Sessions</Text>
+          <Text style={styles.statTextStyle}>10 / 66%</Text>
+        </View>
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Average Session Length</Text>
+          <Text style={styles.statTextStyle}>5 hours</Text>
+        </View>
+
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Average Session Result</Text>
+          <Text style={styles.statTextStyle}>+$550</Text>
+        </View>
+
+      </ScrollView>
+
+
+
+      </View>
     );
   };
 }
@@ -108,13 +163,53 @@ const styles = {
   mainViewStyle: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white'
+    backgroundColor: '#274272',
+    color: '#FCFDFC'
   },
-  homeGraphStyle: {
-
+  totalResultsCard: {
+    flex: 0.2,
+    flexDirection: 'column',
+    margin: 20,
+    padding: 5,
+    borderRadius: 10,
+    alignItems: 'center'
+  },
+  linearGradient: {
+    borderRadius: 5,
+    width: 200,
+    padding: 5
+  },
+  resultText: {
+    color: '#FCFDFC',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: Fonts.CabinBold,
+    padding: 3
+  },
+  headingText: {
+    color: '#FCFDFC',
+    textAlign: 'center',
+    fontSize: 24,
+    fontFamily: Fonts.CabinBold
   },
   sessionsListStyle:{
-
+  },
+  statSection:{
+    flexDirection: 'row',
+    height: 50,
+    borderBottomWidth: 0.5,
+    color: 'white',
+    borderColor: '#274272',
+    backgroundColor: '#3B5889',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  statTextStyle: {
+    color: '#FCFDFC',
+    fontFamily: Fonts.Cabin,
+    fontSize: 18
   }
 }
 
@@ -125,4 +220,4 @@ const mapStateToProps = state => {
   return { sessions };
 }
 
-export default connect(mapStateToProps, { sessionsFetch })(SessionList);
+export default connect(mapStateToProps, { sessionsFetch })(Statistics);

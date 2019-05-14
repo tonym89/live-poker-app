@@ -46,7 +46,7 @@ const d3 = {
   shape,
 };
 
-const height = 250;
+const height = 350;
 const { width } = Dimensions.get('window');
 const verticalPadding = 45;
 const cursorRadius = 10;
@@ -120,7 +120,7 @@ function getTextDate(date) {
    return ' ' + day + ' ' + monthName + ' ' + year;
 }
 
-export default class Chart extends React.Component {
+export default class StatisticsChart extends React.Component {
   constructor(props){
     super();
     this.state={
@@ -250,16 +250,29 @@ export default class Chart extends React.Component {
     return (
       <View style={styles.container}>
         <Svg {...{ width, height }}>
+
+
           <Defs>
             <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
-              <Stop stopColor="#CDE3F8" offset="0%" />
-              <Stop stopColor="#eef6fd" offset="80%" />
-              <Stop stopColor="#FEFFFF" offset="100%" />
+              <Stop stopColor="#274272" offset="0%" />
+              <Stop stopColor="#274272" offset="80%" />
+              <Stop stopColor="#274272" offset="100%" />
             </LinearGradient>
           </Defs>
-          <Path d={line} fill="transparent" stroke="#274272" strokeWidth={5} />
+          <Path d={line} fill="transparent" stroke="#3B5889" strokeWidth={5} />
           <Path d={`${line} L ${width} ${height} L 0 ${height}`} fill="url(#gradient)" />
           <View ref={this.cursor} style={styles.cursor} />
+          <G y={height}>
+            {/* bottom axis */}
+            <Line
+              x1="0"
+              y1="0"
+              x2={width}
+              y2={width}
+              stroke='white'
+              strokeWidth="0.5"
+            />
+          </G>
         </Svg>
         <Animated.View style={[styles.label]}>
 
