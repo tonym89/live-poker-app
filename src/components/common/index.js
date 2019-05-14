@@ -17,3 +17,7 @@ export * from './EarthSvg';
 export * from './ProfitsSvgLarge';
 export * from './ChipsSvgLarge';
 export * from './EarthSvgSmall';
+export * from './TabIcon.js';
+export * from './MonoSessionsSvg.js';
+export * from './SettingsSvg.js';
+export * from './GraphsSvg.js';
