@@ -87,15 +87,16 @@ const RouterComponent = () => {
           </Scene>
         <Scene key="sessionCreate" component={SessionCreate} title="Add Session" />
 
-        <Scene key="sessionReport" component={SessionReport} title="Session Report"/>
+
+            <Scene key="sessionReport" component={SessionReport} title="Session Report" />
 
 
         <Scene key="setLocation" component={SetLocation} title="Add Session" />
 
-        <Scene key="editLocation" component={EditLocation} title="Edit Session" />
+            <Scene key="editLocation" component={EditLocation} title="Edit Session" />
 
-        <Scene key="sessionEdit" component={SessionEdit} title="Edit Session" />
-        </Scene>
+            <Scene key="sessionEdit" component={SessionEdit} title="Edit Session" />
+            </Scene>
 
       </Scene>
     </Router>
