@@ -107,6 +107,7 @@ const ymax = Math.max.apply(null, results);
 
     return (
       <View style={styles.mainViewStyle}>
+      
       <View style={styles.totalResultsCard}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
         <Text style={styles.headingText}>Total Profit:</Text>
