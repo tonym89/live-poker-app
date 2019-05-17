@@ -1,14 +1,29 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, Button, Picker, PickerItem } from 'react-native';
 import { sessionsFetch } from '../actions';
 import ListItem from './ListItem';
 import HomeGraph from './HomeGraph';
 import StatisticsChart from './StatisticsChart';
+import StatisticsChartLinear from './StatisticsChartLinear';
+import StatisticsChartStepBefore from './StatisticsChartStepBefore';
+import StatisticsChartLineGraph from './StatisticsChartLineGraph';
 
 
 class StatisticsGraphPage extends Component {
+  constructor(props){
+    super();
+    this.state={
+      graphType: "curveBasis"
+    }
+  }
+
+  onButtonPress = () => {
+    this.setState({
+      graphType: "curveLinear"
+    });
+  }
 
 
   componentDidMount() {
@@ -95,9 +110,51 @@ const ymax = Math.max.apply(null, results);
 
     return (
       <View style={styles.mainViewStyle}>
-      { this.props && this.props.sessions[0] &&
+
+
+      { this.props && this.props.sessions[0] && this.state.graphType==="curveBasis" &&
      <StatisticsChart data={cumulativeData} style={styles.homeGraphStyle}/>
      }
+
+     { this.props && this.props.sessions[0] && this.state.graphType==="curveLinear" &&
+    <StatisticsChartLinear data={cumulativeData} style={styles.homeGraphStyle}/>
+    }
+
+
+    { this.props && this.props.sessions[0] && this.state.graphType==="curveStepBefore" &&
+   <StatisticsChartStepBefore data={cumulativeData} style={styles.homeGraphStyle}/>
+    }
+
+     { this.props && this.props.sessions[0] && this.state.graphType==="svgLineGraph" &&
+    <StatisticsChartLineGraph data={cumulativeData} style={styles.homeGraphStyle}/>
+    }
+
+    <View style={{flexDirection: 'column', marginTop: 50}}>
+      <View style={{flexDirection: 'row'}}>
+        <Text> Curve </Text>
+        <Text> Step </Text>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Text> Linear </Text>
+        <Text> Traditional </Text>
+      </View>
+    </View>
+
+          <Text style={{color:"#FCFDFC", marginTop: 120}}>Graph Type</Text>
+
+          <Picker
+            selectedValue={this.state.graphType}
+            onValueChange={(itemValue, itemIndex) =>
+                    this.setState({graphType: itemValue})
+                  }
+            style={{width:'80%', color: "white"}}
+            itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+          >
+            <Picker.Item label="Curve" value='curveBasis' />
+            <Picker.Item label="Linear" value="curveLinear" />
+            <Picker.Item label="Step" value="curveStepBefore" />
+            <Picker.Item label="Line Graph" value="svgLineGraph" />
+          </Picker>
 
       </View>
     );
@@ -108,7 +165,9 @@ const styles = {
   mainViewStyle: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#274272'
+    backgroundColor: '#274272',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   },
   homeGraphStyle: {
 

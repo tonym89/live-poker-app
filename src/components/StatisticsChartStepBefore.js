@@ -122,7 +122,7 @@ function getTextDate(date) {
    return ' ' + day + ' ' + monthName + ' ' + year;
 }
 
-export default class StatisticsChart extends React.Component {
+export default class StatisticsChartStepBefore extends React.Component {
   constructor(props){
     super();
     this.state={
@@ -198,7 +198,7 @@ export default class StatisticsChart extends React.Component {
     this.line = d3.shape.line()
       .x(d => scaleX(d.x))
       .y(d => this.scaleY(d.y))
-      .curve(d3.shape.curveBasis)(data);
+      .curve(d3.shape.curveStepBefore)(data);
     this.properties = path.svgPathProperties(this.line);
     this.lineLength = this.properties.getTotalLength();
     this.setState({ ready: true }, () => {
@@ -229,7 +229,7 @@ export default class StatisticsChart extends React.Component {
             this.line = d3.shape.line()
               .x(d => scaleX(d.x))
               .y(d => this.scaleY(d.y))
-              .curve(d3.shape.curveBasis)(data);
+              .curve(d3.shape.curveStepBefore)(data);
             this.properties = path.svgPathProperties(this.line);
             this.lineLength = this.properties.getTotalLength();
             this.setState({ ready: true }, () => {
