@@ -30,7 +30,7 @@ import LinearGradient2 from 'react-native-linear-gradient';
 
 import React, { Component } from 'react';
 import {
- StyleSheet, View, SafeAreaView, Dimensions, Animated, TextInput, Button, Text as TextNormal
+ StyleSheet, View, SafeAreaView, Dimensions, Animated, TextInput,
 } from 'react-native';
 import * as path from 'svg-path-properties';
 import * as shape from 'd3-shape';
@@ -48,11 +48,9 @@ const d3 = {
 
 const height = 275;
 const { width } = Dimensions.get('window');
-const graphWidth = width - 30;
-const containerWidth = width - 10;
 const verticalPadding = 45;
 const cursorRadius = 10;
-const labelWidth = graphWidth;
+const labelWidth = width;
 
 function getLabelResult(date, testData){
   let result = ''
@@ -122,14 +120,13 @@ function getTextDate(date) {
    return ' ' + day + ' ' + monthName + ' ' + year;
 }
 
-export default class StatisticsChartLinear extends React.Component {
+export default class Chart extends React.Component {
   constructor(props){
     super();
     this.state={
       data: [],
       x: new Animated.Value(0),
       ready: false,
-      curveType: "curveBasis"
     }
   }
 
@@ -147,9 +144,6 @@ export default class StatisticsChartLinear extends React.Component {
   xdate = React.createRef();
 
 
-
-
-
   moveCursor(value) {
 
       const { data } = this.props;
@@ -160,7 +154,7 @@ export default class StatisticsChartLinear extends React.Component {
       const yMax = Math.max.apply(null, results);
       const yMin = Math.min.apply(null, results);
 
-    const scaleX = scaleTime().domain([minDate, maxDate]).range([0, graphWidth]);
+    const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
     const { x, y } = this.properties.getPointAtLength(this.lineLength - value);
     if (this.cursor.current) {
       this.cursor.current.setNativeProps({ top: y - cursorRadius, left: x - cursorRadius });
@@ -191,8 +185,7 @@ export default class StatisticsChartLinear extends React.Component {
     const yMax = Math.max.apply(null, results);
     const yMin = Math.min.apply(null, results);
 
-
-    const scaleX = scaleTime().domain([minDate, maxDate]).range([0, graphWidth]);
+    const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
     this.scaleY = scaleLinear().domain([yMin, yMax]).range([height - verticalPadding, verticalPadding]);
     this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range(createLabelData(data));
     this.line = d3.shape.line()
@@ -213,7 +206,7 @@ export default class StatisticsChartLinear extends React.Component {
         if(nextProps.data !== this.props.data){
             this.setState({data:nextProps.data});
             const { data } = this.props;
-              const curveStyle = this.state.curveType;
+
                     console.log(createLabelData(data));
 
             const dates = data.map(a => a.x);
@@ -223,7 +216,7 @@ export default class StatisticsChartLinear extends React.Component {
             const yMax = Math.max.apply(null, results);
             const yMin = Math.min.apply(null, results);
 
-            const scaleX = scaleTime().domain([minDate, maxDate]).range([0, graphWidth]);
+            const scaleX = scaleTime().domain([minDate, maxDate]).range([0, width]);
             this.scaleY = scaleLinear().domain([yMin, yMax]).range([height - verticalPadding, verticalPadding]);
             this.scaleLabel = scaleQuantile().domain([yMin, yMax]).range(createLabelData(data));
             this.line = d3.shape.line()
@@ -249,71 +242,25 @@ export default class StatisticsChartLinear extends React.Component {
     }
     const translateX = x.interpolate({
       inputRange: [0, lineLength],
-      outputRange: [graphWidth - labelWidth, 0],
+      outputRange: [width - labelWidth, 0],
       extrapolate: 'clamp',
     });
 
     console.log("Chart rendering")
     return (
       <View style={styles.container}>
-      <View style={{flexDirection: 'row' }}>
-        <TextNormal style={{color: 'white', marginRight: 3 }}>$</TextNormal>
-        <Svg {...{ width: graphWidth, height: 500 }}>
-
-
-
+        <Svg {...{ width, height }}>
           <Defs>
             <LinearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="gradient">
-              <Stop stopColor="#274272" offset="0%" />
-              <Stop stopColor="#274272" offset="80%" />
-              <Stop stopColor="#274272" offset="100%" />
+              <Stop stopColor="#CDE3F8" offset="0%" />
+              <Stop stopColor="#eef6fd" offset="80%" />
+              <Stop stopColor="#FEFFFF" offset="100%" />
             </LinearGradient>
           </Defs>
-          <Path d={line} fill="transparent" stroke="#3B5889" strokeWidth={5} />
-          <Path d={`${line} L ${graphWidth} ${height} L 0 ${height}`} fill="url(#gradient)" />
+          <Path d={line} fill="transparent" stroke="#274272" strokeWidth={5} />
+          <Path d={`${line} L ${width} ${height} L 0 ${height}`} fill="url(#gradient)" />
           <View ref={this.cursor} style={styles.cursor} />
-
-          <G y={height}>
-            {/* bottom axis */}
-            <Line
-              x1="0"
-              y1="0"
-              x2={graphWidth}
-              y2="0"
-              stroke='white'
-              strokeWidth="0.5"
-            />
-            <Text
-             x={graphWidth}
-             y="20"
-             stroke="white"
-             fill="white"
-             textAnchor="end"
-             >
-             Date
-             </Text>
-
-
-          </G>
-
-          <G y={height}>
-            {/* Vertical axis */}
-            <Line
-              x1="0"
-              y1="0"
-              x2="0"
-              y2={-height}
-              stroke='white'
-              strokeWidth="0.5"
-            />
-
-          </G>
-
-
-
         </Svg>
-
-
         <Animated.View style={[styles.label]}>
 
 
@@ -346,8 +293,6 @@ export default class StatisticsChartLinear extends React.Component {
           )}
           horizontal
         />
-        </View>
-
       </View>
     );
   }
@@ -358,9 +303,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    marginTop: 20,
+    marginTop: 60,
     height,
-    width: containerWidth,
+    width,
   },
   cursor: {
     width: cursorRadius * 2,
@@ -372,8 +317,8 @@ const styles = StyleSheet.create({
   },
   label: {
     position: 'absolute',
-    top: 0,
-    left: 25,
+    top: -60,
+    left: 0,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     width: labelWidth,
