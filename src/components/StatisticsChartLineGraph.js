@@ -24,13 +24,13 @@ export default class StatisticsChartLineGraph extends React.PureComponent {
      const contentInset = { top: 20, bottom: 20 }
         return (
           <View style={{ flexDirection: 'column' }}>
-          <View style={{ height: 275, width: graphWidth, flexDirection: 'row' }}>
+          <View style={{ height: 315, width: graphWidth, flexDirection: 'row' }}>
 
                <YAxis
                    data={ results }
                    contentInset={ contentInset }
                    svg={{
-                       fill: '#FCFDFC',
+                       fill: 'black',
                        fontSize: 10,
                    }}
                    numberOfTicks={ 5 }
@@ -54,7 +54,7 @@ export default class StatisticsChartLineGraph extends React.PureComponent {
            <XAxis
               data={ data }
               svg={{
-                  fill: '#FCFDFC',
+                  fill: 'black',
                   fontSize: 10,
                   rotation: 20,
                   originY: 30,
