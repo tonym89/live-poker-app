@@ -55,13 +55,76 @@ class Statistics extends Component {
     return cumulativeData;
   }
 
-  function totalHoursPlayed(sessionsData) {
-let totalHours = '';
+  function calculateWinningSessions(sessionsData) {
+  let winningSessions = 0;
+  for (let i=0; i<sessionsData.length; i+=1) {
+    if (sessionsData[i].cashedout > sessionsData[i].buyin) {
+      winningSessions += 1;
+    }
+  }
+  return winningSessions
+  }
+
+  const totalWinningSessions = calculateWinningSessions(sessionsData);
+
+  function bigBlindsEarned(sessionsData) {
+  let bigBlinds = 0;
+  let totalSessionEnd = 0;
+  for (let i=0; i<sessionsData.length; i+=1) {
+  bigBlinds = bigBlinds + ((sessionsData[i].cashedout - sessionsData[i].buyin)/sessionsData[i].bigblind)
+  console.log(bigBlinds)
+  }
+  return bigBlinds
+  }
+
+  const totalBigBlinds = bigBlindsEarned(sessionsData)
+
+
+function totalTimePlayed(sessionsData) {
+let totalSessionStart = 0;
+let totalSessionEnd = 0;
 for (let i=0; i<sessionsData.length; i+=1) {
- graphData.push({x: new Date(sessionsData[i].sessionstart), y: parseFloat(sessionsData[i].cashedout) - parseFloat(sessionsData[i].buyin)});
+totalSessionStart = totalSessionStart + new Date(sessionsData[i].sessionstart).getTime()
+totalSessionEnd = totalSessionEnd + new Date(sessionsData[i].sessionend).getTime()
+console.log(totalSessionStart)
 }
-return graphData;
+const totalMsPlayed = (totalSessionEnd - totalSessionStart)
+const milliseconds = parseInt((totalMsPlayed % 1000) / 100);
+const seconds = Math.floor((totalMsPlayed / 1000) % 60);
+const minutes = Math.floor((totalMsPlayed / (1000 * 60)) % 60);
+const hours = Math.floor((totalMsPlayed / (1000 * 60 * 60)) % 24);
+const days = Math.floor((totalMsPlayed / (1000 * 60 * 60 * 24)) );
+const totalhours = ((days * 24) + hours);
+
+if (totalhours === 1) {
+  return totalhours + ' hour ' + minutes + ' minutes';
 }
+else {
+  return totalhours + ' hours ' + minutes + ' minutes';
+}
+}
+
+function totalTimePlayedHours(sessionsData) {
+let totalSessionStart = 0;
+let totalSessionEnd = 0;
+for (let i=0; i<sessionsData.length; i+=1) {
+totalSessionStart = totalSessionStart + new Date(sessionsData[i].sessionstart).getTime()
+totalSessionEnd = totalSessionEnd + new Date(sessionsData[i].sessionend).getTime()
+console.log(totalSessionStart)
+}
+const totalMsPlayed = (totalSessionEnd - totalSessionStart)
+const milliseconds = parseInt((totalMsPlayed % 1000) / 100);
+const seconds = Math.floor((totalMsPlayed / 1000) % 60);
+const minutes = Math.floor((totalMsPlayed / (1000 * 60)) % 60);
+const hours = Math.floor((totalMsPlayed / (1000 * 60 * 60)) % 24);
+const days = Math.floor((totalMsPlayed / (1000 * 60 * 60 * 24)) );
+const totalhours = ((days * 24) + hours) + (minutes / 60);
+return totalhours
+}
+
+const totalMsPlayed = totalTimePlayed(sessionsData)
+const totalHoursPlayed = totalTimePlayedHours(sessionsData)
+
 
 
 
@@ -107,7 +170,7 @@ const ymax = Math.max.apply(null, results);
 
     return (
       <View style={styles.mainViewStyle}>
-      
+
       <View style={styles.totalResultsCard}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
         <Text style={styles.headingText}>Total Profit:</Text>
@@ -118,37 +181,33 @@ const ymax = Math.max.apply(null, results);
 
       <ScrollView style={{flex: 0.8}}>
         <View style={styles.statSection}>
-          <Text style={styles.statTextStyle}>Net Profit</Text>
-          <Text style={styles.statTextStyle}>+${totalResults}</Text>
-        </View>
-        <View style={styles.statSection}>
-          <Text style={styles.statTextStyle}>Total Hours Played</Text>
-          <Text style={styles.statTextStyle}>150 hours</Text>
+          <Text style={styles.statTextStyle}>Total Time Played</Text>
+          <Text style={styles.statTextStyle}>{totalMsPlayed}</Text>
         </View>
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>$/Hour</Text>
-          <Text style={styles.statTextStyle}>$40</Text>
+          <Text style={styles.statTextStyle}>${(totalResults / totalHoursPlayed).toFixed(2)}</Text>
         </View>
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Big Blinds/Hour</Text>
-          <Text style={styles.statTextStyle}>4.2</Text>
+          <Text style={styles.statTextStyle}>{(totalBigBlinds / totalHoursPlayed).toFixed(2)}</Text>
         </View>
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Sessions Played</Text>
-          <Text style={styles.statTextStyle}>15</Text>
+          <Text style={styles.statTextStyle}>{sessionsData.length}</Text>
         </View>
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Winning Sessions</Text>
-          <Text style={styles.statTextStyle}>10 / 66%</Text>
+          <Text style={styles.statTextStyle}>{totalWinningSessions} ({((totalWinningSessions / sessionsData.length)*100).toFixed(2)}%)</Text>
         </View>
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Average Session Length</Text>
-          <Text style={styles.statTextStyle}>5 hours</Text>
+          <Text style={styles.statTextStyle}>{(totalHoursPlayed/sessionsData.length).toFixed(2)} hours</Text>
         </View>
 
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Average Session Result</Text>
-          <Text style={styles.statTextStyle}>+$550</Text>
+          <Text style={styles.statTextStyle}>${(totalResults / sessionsData.length).toFixed(2)}</Text>
         </View>
 
       </ScrollView>
@@ -177,20 +236,20 @@ const styles = {
   },
   linearGradient: {
     borderRadius: 5,
-    width: 200,
+    width: 250,
     padding: 5
   },
   resultText: {
     color: '#FCFDFC',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: Fonts.CabinBold,
     padding: 3
   },
   headingText: {
     color: '#FCFDFC',
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: 30,
     fontFamily: Fonts.CabinBold
   },
   sessionsListStyle:{

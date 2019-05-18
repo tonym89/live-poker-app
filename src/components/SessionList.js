@@ -80,7 +80,7 @@ class SessionList extends Component {
       { x: new Date(2018, 10, 16), y: 200 },
       { x: new Date(2018, 10, 17), y: 0 },
     ];
-    console.log(testData);
+    console.log(this.props.sessions);
 
 
       const cumulativeData = createCumulativeData(graphData)
