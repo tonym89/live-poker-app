@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import LinearGradient from 'react-native-linear-gradient';
@@ -40,6 +40,19 @@ class SessionCreate extends Component {
 
 
   onButtonPress() {
+    if (this.props.buyin === '') {
+      Alert.alert(
+        'Please enter valid buy in value',
+    );
+  } else if (this.props.cashedout === '') {
+      Alert.alert(
+        'Please enter valid cashed out value',
+        );
+    } else if (this.props.bigblind === '' || this.props.smallblind === '') {
+        Alert.alert(
+          'Please enter valid blind values',
+          );
+    } else {
     const { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails, sessionBegin, sessionEnd } = this.props;
 
     console.log(venue);
@@ -59,6 +72,7 @@ class SessionCreate extends Component {
       venue,
       venueDetails
     });
+    }
   }
 
   startDateHandler = (starttime) => {
@@ -468,7 +482,7 @@ const styles = StyleSheet.create({
    fontSize: 20,
    justifyContent: 'center',
    alignItems: 'center',
-   backgroundColor: '#274272',
+   backgroundColor: '#3B5889',
    borderWidth: 0.2,
    borderColor: 'grey',
    shadowOpacity: 0,
