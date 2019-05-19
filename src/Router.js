@@ -10,6 +10,8 @@ import SessionEdit from './components/SessionEdit';
 import EditLocation from './components/EditLocation';
 import Statistics from './components/Statistics';
 import StatisticsGraphPage from './components/StatisticsGraphPage';
+import Settings from './components/Settings';
+import About from './components/About';
 import { MonoSessionsSvg, SettingsSvg, GraphsSvg } from './components/common';
 
 const SessionsTabIcon = ({ selected, title }) => {
@@ -69,8 +71,6 @@ const RouterComponent = () => {
 
           <Scene key="Statistics" title="Statistics" icon={ReportTabIcon}>
             <Scene
-              onLeft={() => Actions.setLocation()}
-              leftTitle="Filters"
               onRight={() => Actions.statisticsGraphPage()}
               rightTitle="Graphs"
               key="Statistics"
@@ -82,7 +82,7 @@ const RouterComponent = () => {
           <Scene key="Settings" title="Settings" icon={SettingsTabIcon}>
             <Scene
               key="Settings"
-              component={SessionList}
+              component={Settings}
               title="Settings"
             />
           </Scene>
@@ -93,6 +93,9 @@ const RouterComponent = () => {
           </Scene>
         <Scene key="sessionCreate" component={SessionCreate} title="Add Session" />
 
+            <Scene key="settings" component={Settings} title="Settings" />
+
+            <Scene key="about" component={About} title="About" />
 
             <Scene key="sessionReport" component={SessionReport} title="Session Report" />
 
