@@ -1,29 +1,12 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { Fonts } from '../utils/Fonts';
 
-class Settings extends Component {
+class About extends Component {
     render() {
       return (
         <View style={styles.mainViewStyle}>
-          <TouchableOpacity onPress={Actions.about}>
-            <View style={styles.statSection}>
-              <Text style={styles.statTextStyle}>About</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={styles.statSection}>
-              <Text style={styles.statTextStyle}>Language</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={styles.statSection}>
-              <Text style={styles.statTextStyle}>Currency</Text>
-            </View>
-          </TouchableOpacity>
+          <Text style={{ color: '#FCFDFC', font: Fonts.Cabin }}>Poker Dex is an app developed by Tony McShane under the company Eden Rose London Limited.  It aims to deliver a cutting edge user interface facilitating the tracking of live poker results.</Text>
         </View>
       )
       }
@@ -36,7 +19,7 @@ class Settings extends Component {
         flexDirection: 'column',
         backgroundColor: '#274272',
         color: '#FCFDFC',
-        paddingVertical: 20,
+        padding: 20,
       },
       statSection: {
         flexDirection: 'row',
@@ -59,4 +42,4 @@ class Settings extends Component {
       }
 
 
-export default Settings;
+export default About;
