@@ -284,9 +284,12 @@ class SessionCreate extends Component {
         onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
         itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
       >
-        <PickerItem label="No Limit" value='No Limit' />
-        <PickerItem label="Pot Limit" value="Pot Limit" />
-        <PickerItem label="Fixed Limit" value="Fixed Limit" />
+          <PickerItem label="Hold em" value='Hold em' />
+          <PickerItem label="Omaha" value="Omaha" />
+          <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+          <PickerItem label="Stud" value="Stud" />
+          <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
+          <PickerItem label="Razz" value="Razz" />
       </Picker>
 
       <TouchableOpacity onPress={this._toggleLimitModal}>
@@ -336,6 +339,9 @@ class SessionCreate extends Component {
       >
         <PickerItem label="Hold em" value='Hold em' />
         <PickerItem label="Omaha" value="Omaha" />
+        <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+        <PickerItem label="Stud" value="Stud" />
+        <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
         <PickerItem label="Razz" value="Razz" />
       </Picker>
 

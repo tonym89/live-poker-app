@@ -141,28 +141,49 @@ function getTextDate(date) {
                 <Text style={styles.titleStyle}>  ${smallblind} / ${bigblind}</Text>
               </View>
 
-              { gametype === 'Hold em' &&
+                  { gametype === 'Hold em' &&
 
+                  <View style={{flexDirection:'row', padding: 2}}>
+                    <HoldEmSvg />
+                    <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+                  </View>
+
+                }
+
+                  { gametype === 'Omaha' &&
+                  <View style={{flexDirection:'row', padding: 2}}>
+                    <OmahaSvg />
+                    <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+                  </View>
+                }
+
+                { gametype === 'Razz' &&
+                <View style={{flexDirection:'row', padding: 2}}>
+                  <OmahaSvg />
+                  <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+                </View>
+              }
+
+                { gametype === 'Stud' &&
+                <View style={{flexDirection:'row', padding: 2}}>
+                  <OmahaSvg />
+                  <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+                </View>
+              }
+
+                { gametype === '2-7 Triple Draw' &&
+                <View style={{flexDirection:'row', padding: 2}}>
+                  <OmahaSvg />
+                  <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+                </View>
+              }
+
+              { gametype === 'Omaha Hi/Lo' &&
               <View style={{flexDirection:'row', padding: 2}}>
-                <HoldEmSvg />
+                <OmahaSvg />
                 <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
               </View>
-
             }
-
-            { gametype === 'Omaha' &&
-            <View style={{flexDirection:'row', padding: 2}}>
-              <OmahaSvg />
-              <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
-            </View>
-          }
-
-          { gametype === 'Razz' &&
-          <View style={{flexDirection:'row', padding: 2}}>
-            <OmahaSvg />
-            <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
-          </View>
-        }
 
               <View style={{flexDirection:'row', padding: 2}}>
                 <TimerSvg />
