@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import LinearGradient from 'react-native-linear-gradient';
@@ -33,7 +33,18 @@ class SetLocation extends Component {
   }
 
   onNextPress() {
-    Actions.sessionCreate({ venue: this.state.venue, venueDetails: this.state.venueDetails, sessionBegin: this.state.startTime, sessionEnd: this.state.endTime  });
+    if (new Date(this.state.startTime) > new Date(this.state.endTime)) {
+      Alert.alert(
+        'Please enter valid session times',
+    );
+    } else if (this.state.venue === '') {
+      Alert.alert(
+        'Please enter a location',
+        );
+    }
+    else {
+      Actions.sessionCreate({ venue: this.state.venue, venueDetails: this.state.venueDetails, sessionBegin: this.state.startTime, sessionEnd: this.state.endTime  });
+    }
   };
 
   startDateHandler = (starttime) => {
@@ -136,7 +147,7 @@ class SetLocation extends Component {
 
       <View style={styles.mainViewStyle}>
 
-      <View style={{flex: 0.3}}>
+      <View style={{flex: 0.5}}>
       <View style={styles.detailsCard}>
 
       <View style={styles.venueBoxStyle}>
@@ -182,7 +193,7 @@ class SetLocation extends Component {
           top: 0,
           },
           listView: {
-            height: 100
+            height: 100,
           },
           textInputContainer: {
           backgroundColor: '#FA7E7E',
@@ -371,7 +382,7 @@ const styles = StyleSheet.create({
    fontSize: 20,
    justifyContent: 'center',
    alignItems: 'center',
-   backgroundColor: '#274272',
+   backgroundColor: '#3B5889',
    borderWidth: 0.2,
    borderColor: 'grey',
    shadowOpacity: 0,
