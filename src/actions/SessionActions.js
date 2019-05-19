@@ -47,6 +47,7 @@ export const sessionSave = ({ buyin, cashedout, time, sessionstart, sessionend, 
       .then(()=> {
         dispatch({ type: SESSION_SAVE_SUCCESS });
         Actions.sessionList({ type: 'reset' });
+        Actions.main();
       });
   };
 };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import LinearGradient from 'react-native-linear-gradient';
@@ -39,9 +39,20 @@ class SetLocation extends Component {
   }
 
   onNextPress() {
+    if (new Date(this.state.startTime) > new Date(this.state.endTime)) {
+      Alert.alert(
+        'Please enter valid session times',
+    );
+    } else if (this.state.venue === '') {
+      Alert.alert(
+        'Please enter a location',
+        );
+    }
+    else {
     const { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails } = this.props;
     console.log(buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails )
     Actions.sessionEdit({ session: this.props.session, venue: this.state.venue, venueDetails: this.state.venueDetails });
+    }
   };
 
   startDateHandler = (starttime) => {
@@ -144,7 +155,7 @@ class SetLocation extends Component {
 
       <View style={styles.mainViewStyle}>
 
-      <View style={{flex: 0.3}}>
+      <View style={{flex: 0.5}}>
       <View style={styles.detailsCard}>
 
       <View style={styles.venueBoxStyle}>
@@ -380,7 +391,7 @@ const styles = StyleSheet.create({
    fontSize: 20,
    justifyContent: 'center',
    alignItems: 'center',
-   backgroundColor: '#274272',
+   backgroundColor: '#3B5889',
    borderWidth: 0.2,
    borderColor: 'grey',
    shadowOpacity: 0,
