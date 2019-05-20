@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
@@ -116,48 +116,50 @@ class SessionReport extends Component {
 
         </View>
 
-        <View style={{flex: 0.6}}>
+        <View style={{flex: 0.6, backgroundColor: '#274272', }}>
 
-        <View style={styles.detailsCard}>
+        <ScrollView>
 
-        <View style={styles.venueBoxStyle}>
-          <Text style={styles.dateStyle}>{ getTextDate(new Date(sessionstart)) }</Text>
-
-
+        <View style={styles.totalResultsCard}>
+          <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradientResult}>
+          <Text style={styles.headingText}>Session Result:</Text>
+          <Text style={styles.resultText}>{( netResult>= 0) ? '+$' + netResult: '-$' + Math.abs(netResult)}</Text>
+          </LinearGradient>
         </View>
 
-        <View style={styles.detailsBoxStyle}>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult: '-$' + Math.abs(netResult)}</Text>
-        </View>
-
-
-
-          <View style={styles.sessionDetailsRow}>
-            <Text style={styles.timeStyle}>Buy in:</Text>
-            <Text style={styles.locationStyle}>${buyin}</Text>
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Date</Text>
+            <Text style={styles.statTextStyle}>{ getTextDate(new Date(sessionstart)) }</Text>
+          </View>
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Location</Text>
+            <Text style={styles.statTextStyle}>{ venueDetails.name }</Text>
           </View>
 
-          <View style={styles.sessionDetailsRow}>
-            <Text style={styles.timeStyle}>Cashed out:</Text>
-            <Text style={styles.locationStyle}>${cashedout}</Text>
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Time Played</Text>
+            <Text style={styles.statTextStyle}>{msToTimeWords(new Date(differenceInMs))}</Text>
+          </View>
+
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>$/Hour</Text>
+            <Text style={styles.statTextStyle}>{( hourly>= 0) ? '+$' + hourly: '-$' + Math.abs(hourly)}</Text>
+          </View>
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Bought in</Text>
+            <Text style={styles.statTextStyle}>${buyin}</Text>
+          </View>
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Cashed out</Text>
+            <Text style={styles.statTextStyle}>${cashedout}</Text>
+          </View>
+          <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Stakes</Text>
+            <Text style={styles.statTextStyle}>${smallblind}/{bigblind}</Text>
           </View>
 
 
-          <View style={styles.sessionDetailsRow}>
-            <Text style={styles.timeStyle}>Stakes:</Text>
-            <Text style={styles.locationStyle}>${smallblind}/{bigblind}</Text>
-          </View>
 
-          <View style={styles.sessionDetailsRow}>
-            <Text style={styles.timeStyle}>Session length:</Text>
-            <Text style={styles.locationStyle}>{msToTimeWords(new Date(differenceInMs))}</Text>
-          </View>
-
-          <View style={styles.sessionDetailsRow}>
-            <Text style={styles.timeStyle}>$/hour:</Text>
-            <Text style={styles.locationStyle}>{( hourly>= 0) ? '+$' + hourly: '-$' + Math.abs(hourly)}</Text>
-          </View>
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
@@ -166,15 +168,13 @@ class SessionReport extends Component {
               </LinearGradient>
             </TouchableOpacity>
           </View>
+            </ScrollView>
 
 
           </View>
 
           </View>
 
-          </View>
-
-        </View>
       )
     }
 }
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#FDFDFD',
+    backgroundColor: '#274272',
   },
   sessionDetailsRow: {
   flexDirection: 'row',
@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   saveButton: {
+    margin: 10,
     width: 180,
     height: 50,
     borderRadius: 15,
@@ -287,6 +288,49 @@ const styles = StyleSheet.create({
    fontSize: 22,
    color: '#FCFDFC',
    textAlign: 'center',
+ },
+ statSection:{
+   flexDirection: 'row',
+   height: 50,
+   borderBottomWidth: 0.5,
+   color: 'white',
+   borderColor: '#274272',
+   backgroundColor: '#3B5889',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   paddingLeft: 20,
+   paddingRight: 20,
+ },
+ statTextStyle: {
+   color: '#FCFDFC',
+   fontFamily: Fonts.Cabin,
+   fontSize: 18
+ },
+ totalResultsCard: {
+   flex: 0.2,
+   flexDirection: 'column',
+   marginBottom: 20,
+   padding: 5,
+   borderRadius: 10,
+   alignItems: 'center'
+ },
+ linearGradientResult: {
+   borderRadius: 5,
+   width: 200,
+   padding: 5
+ },
+ resultText: {
+   color: '#FCFDFC',
+   textAlign: 'center',
+   fontSize: 22,
+   fontFamily: Fonts.CabinBold,
+   padding: 3
+ },
+ headingText: {
+   color: '#FCFDFC',
+   textAlign: 'center',
+   fontSize: 26,
+   fontFamily: Fonts.CabinBold
  },
 });
 

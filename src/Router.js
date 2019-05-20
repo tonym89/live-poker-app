@@ -97,7 +97,11 @@ const RouterComponent = () => {
 
             <Scene key="about" component={About} title="About" />
 
-            <Scene key="sessionReport" component={SessionReport} title="Session Report" />
+            <Scene
+            key="sessionReport"
+            component={SessionReport}
+            title="Session Report"
+            />
 
             <Scene key="statisticsGraphPage" component={StatisticsGraphPage} title="Graphs" />
 
