@@ -25,10 +25,13 @@ class Statistics extends Component {
 
   render() {
 
+    if (this.props && this.props.sessions[0]) {
+
     function sortByDate(sessionsData) {
    let sortedSessions = sessionsData.sort(function(a,b){return new Date(a.sessionstart)<new Date(b.sessionstart) ? -1 : new Date(a.sessionstart)>new Date(b.sessionstart) ? 1 : 0 ;})
    return sortedSessions;
  }
+
 
       const sessionsData = sortByDate(this.props.sessions);
 
@@ -171,6 +174,7 @@ const ymax = Math.max.apply(null, results);
     return (
       <View style={styles.mainViewStyle}>
 
+
       <View style={styles.totalResultsCard}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
         <Text style={styles.headingText}>Total Profit:</Text>
@@ -216,6 +220,13 @@ const ymax = Math.max.apply(null, results);
 
       </View>
     );
+  } else {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#274272'}}>
+        <Text style={styles.statTextStyle}>Loading...</Text>
+      </View>
+    )
+  }
   };
 }
 
