@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Map } from './Map';
 import { Fonts } from '../utils/Fonts';
+import { sessionDelete } from '../actions';
 import { CardSection } from './common';
 
 const { height, width } = Dimensions.get('window');
@@ -17,6 +19,12 @@ class SessionReport extends Component {
 
   onButtonPress() {
     Actions.editLocation({ session: this.props.session });
+  };
+
+  onDeleteButtonPress() {
+    const { uid } = this.props.session;
+
+    this.props.sessionDelete({ uid });
   };
 
   componentDidMount(){
@@ -163,8 +171,16 @@ class SessionReport extends Component {
 
           <View style={{alignItems: 'center'}}>
             <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#DE4150', '#FF6978', '#DE4150']} style={styles.linearGradient}>
+              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
                   <Text style={styles.saveText}>Edit Session</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{alignItems: 'center'}}>
+            <TouchableOpacity style={styles.saveButton} onPress={this.onDeleteButtonPress.bind(this)}>
+              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#DE4150', '#FF6978', '#DE4150']} style={styles.linearGradient}>
+                  <Text style={styles.saveText}>Delete Session</Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -269,8 +285,8 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     margin: 10,
-    width: 180,
-    height: 50,
+    width: 220,
+    height: 60,
     borderRadius: 15,
     justifyContent: 'center',
   },
@@ -334,4 +350,12 @@ const styles = StyleSheet.create({
  },
 });
 
-export default SessionReport;
+const mapStateToProps = (state) => {
+  const { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit } = state.sessionForm;
+
+  return { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit };
+};
+
+export default connect(mapStateToProps, {
+  sessionDelete
+})(SessionReport);

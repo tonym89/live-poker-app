@@ -51,3 +51,16 @@ export const sessionSave = ({ buyin, cashedout, time, sessionstart, sessionend, 
       });
   };
 };
+
+export const sessionDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return () => {
+    firebase.database().ref(`users/${currentUser.uid}/sessions/${uid}`)
+      .remove()
+      .then(() => {
+        Actions.sessionList({ type: 'reset' });
+        Actions.main();
+      });
+  };
+};
