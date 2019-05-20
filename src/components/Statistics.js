@@ -174,7 +174,7 @@ const ymax = Math.max.apply(null, results);
       <View style={styles.totalResultsCard}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#01CCAD']} style={styles.linearGradient}>
         <Text style={styles.headingText}>Total Profit:</Text>
-        <Text style={styles.resultText}>+${totalResults}</Text>
+        <Text style={styles.resultText}>{( totalResults>= 0) ? '+$' + totalResults: '-$' + Math.abs(totalResults)}</Text>
         </LinearGradient>
       </View>
 
