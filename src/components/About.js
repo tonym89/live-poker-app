@@ -6,7 +6,12 @@ class About extends Component {
     render() {
       return (
         <View style={styles.mainViewStyle}>
-          <Text style={{ color: '#FCFDFC', font: Fonts.Cabin }}>Poker Dex is an app developed by Tony McShane under the company Eden Rose London Limited.  It aims to deliver a cutting edge user interface facilitating the tracking of live poker results.</Text>
+          <Text style={styles.settingTextStyle}>Poker Dex is an app developed by me, Tony McShane, poker player, coder and director Eden Rose London Limited.  The app aims to deliver a cutting edge user interface facilitating the tracking of live poker results.  This version is a minimum viable product and further features, such as additional languages and full multi-currency support, will be added imminently.  This is my first native mobile app and I am very eager to hear all feedback (positive and negative).  I am also looking to guage demand for additional features in the future.  Possible new features include:</Text>
+          <Text style={styles.settingTextStyle}>- Nearby casinos with a real-time list of what games are running</Text>
+          <Text style={styles.settingTextStyle}>- Tournament functionality (Tournament mode with upcoming schedules)</Text>
+          <Text style={styles.settingTextStyle}>- Player notes - with possible camera usage to take picture of opponent</Text>
+          <Text style={styles.settingTextStyle}>- Opening ranges/shoving ranges</Text>
+          <Text style={styles.settingTextStyle}>- Facility to organise meet up games - i.e. connect with a casino, book a dealer and a table and show up with friends (deposit required)</Text>
         </View>
       )
       }
@@ -34,10 +39,10 @@ class About extends Component {
         paddingRight: 20,
         marginBottom: 20
       },
-      statTextStyle: {
+      settingTextStyle: {
         color: '#FCFDFC',
         fontFamily: Fonts.Cabin,
-        fontSize: 18
+        marginBottom: 5
       },
       }
 

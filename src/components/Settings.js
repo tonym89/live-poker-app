@@ -13,17 +13,6 @@ class Settings extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <View style={styles.statSection}>
-              <Text style={styles.statTextStyle}>Language</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={styles.statSection}>
-              <Text style={styles.statTextStyle}>Currency</Text>
-            </View>
-          </TouchableOpacity>
         </View>
       )
       }
