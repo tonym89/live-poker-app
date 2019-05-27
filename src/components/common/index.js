@@ -21,3 +21,4 @@ export * from './TabIcon.js';
 export * from './MonoSessionsSvg.js';
 export * from './SettingsSvg.js';
 export * from './GraphsSvg.js';
+export * from './AnalysisSvg.js';
