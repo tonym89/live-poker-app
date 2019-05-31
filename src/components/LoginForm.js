@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
 import { Fonts } from '../utils/Fonts';
 import { AnalysisSvg } from './common';
+import mainIcon from './common/mainIcon.png';
+
 
 
 class LoginForm extends Component {
@@ -51,8 +53,8 @@ class LoginForm extends Component {
     return (
 
       <View style={styles.mainViewStyle}>
-        <View style={{alignSelf: 'center', marginTop: 20}}>
-          <AnalysisSvg />
+        <View style={{alignSelf: 'center', marginTop: 0}}>
+          <Image style={{width: 250, height: 250}} source={mainIcon} />
         </View>
         <View style={styles.loginCard}>
         <View style={{alignSelf: 'center'}}>

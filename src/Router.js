@@ -71,7 +71,7 @@ const RouterComponent = () => {
 
           <Scene key="Statistics" title="Statistics" icon={ReportTabIcon}>
             <Scene
-              onRight={() => Actions.statisticsGraphPage()}
+              onRight={() => Actions.statisticsGraphPage() }
               rightTitle="Graphs"
               key="Statistics"
               component={Statistics}

@@ -22,3 +22,5 @@ export * from './MonoSessionsSvg.js';
 export * from './SettingsSvg.js';
 export * from './GraphsSvg.js';
 export * from './AnalysisSvg.js';
+export * from './FilterModal.js';
+export * from './ModalButton.js';
