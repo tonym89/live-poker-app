@@ -127,28 +127,42 @@ const ymax = Math.max.apply(null, results);
 
     return (
       <View style={styles.mainViewStyle}>
-      { this.props && this.props.sessions[0] && this.state.graphType==="curveBasis" && this.state.theme==="light" &&
+
+      {this.props.sessions[0] && !this.props.sessions[1] &&
+        <View style={{height: 300, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20}}>A minimum of two saved sessions are required to generate graphs</Text>
+        </View>
+      }
+
+      {!this.props.sessions[0] && !this.props.sessions[1] &&
+        <View style={{height: 300, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20}}>A minimum of two saved sessions are required to generate graphs</Text>
+        </View>
+      }
+
+
+      { this.props && this.props.sessions[0] && this.props.sessions[1] && this.state.graphType==="curveBasis" && this.state.theme==="light" &&
      <StatisticsChart data={cumulativeData} theme={'light'} style={styles.homeGraphStyle}/>
      }
 
-     { this.props && this.props.sessions[0] && this.state.graphType==="curveBasis" && this.state.theme==="dark" &&
+     { this.props && this.props.sessions[0] && this.props.sessions[1] && this.state.graphType==="curveBasis" && this.state.theme==="dark" &&
     <StatisticsChart data={cumulativeData} theme={'dark'} style={styles.homeGraphStyle}/>
     }
 
 
-     { this.props && this.props.sessions[0] && this.state.graphType==="curveLinear" &&
+     { this.props && this.props.sessions[0] && this.props.sessions[1] && this.state.graphType==="curveLinear" &&
     <StatisticsChartLinear data={cumulativeData} theme={'light'} style={styles.homeGraphStyle}/>
     }
 
 
-    { this.props && this.props.sessions[0] && this.state.graphType==="curveStepBefore" &&
+    { this.props && this.props.sessions[0] && this.props.sessions[1] && this.state.graphType==="curveStepBefore" &&
    <StatisticsChartStepBefore data={cumulativeData} style={styles.homeGraphStyle}/>
     }
 
-     { this.props && this.props.sessions[0] && this.state.graphType==="svgLineGraph" &&
+     { this.props && this.props.sessions[0] && this.props.sessions[1] && this.state.graphType==="svgLineGraph" &&
     <StatisticsChartLineGraph data={cumulativeData} style={styles.homeGraphStyle}/>
     }
-    <View style={{flexDirection: 'column', backgroundColor: '#274272', width: 500, marginTop: 30, alignItems: 'center', justifyContent: 'center', shadowColor: '#ccc',
+    <View style={{flexDirection: 'column', backgroundColor: '#274272', width: 500, height: 500, marginTop: 30, alignItems: 'center', shadowColor: '#ccc',
 
   shadowOpacity: 1, }}>
 
@@ -198,22 +212,7 @@ const ymax = Math.max.apply(null, results);
 
     </View>
 
-          <Text style={{color:"#FCFDFC", marginTop: 120}}>Graph Type</Text>
 
-          <Picker
-            selectedValue={this.state.graphType}
-            onValueChange={(itemValue, itemIndex) =>
-                    this.setState({graphType: itemValue})
-                  }
-            style={{width:'80%', color: "white"}}
-            itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
-          >
-            <Picker.Item label="Curve" value='curveBasis' />
-            <Picker.Item label="Linear" value="curveLinear" />
-            <Picker.Item label="Step" value="curveStepBefore" />
-            <Picker.Item label="Line Graph" value="svgLineGraph" />
-            <Picker.Item label="No axes" value="noAxesCurve" />
-          </Picker>
 
           </View>
 
@@ -229,6 +228,7 @@ const styles = {
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'flex-start'
+
   },
   homeGraphStyle: {
 
