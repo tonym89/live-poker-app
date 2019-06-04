@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
-import { Card, CardSection, Input, Button, Spinner } from './common';
+import { Card, CardSection, LoginFormInput, Button, Spinner } from './common';
 import { Fonts } from '../utils/Fonts';
 import { AnalysisSvg } from './common';
 import mainIcon from './common/mainIcon.png';
@@ -31,9 +33,13 @@ class LoginForm extends Component {
     }
 
     return (
-    <Button onPress={this.onButtonPress.bind(this)}>
-      Login
-    </Button>
+    <View>
+    <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
+      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+          <Text style={styles.saveText}>Login/Register</Text>
+      </LinearGradient>
+    </TouchableOpacity>
+    </View>
     );
   }
 
@@ -53,25 +59,30 @@ class LoginForm extends Component {
     return (
 
       <View style={styles.mainViewStyle}>
+
+      <KeyboardAwareScrollView  innerRef={ref => {
+    this.scroll = ref
+  }}>
         <View style={{alignSelf: 'center', marginTop: 0}}>
           <Image style={{width: 250, height: 250}} source={mainIcon} />
         </View>
         <View style={styles.loginCard}>
-        <View style={{alignSelf: 'center'}}>
-          <Text style={{fontFamily: Fonts.CabinBold, fontSize: 20, marginBottom: 10}}>Login or Register</Text>
-        </View>
 
           <CardSection>
-            <Input
+            <LoginFormInput
               label="Email"
-              placeholder="email@gmail.com"
+              placeholder="myname@email.com"
               onChangeText={this.onEmailChange.bind(this)}
               value={this.props.email}
+              onFocus= {(event: Event) => {
+        // `bind` the function if you're using ES6 classes
+        this.scroll.props.scrollToPosition(0, 70)
+      }}
             />
           </CardSection>
 
           <CardSection>
-          <Input
+          <LoginFormInput
             secureTextEntry
             label="Password"
             placeholder="password"
@@ -82,10 +93,12 @@ class LoginForm extends Component {
 
           {this.renderError()}
 
-          <CardSection>
-            {this.renderButton()}
-          </CardSection>
+
+            <View style={{marginTop: 60}}>
+              {this.renderButton()}
+            </View>
         </View>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -104,11 +117,33 @@ const styles = {
     color: 'red'
   },
     loginCard: {
-    margin: 20,
-    backgroundColor: '#FCFDFC',
-    borderRadius: 5,
+    margin: 0,
+    backgroundColor: '#3B5889',
     padding: 10
-  }
+  },
+  saveText: {
+    fontFamily: Fonts.CabinBold,
+    fontSize: 23,
+    color: '#FCFDFC',
+    textAlign: 'center',
+  },
+  saveButton: {
+    alignSelf: 'center',
+    width: 250,
+    height: 40,
+    backgroundColor: '#330066',
+    borderRadius: 15,
+    justifyContent: 'center',
+    bottom: 30
+  },
+  linearGradient: {
+   flex: 1,
+   paddingLeft: 15,
+   paddingRight: 15,
+   borderRadius: 10,
+   justifyContent: 'center',
+   alignItems: 'center'
+ },
 }
 
 const mapStateToProps = state => {
