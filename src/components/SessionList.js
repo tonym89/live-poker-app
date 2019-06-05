@@ -51,6 +51,9 @@ class SessionList extends Component {
     } else {
       cumulativeData.push({x: graphData[i].x, y: graphData[i].y + cumulativeData[i-1].y})
     }
+      if (cumulativeData[1]){
+      cumulativeData.unshift({x: new Date(cumulativeData[0].x - 1), y: 0})
+      }
     return cumulativeData;
   }
 
