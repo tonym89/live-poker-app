@@ -37,7 +37,8 @@
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "svg-path-properties": "^0.4.8"
+    "svg-path-properties": "^0.4.8",
+    "yaml": "^1.6.0"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
