@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { emailChanged, passwordChanged, loginUser, registerUser } from '../actions';
 import { Card, CardSection, LoginFormInput, Button, Spinner } from './common';
 import { Fonts } from '../utils/Fonts';
 import { AnalysisSvg } from './common';
@@ -27,6 +27,12 @@ class LoginForm extends Component {
     this.props.loginUser({ email, password });
   }
 
+  onRegisterButtonPress() {
+    const { email, password } = this.props;
+
+    this.props.registerUser({ email, password });
+  }
+
   renderButton() {
     if (this.props.loading) {
         return <Spinner size="large" />;
@@ -35,8 +41,24 @@ class LoginForm extends Component {
     return (
     <View>
     <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
-          <Text style={styles.saveText}>Login/Register</Text>
+      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
+          <Text style={styles.saveText}>Login</Text>
+      </LinearGradient>
+    </TouchableOpacity>
+    </View>
+    );
+  }
+
+  renderRegisterButton() {
+    if (this.props.loading) {
+        return <View />;
+    }
+
+    return (
+    <View>
+    <TouchableOpacity style={styles.saveButton} onPress={this.onRegisterButtonPress.bind(this)}>
+      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
+          <Text style={styles.saveText}>Register</Text>
       </LinearGradient>
     </TouchableOpacity>
     </View>
@@ -96,6 +118,7 @@ class LoginForm extends Component {
 
             <View style={{marginTop: 60}}>
               {this.renderButton()}
+              {this.renderRegisterButton()}
             </View>
         </View>
         </KeyboardAwareScrollView>
@@ -134,7 +157,9 @@ const styles = {
     backgroundColor: '#330066',
     borderRadius: 15,
     justifyContent: 'center',
-    bottom: 30
+    bottom: 30,
+    marginTop: 20,
+    marginBottom: 20,
   },
   linearGradient: {
    flex: 1,
@@ -156,5 +181,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  emailChanged, passwordChanged, loginUser
+  emailChanged, passwordChanged, loginUser, registerUser
 })(LoginForm);

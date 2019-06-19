@@ -119,7 +119,7 @@ const ymax = Math.max.apply(null, results);
 
      </View>
        }
-         <FlatList data={sessionsData.reverse()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
+         <FlatList data={sessionsData.reverse()} keyExtractor={(item, index) => index.toString()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
       </View>
     );
   };
