@@ -157,6 +157,20 @@ function getTextDate(date) {
                   </View>
                 }
 
+                { gametype === 'Mix' &&
+                <View style={{flexDirection:'row', padding: 2}}>
+                  <OmahaSvg />
+                  <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+                </View>
+              }
+
+              { gametype === 'Short Deck' &&
+              <View style={{flexDirection:'row', padding: 2}}>
+                <HoldEmSvg />
+                <Text style={styles.titleStyle}>  {limit} {gametype}</Text>
+              </View>
+            }
+
                 { gametype === 'Razz' &&
                 <View style={{flexDirection:'row', padding: 2}}>
                   <OmahaSvg />
