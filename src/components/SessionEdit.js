@@ -285,12 +285,14 @@ class SessionEdit extends Component {
       onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
       itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
     >
-        <PickerItem label="Hold em" value='Hold em' />
-        <PickerItem label="Omaha" value="Omaha" />
-        <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
-        <PickerItem label="Stud" value="Stud" />
-        <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
-        <PickerItem label="Razz" value="Razz" />
+      <PickerItem label="Hold em" value='Hold em' />
+      <PickerItem label="Omaha" value="Omaha" />
+      <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+      <PickerItem label="Short Deck" value="Short Deck" />
+      <PickerItem label="Mix" value="Mix" />
+      <PickerItem label="Stud" value="Stud" />
+      <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
+      <PickerItem label="Razz" value="Razz" />
     </Picker>
 
     <TouchableOpacity onPress={this._toggleLimitModal}>
