@@ -1,4 +1,4 @@
-package com.pokermanager;
+package com.pokerdex;
 
 import android.app.Application;
 
