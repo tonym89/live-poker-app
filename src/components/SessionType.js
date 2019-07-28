@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Fonts } from '../utils/Fonts';
 import { Actions } from 'react-native-router-flux';
+import { Fonts } from '../utils/Fonts';
 
 class SessionType extends Component {
     render() {
@@ -14,7 +14,7 @@ class SessionType extends Component {
             </View>
           </View>
 
-            <TouchableOpacity style={styles.saveButton}>
+            <TouchableOpacity style={styles.saveButton} onPress={this.saveStartTime}>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
                     <Text style={styles.saveText}>Start New</Text>
                 </LinearGradient>
@@ -32,13 +32,13 @@ class SessionType extends Component {
               </View>
             </View>
 
-            <TouchableOpacity style={styles.saveButton}>
+            <TouchableOpacity style={styles.saveButton} onPress={this.displayStartTime}>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
                     <Text style={styles.saveText}>Start New</Text>
                 </LinearGradient>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.saveButton}>
+            <TouchableOpacity style={styles.saveButton} onPress={Actions.onGoingSession}>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
                     <Text style={styles.saveText}>Add Completed</Text>
                 </LinearGradient>
@@ -46,6 +46,22 @@ class SessionType extends Component {
 
         </View>
       )
+      }
+
+      saveStartTime(){
+        let startTime = new Date();
+        AsyncStorage.setItem('startTime', JSON.stringify(startTime));
+        Actions.onGoingSession();
+      }
+
+      displayStartTime = async () => {
+        try{
+          let startTime = await AsyncStorage.getItem('startTime')
+          alert(startTime)
+        }
+        catch(error) {
+          alert(error);
+        }
       }
     }
 

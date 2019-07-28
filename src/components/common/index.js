@@ -25,3 +25,4 @@ export * from './AnalysisSvg.js';
 export * from './FilterModal.js';
 export * from './ModalButton.js';
 export * from './LoginFormInput.js';
+export * from './BuyinInput.js';

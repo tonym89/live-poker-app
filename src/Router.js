@@ -6,6 +6,7 @@ import SessionList from './components/SessionList';
 import SessionCreate from './components/SessionCreate';
 import SessionReport from './components/SessionReport';
 import SetLocation from './components/SetLocation';
+import OnGoingSession from './components/OnGoingSession';
 import SessionEdit from './components/SessionEdit';
 import EditLocation from './components/EditLocation';
 import Statistics from './components/Statistics';
@@ -110,6 +111,9 @@ const RouterComponent = () => {
 
 
         <Scene key="setLocation" component={SetLocation} title="Add Session" />
+
+
+                <Scene key="onGoingSession" component={OnGoingSession} title="Record Current Session" />
 
             <Scene key="editLocation" component={EditLocation} title="Edit Session" />
 
