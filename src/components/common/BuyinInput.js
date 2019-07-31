@@ -13,6 +13,7 @@ const BuyinInput = ({ label, value, onChangeText, placeholder, secureTextEntry }
         keyboardType='numeric'
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
+        placeholderTextColor={'#cccccc'}
         autoCorrect={false}
         style={inputStyle}
         value={value}
@@ -24,28 +25,29 @@ const BuyinInput = ({ label, value, onChangeText, placeholder, secureTextEntry }
 
 const styles = {
   inputStyle: {
-    color: '#000',
-    paddingRight: 5,
-    paddingLeft: 5,
-    fontSize: 18,
-    lineHeight: 23,
+    color: '#FCFDFC',
+    backgroundColor: '#3B5889',
+    fontSize: 20,
+    lineHeight: 25,
     width: 100,
-    borderColor: '#13233B',
-    borderWidth: 0.2,
+    height: 30,
+    borderColor: '#FCFDFC',
+    borderWidth: 0.6,
     borderRadius: 5,
-    marginRight: 20,
+    paddingLeft: 5
   },
   labelStyle: {
+    color: '#FCFDFC',
     fontFamily: Fonts.Cabin,
     fontSize: 20,
     paddingLeft: 20,
-    flex: 1
+    paddingRight: 5
   },
   containerStyle: {
     height: 25,
-    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 };
 
