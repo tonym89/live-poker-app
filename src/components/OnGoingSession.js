@@ -123,6 +123,7 @@ class OnGoingSession extends Component {
       now: 0,
       laps: [ ],
       recording: 'start',
+      locationFocused: false,
     };
   }
 
@@ -210,7 +211,6 @@ class OnGoingSession extends Component {
     this.setState({
         isStartVisible: false,
         startTime: new Date(value),
-        start: new Date(value)
     });
     console.log(new Date(this.state.startTime));
   }
@@ -251,6 +251,7 @@ class OnGoingSession extends Component {
   }
 
   render() {
+    const netResult = this.props.cashedout - this.props.buyin;
 
     const { now, start, laps } = this.state
     const timer = now - start
@@ -300,6 +301,18 @@ class OnGoingSession extends Component {
        return monthName + ' ' + day + ' ' + year + ' ' + time;
     }
 
+        locationFocusFunction = () => {
+          this.setState({
+              locationFocused: true
+          });
+        }
+
+          locationUnfocusFunction = () => {
+            this.setState({
+                locationFocused: false
+            });
+        }
+
 
 
 
@@ -308,100 +321,15 @@ class OnGoingSession extends Component {
 
       <View style={styles.mainViewStyle}>
 
-      <View style={styles.container}>
-        <Timer
-          interval={laps.reduce((total, curr) => total + curr, 0) + timer}
-          style={styles.timer}
-        />
-        {laps.length === 0 && (
-          <ButtonsRow>
-            <RoundButton
-              title='Lap'
-              color='#8B8B90'
-              background='#151515'
-              disabled
-            />
-            <RoundButton
-              title='Start'
-              color='#50D167'
-              background='#1B361F'
-              onPress={this.start}
-            />
-          </ButtonsRow>
-        )}
-        {start > 0 && (
-          <ButtonsRow>
-            <RoundButton
-              title='Lap'
-              color='#FFFFFF'
-              background='#3D3D3D'
-              onPress={this.lap}
-            />
-            <RoundButton
-              title='Stop'
-              color='#E33935'
-              background='#3C1715'
-              onPress={this.stop}
-            />
-          </ButtonsRow>
-        )}
-        {laps.length > 0 && start === 0 && (
-          <ButtonsRow>
-            <RoundButton
-              title='Reset'
-              color='#FFFFFF'
-              background='#3D3D3D'
-              onPress={this.reset}
-            />
-            <RoundButton
-              title='Start'
-              color='#50D167'
-              background='#1B361F'
-              onPress={this.resume}
-            />
-          </ButtonsRow>
-        )}
-        <LapsTable laps={laps} timer={timer}/>
-      </View>
 
 
-      {laps.length === 0 && (
-      <TouchableOpacity style={styles.saveButton} onPress={this.start}>
-          <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
-              <Text style={styles.saveText}>Start</Text>
-          </LinearGradient>
-      </TouchableOpacity>
-      )}
-
-      {start > 0 && (
-
-        <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
-            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
-                <Text style={styles.saveText}>Stop</Text>
-            </LinearGradient>
-        </TouchableOpacity>
-
-
-          )}
-
-
-          {laps.length > 0 && start === 0 && (
-
-            <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
-                    <Text style={styles.saveText}>Save</Text>
-                </LinearGradient>
-            </TouchableOpacity>
-
-
-              )}
 
       <ScrollView style={{flex: 0.8}}>
       <View style={styles.statSection}>
         <Text style={styles.statTextStyle}>Start Time:</Text>
 
         {this.state.startTime === 0 && (
-        <Text style={styles.statTextStyle}></Text>
+        <Text style={styles.startStatTextStyle}>Press 'Start'</Text>
         )}
 
         {this.state.startTime > 0 && (
@@ -422,6 +350,10 @@ class OnGoingSession extends Component {
         <Text style={styles.statTextStyle}>End Time:</Text>
         {this.state.endTime === 0 && (
         <Text style={styles.statTextStyle}></Text>
+        )}
+
+        {this.state.endTime === 0 && start > 0 && (
+        <Text style={styles.endStatTextStyle}>Press 'Stop'</Text>
         )}
         {this.state.endTime > 0 && (
           <TouchableOpacity onPress={this.showEndPicker}>
@@ -446,30 +378,187 @@ class OnGoingSession extends Component {
           )}
           {this.state.recording === 'end' && (
               <Text style={styles.timePlayedText}>{msToTime(new Date(differenceInMs))}</Text>
+
           )}
         </View>
+
+        <View style={( this.state.locationFocused === false ) ? styles.statSection : styles.locationStatSection}>
+
+          {(this.state.locationFocused === false &&
+            <Text style={styles.statTextStyle}>Location:</Text>
+          )}
+
+
+            {this.state.venueDetails.name == undefined && this.state.locationFocused === false && start === 0 &&(
+              <TouchableOpacity onPress={locationFocusFunction}>
+                <EarthSvgSmall />
+              </TouchableOpacity>
+              )}
+
+          {this.state.venueDetails.name !== undefined && this.state.locationFocused === false && (
+            <TouchableOpacity onPress={locationFocusFunction}>
+              <Text style={styles.venueStatTextStyle}>{this.state.venueDetails.name}  <EarthSvgSmall /></Text>
+            </TouchableOpacity>
+            )}
+
+          {( this.state.locationFocused === true &&
+
+          <GooglePlacesAutocomplete
+          placeholder='Enter Location'
+          minLength={2} // minimum length of text to search
+          autoFocus={true}
+          returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+          keyboardAppearance={'light'} // Can be left out for default keyboardAppearance https://facebook.github.io/react-native/docs/textinput.html#keyboardappearance
+          listViewDisplayed='false'    // true/false/undefined
+          fetchDetails={true}
+          renderDescription={row => row.description} // custom description render
+
+          textInputProps={{
+              onFocus: () => locationFocusFunction(),
+          }}
+
+          onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+              this.setState({
+                  venue: data,
+                  venueDetails: details,
+                  locationFocused: false
+              });
+              console.log(this.state.venue)
+          }}
+
+          getDefaultValue={() => ''}
+
+          query={{
+          // available options: https://developers.google.com/places/web-service/autocomplete
+          key: 'AIzaSyDkIWixhcpMisJ3Ua73U1G5HcEsEq-mzQs',
+          language: 'en', // language of the results
+          // default: 'geocode'
+          }}
+          styles={(this.state.locationFocused === false) ? {
+          container: {
+          width: width - 50,
+          shadowOpacity: 0,
+          flex: 0,
+          top: 0,
+          marginLeft: 10
+          },
+          listView: {
+            height: 100,
+          },
+          textInputContainer: {
+          backgroundColor: 'rgba(0,0,0,0)',
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+          borderRadius: 5
+          },
+
+          } : {
+          container: {
+          width: width - 50,
+          shadowOpacity: 0,
+          flex: 0,
+          top: 0,
+          },
+          listView: {
+            height: 100,
+          },
+          textInputContainer: {
+          backgroundColor: '#FA7E7E',
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+          borderRadius: 5
+          },
+          listView: {
+         position: 'absolute',
+         zIndex: 9999,
+         top: 40
+          },
+          row: {
+          backgroundColor: 'white'
+          },
+          }}
+          />
+          )}
+
+        </View>
+
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Bought in:</Text>
           <BuyinInput
-            placeholder="$1000"
+            label="$"
+            placeholder="1000"
             value={this.props.buyin}
             onChangeText={value => this.props.sessionUpdate({ prop: 'buyin', value })}
           />
         </View>
 
         <View style={styles.statSection}>
-          <Text style={styles.statTextStyle}>Start Time:</Text>
-          <Text style={styles.statTextStyle}>Whenever timer clicks</Text>
+          <Text style={styles.statTextStyle}>Cashed Out:</Text>
+          <BuyinInput
+            label="$"
+            placeholder="1500"
+            value={this.props.cashedout}
+            onChangeText={value => this.props.sessionUpdate({ prop: 'cashedout', value })}
+          />
         </View>
 
         <View style={styles.statSection}>
-          <Text style={styles.statTextStyle}>End Time:</Text>
+          <Text style={styles.statTextStyle}>Net Result:</Text>
+          <Text style={( netResult>= 0) ? styles.green : styles.red}>{( netResult>= 0) ? '+$' + netResult : '-$' + Math.abs(netResult) }</Text>
+        </View>
+
+
+
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Blinds:</Text>
+          <Text style={styles.statTextStyle}></Text>
+        </View>
+
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Limit:</Text>
+          <Text style={styles.statTextStyle}></Text>
+        </View>
+
+        <View style={styles.statSection}>
+          <Text style={styles.statTextStyle}>Game Type:</Text>
           <Text style={styles.statTextStyle}></Text>
         </View>
 
 
 
       </ScrollView>
+
+
+            {laps.length === 0 && (
+            <TouchableOpacity style={styles.saveButton} onPress={this.start}>
+                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
+                    <Text style={styles.saveText}>Start</Text>
+                </LinearGradient>
+            </TouchableOpacity>
+            )}
+
+            {start > 0 && (
+
+              <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
+                  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
+                      <Text style={styles.saveText}>Stop</Text>
+                  </LinearGradient>
+              </TouchableOpacity>
+
+
+                )}
+
+
+                {laps.length > 0 && start === 0 && (
+
+                  <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
+                      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
+                          <Text style={styles.saveText}>Save</Text>
+                      </LinearGradient>
+                  </TouchableOpacity>
+
+
+                    )}
 
 
 
@@ -641,10 +730,27 @@ const styles = StyleSheet.create({
    paddingLeft: 20,
    paddingRight: 20,
  },
+ locationStatSection:{
+   flexDirection: 'row',
+   height: 150,
+   borderBottomWidth: 0.5,
+   color: 'white',
+   borderColor: '#274272',
+   backgroundColor: '#3B5889',
+   justifyContent: 'center',
+   paddingTop: 18,
+   paddingLeft: 20,
+   paddingRight: 20,
+ },
  statTextStyle: {
    color: '#FCFDFC',
    fontFamily: Fonts.Cabin,
    fontSize: 18
+ },
+ venueStatTextStyle: {
+   color: '#FCFDFC',
+   fontFamily: Fonts.Cabin,
+   fontSize: 18,
  },
 startStatTextStyle: {
   color:'#03ADB0',
@@ -655,6 +761,16 @@ endStatTextStyle: {
   color:'#FA7E7E',
   fontFamily: Fonts.Cabin,
   fontSize: 18
+},
+green: {
+  fontSize: 18,
+  fontFamily: Fonts.CabinBold,
+  color: '#03ADB0'
+},
+red: {
+  fontSize: 20,
+  fontFamily: Fonts.CabinBold,
+  color: '#FA7E7E'
 },
  container: {
   flex: 1,
