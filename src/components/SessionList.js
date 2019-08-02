@@ -15,6 +15,17 @@ class SessionList extends Component {
   componentDidMount() {
     this.props.sessionsFetch();
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.sessions.length !== this.props.sessions.length)
+    {
+      return true
+    }
+    else {
+      return false
+    }
+}
+
   componentDidUpdate(prevProps) {
     if (prevProps.sessions.length !== this.props.sessions.length) {
       this.props.sessionsFetch();
@@ -119,7 +130,7 @@ const ymax = Math.max.apply(null, results);
 
      </View>
        }
-         <FlatList data={sessionsData.reverse()} keyExtractor={(item, index) => index.toString()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
+         <FlatList windowSize={80} data={sessionsData.reverse()} keyExtractor={(item, index) => index.toString()} renderItem={({item}) => <ListItem session={item}/>} style={styles.sessionsListStyle}/>
       </View>
     );
   };

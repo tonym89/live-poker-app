@@ -714,7 +714,7 @@ class OnGoingSession extends Component {
                 {laps.length > 0 && start === 0 && (
 
                   <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-                      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
+                      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
                           <Text style={styles.saveText}>Save</Text>
                       </LinearGradient>
                   </TouchableOpacity>

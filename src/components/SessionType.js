@@ -10,11 +10,11 @@ class SessionType extends Component {
         <View style={styles.mainViewStyle}>
           <View style={styles.sectionTitle}>
             <View style={styles.statSection}>
-              <Text style={styles.statTextStyle}>Live Sessions</Text>
+              <Text style={styles.statTextStyle}>Live Session</Text>
             </View>
           </View>
 
-            <TouchableOpacity style={styles.saveButton} onPress={this.saveStartTime}>
+            <TouchableOpacity style={styles.saveButton} onPress={Actions.onGoingSession}>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
                     <Text style={styles.saveText}>Start New</Text>
                 </LinearGradient>
@@ -26,43 +26,11 @@ class SessionType extends Component {
                 </LinearGradient>
             </TouchableOpacity>
 
-            <View style={styles.sectionTitle}>
-              <View style={styles.statSection}>
-                <Text style={styles.statTextStyle}>Online Sessions</Text>
-              </View>
-            </View>
-
-            <TouchableOpacity style={styles.saveButton} onPress={this.displayStartTime}>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
-                    <Text style={styles.saveText}>Start New</Text>
-                </LinearGradient>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.saveButton} onPress={Actions.onGoingSession}>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
-                    <Text style={styles.saveText}>Add Completed</Text>
-                </LinearGradient>
-            </TouchableOpacity>
 
         </View>
       )
       }
 
-      saveStartTime(){
-        let startTime = new Date();
-        AsyncStorage.setItem('startTime', JSON.stringify(startTime));
-        Actions.onGoingSession();
-      }
-
-      displayStartTime = async () => {
-        try{
-          let startTime = await AsyncStorage.getItem('startTime')
-          alert(startTime)
-        }
-        catch(error) {
-          alert(error);
-        }
-      }
     }
 
 
@@ -99,7 +67,7 @@ const styles = {
   },
   sectionTitle:{
     alignItems: 'center',
-    flex: 0.3
+    flex: 0.2
   },
       statSection: {
         flexDirection: 'row',
