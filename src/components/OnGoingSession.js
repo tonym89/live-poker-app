@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 import { sessionUpdate, sessionCreate } from '../actions';
-import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg, EarthSvgSmall, BuyinInput } from './common';
+import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg, EarthSvgSmall, BuyinInput, BlindInputOngoing } from './common';
 import { Fonts } from '../utils/Fonts';
 import moment from 'moment';
 
@@ -131,8 +131,73 @@ class OnGoingSession extends Component {
     clearInterval(this.timer)
   }
 
+  _toggleModal = () =>
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+
+
+  _toggleLimitModal = () =>
+    this.setState({ isLimitModalVisible: !this.state.isLimitModalVisible });
+
+    onButtonPress() {
+      if (this.props.buyin === '') {
+        Alert.alert(
+          'Please enter valid buy in value',
+      );
+    } else if (this.props.cashedout === '') {
+        Alert.alert(
+          'Please enter valid cashed out value',
+          );
+      } else if (this.props.bigblind === '' || this.props.smallblind === '') {
+          Alert.alert(
+            'Please enter valid blind values',
+            );
+      }
+      if (new Date(this.state.startTime) > new Date(this.state.endTime)) {
+        Alert.alert(
+          'Please enter valid session times',
+      );
+      } else if (this.state.venue === '') {
+        Alert.alert(
+          'Please enter a location',
+          );
+      }  else {
+      let { buyin, cashedout, time, sessionstart, sessionend, gametype, bigblind, smallblind, location, limit, venue, venueDetails, sessionBegin, sessionEnd } = this.props;
+
+
+
+      console.log(venue);
+      console.log('hello');
+      console.log(this.state.startTime);
+      console.log(this.state.endTime);
+      console.log(sessionend);
+      console.log(sessionstart);
+
+      this.props.sessionCreate({
+        buyin: buyin || 0,
+        cashedout: cashedout || 0,
+        sessionstart,
+        sessionend,
+        gametype: gametype || 'Hold em',
+        time: time || 'Monday',
+        bigblind,
+        smallblind,
+        location,
+        limit: limit || 'No Limit',
+        venue: this.state.venue,
+        venueDetails: this.state.venueDetails
+      });
+      }
+    }
+
   start = () => {
-   const now = new Date().getTime()
+   const nowDate = new Date()
+   const now = nowDate.getTime();
+   console.log(new Date());
+   console.log(now);
+   const value = nowDate.toISOString();
+   console.log(value)
+   this.props.sessionUpdate({ prop: 'sessionstart', value });
+   console.log(this.props.sessionstart);
    this.setState({
      start: now,
      startTime: now,
@@ -156,10 +221,16 @@ class OnGoingSession extends Component {
  }
 
  stop = () => {
-   const timestamp = new Date().getTime()
+   const timestampDate = new Date()
+   const timestamp = timestampDate.getTime()
+   const value = timestampDate.toISOString();
+   console.log(value)
+   this.props.sessionUpdate({ prop: 'sessionend', value });
+   console.log(this.props.sessionend);
    clearInterval(this.timer)
    const { laps, now, start } = this.state
    const [firstLap, ...other] = laps
+  console.log(this.props.sessionstart);
    this.setState({
      laps: [firstLap + now - start, ...other],
      start: 0,
@@ -207,12 +278,14 @@ class OnGoingSession extends Component {
   startDateHandler = (starttime) => {
     console.log('A start date has been picked: ', starttime);
     const value = starttime.toISOString();
+    console.log(value)
     this.props.sessionUpdate({ prop: 'sessionstart', value });
     this.setState({
         isStartVisible: false,
-        startTime: new Date(value),
+        startTime: starttime,
     });
     console.log(new Date(this.state.startTime));
+    console.log(this.props.sessionstart);
   }
 
   showPicker = () => {
@@ -251,6 +324,8 @@ class OnGoingSession extends Component {
   }
 
   render() {
+
+    const PickerItem = Picker.Item;
     const netResult = this.props.cashedout - this.props.buyin;
 
     const { now, start, laps } = this.state
@@ -511,17 +586,104 @@ class OnGoingSession extends Component {
 
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Blinds:</Text>
-          <Text style={styles.statTextStyle}></Text>
+          <View style={{flexDirection: 'row'}}>
+            <BlindInputOngoing
+              style={{marginRight: 20}}
+              label="$ "
+              placeholder="5"
+              value={this.props.smallblind}
+              onChangeText={value => this.props.sessionUpdate({ prop: 'smallblind', value })}
+            />
+            <BlindInputOngoing
+              placeholder="10"
+              value={this.props.bigblind}
+              onChangeText={value => this.props.sessionUpdate({ prop: 'bigblind', value })}
+            />
+          </View>
         </View>
 
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Limit:</Text>
-          <Text style={styles.statTextStyle}></Text>
+          <TouchableOpacity onPress={this._toggleLimitModal}>
+
+            <View style={{justifyContent: 'flex-end'}}>
+              <Text style={styles.statTextStyle}>
+               {this.props.limit ? this.props.limit : 'No Limit'}
+               </Text>
+            </View>
+          </TouchableOpacity>
+
+
+          <Modal isVisible={this.state.isLimitModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
+              marginBottom: 100
+           }}>
+           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ width: 200,
+      height: 200, bottom: 0, justifyContent: 'flex-end',
+          margin: 20, }}>
+
+<Picker
+  selectedValue={this.props.limit}
+  onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
+  itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+>
+    <PickerItem label="No Limit" value='No Limit' />
+    <PickerItem label="Pot Limit" value="Pot Limit" />
+    <PickerItem label="Fixed Limit" value="Fixed Limit" />
+</Picker>
+
+<TouchableOpacity onPress={this._toggleLimitModal}>
+  <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+</TouchableOpacity>
+
+              </View>
+            </View>
+          </Modal>
         </View>
 
         <View style={styles.statSection}>
           <Text style={styles.statTextStyle}>Game Type:</Text>
-          <Text style={styles.statTextStyle}></Text>
+          <TouchableOpacity onPress={this._toggleModal}>
+
+            <View style={{justifyContent: 'flex-end'}}>
+              <Text style={styles.statTextStyle}>
+               {this.props.gametype ? this.props.gametype : 'Hold em'}
+               </Text>
+            </View>
+          </TouchableOpacity>
+
+
+
+          <Modal isVisible={this.state.isModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
+              marginBottom: 100
+           }}>
+           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ width: 200,
+      height: 200, bottom: 0, justifyContent: 'flex-end',
+          margin: 20, }}>
+
+<Picker
+  selectedValue={this.props.gametype}
+  onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
+  itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+>
+  <PickerItem label="Hold em" value='Hold em' />
+  <PickerItem label="Omaha" value="Omaha" />
+  <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+  <PickerItem label="Short Deck" value="Short Deck" />
+  <PickerItem label="Mix" value="Mix" />
+  <PickerItem label="Stud" value="Stud" />
+  <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
+  <PickerItem label="Razz" value="Razz" />
+</Picker>
+
+<TouchableOpacity onPress={this._toggleModal}>
+  <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+</TouchableOpacity>
+
+              </View>
+            </View>
+          </Modal>
         </View>
 
 
@@ -551,7 +713,7 @@ class OnGoingSession extends Component {
 
                 {laps.length > 0 && start === 0 && (
 
-                  <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
+                  <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
                       <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
                           <Text style={styles.saveText}>Save</Text>
                       </LinearGradient>
