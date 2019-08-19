@@ -1,0 +1,36 @@
+dependencies: \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedModule.m \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Target\ Support\ Files/React-RCTAnimation/React-RCTAnimation-prefix.pch \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedModule.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTBridgeModule.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTDefines.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTEventDispatcher.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTBridge.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTBridgeDelegate.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTJavaScriptLoader.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTFrameUpdate.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTInvalidating.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTEventEmitter.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTSurfacePresenterStub.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTUIManager.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTRootView.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTViewManager.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTConvert.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTAnimationType.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTBorderStyle.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTLog.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTAssert.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTUtils.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTPointerEvents.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTTextDecorationLineType.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Private/yoga/Yoga.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Private/yoga/YGEnums.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Private/yoga/YGMacros.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Private/yoga/YGValue.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/UIView+React.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTComponent.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTUIManagerObserverCoordinator.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/ios/Pods/Headers/Public/React-Core/React/RCTUIManagerUtils.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTValueAnimatedNode.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/node_modules/react-native/Libraries/NativeAnimation/Nodes/RCTAnimatedNode.h \
+  /Users/Tony/code/tonym89/react-native/poker-dex-subscriptions/PokerDex/node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedNodesManager.h
