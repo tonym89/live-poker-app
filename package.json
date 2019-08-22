@@ -27,6 +27,8 @@
     "react-native-google-places-autocomplete": "^1.3.9",
     "react-native-google-static-map": "^0.1.13",
     "react-native-gradient-buttons": "^1.3.0",
+    "react-native-iap": "^3.3.9",
+    "react-native-in-app-utils": "^6.0.1",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-modal": "^9.0.0",
