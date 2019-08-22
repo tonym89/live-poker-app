@@ -14,6 +14,7 @@ import StatisticsGraphPage from './components/StatisticsGraphPage';
 import Settings from './components/Settings';
 import About from './components/About';
 import SessionType from './components/SessionType';
+import Subscription from './components/Subscription';
 import { MonoSessionsSvg, SettingsSvg, GraphsSvg } from './components/common';
 
 const SessionsTabIcon = ({ selected, title }) => {
@@ -98,6 +99,8 @@ const RouterComponent = () => {
             <Scene key="settings" component={Settings} title="Settings" />
 
             <Scene key="sessionType" component={SessionType} title="Session Type" />
+
+            <Scene key="Subscription" component={Subscription} title="Subscription" />
 
             <Scene key="about" component={About} title="About" />
 
