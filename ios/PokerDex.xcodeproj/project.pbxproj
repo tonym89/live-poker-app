@@ -71,12 +71,12 @@
 		B8AD67B99296446DAC8295E8 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE75CEA0283A4DBFA3B5A9CA /* Lato-LightItalic.ttf */; };
 		CAA5788D54154CD4BB2799A6 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2E1EA1B96B540BD935B54D0 /* Lato-Bold.ttf */; };
 		CB7CBE10564B4C20AD375114 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 620339EEDE144C7E830DC1BE /* Lato-Hairline.ttf */; };
-		D0629E9E7E1A42F38C76E78B /* InAppUtilsTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = 2749269122354410B4510920 /* InAppUtilsTests.xctest */; };
 		D1A2CA8F8F5E49B28BD81428 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D827AF182E47B2BA7A9B6F /* libRNSVG.a */; };
 		D841F758E924494684EC0D1A /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36623C7A7236417FA1A42D93 /* Roboto-LightItalic.ttf */; };
 		E4C1669405084E468FCDCD1A /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF6AAA72DB6444A68CF60E60 /* libRNSVG-tvOS.a */; };
 		E61275644F07437491C06B6E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A415CB77431E4C6AAD8021A5 /* Roboto-Bold.ttf */; };
 		E79559D264E74D3E89B901CC /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 904AA6BD44B94435B0BD449F /* libInAppUtils.a */; };
+		EA4D0B0B2325A3CD0043F97A /* Icon-App-60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA4D0B0A2325A3CD0043F97A /* Icon-App-60x60@2x.png */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		F20B58727895465CB958D835 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32E3D6556F374DF6B578EC52 /* Lato-HairlineItalic.ttf */; };
@@ -468,6 +468,7 @@
 		D9D827AF182E47B2BA7A9B6F /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		DAAC0B0A3B02412788838540 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		E84E211241CA408F950BAAA1 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
+		EA4D0B0A2325A3CD0043F97A /* Icon-App-60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-60x60@2x.png"; sourceTree = "<group>"; };
 		EABC9D93230EC09000953863 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -504,7 +505,6 @@
 				D1A2CA8F8F5E49B28BD81428 /* libRNSVG.a in Frameworks */,
 				9F68DE280AB540388F5BF507 /* libBVLinearGradient.a in Frameworks */,
 				E79559D264E74D3E89B901CC /* libInAppUtils.a in Frameworks */,
-				D0629E9E7E1A42F38C76E78B /* InAppUtilsTests.xctest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +670,7 @@
 				FDFE3960BAB64FB48240B895 /* Cabin-Italic.ttf */,
 				BC0BF783A8144F14BCD69FE7 /* Cabin-Medium.ttf */,
 				C04BAC5DF515405397E80E06 /* Cabin-MediumItalic.ttf */,
+				EA4D0B0A2325A3CD0043F97A /* Icon-App-60x60@2x.png */,
 				C5689974C38B4D5FBB82A083 /* Cabin-Regular.ttf */,
 				3CE24513B045412A81812C07 /* Cabin-SemiBold.ttf */,
 				ACA14BE14EC64A0BA30F680E /* Cabin-SemiBoldItalic.ttf */,
@@ -923,10 +924,12 @@
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 6R8K3YJ624;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 6R8K3YJ624;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -1340,6 +1343,7 @@
 				1E8AE1A089FD43A4AE6806D2 /* Cabin-Medium.ttf in Resources */,
 				97DCFD942FD546EAA9E638E7 /* Cabin-MediumItalic.ttf in Resources */,
 				0248732AEB804E009D1F81DF /* Cabin-Regular.ttf in Resources */,
+				EA4D0B0B2325A3CD0043F97A /* Icon-App-60x60@2x.png in Resources */,
 				89895CC22CEA4036B05E7B8B /* Cabin-SemiBold.ttf in Resources */,
 				8616463F7F9542DE8D9DA3CD /* Cabin-SemiBoldItalic.ttf in Resources */,
 				0EB1D9AE0FE84DBC9AD6DB31 /* Lato-Black.ttf in Resources */,
@@ -1615,6 +1619,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6R8K3YJ624;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1656,6 +1661,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6R8K3YJ624;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1694,6 +1700,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6R8K3YJ624;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1734,6 +1741,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6R8K3YJ624;
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
