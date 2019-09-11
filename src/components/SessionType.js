@@ -14,7 +14,7 @@ class SessionType extends Component {
             </View>
           </View>
 
-            <TouchableOpacity style={styles.saveButton} onPress={Actions.Subscription}>
+            <TouchableOpacity style={styles.saveButton} onPress={Actions.onGoingSession}>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
                     <Text style={styles.saveText}>Start New</Text>
                 </LinearGradient>
