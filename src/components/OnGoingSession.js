@@ -464,7 +464,7 @@ class OnGoingSession extends Component {
           )}
 
 
-            {this.state.venueDetails.name == undefined && this.state.locationFocused === false && start === 0 &&(
+            {this.state.venueDetails.name == undefined && this.state.locationFocused === false && (start === 0 || recording === 'end') &&(
               <TouchableOpacity onPress={locationFocusFunction}>
                 <EarthSvgSmall />
               </TouchableOpacity>
@@ -734,9 +734,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#274272',
-  },
-  resetBtn: {
-
   },
   startButton: {
     width: 150,
