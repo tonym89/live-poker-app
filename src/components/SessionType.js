@@ -3,9 +3,11 @@ import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import { Fonts } from '../utils/Fonts';
+import { connect } from 'react-redux';
 
 class SessionType extends Component {
     render() {
+      const {sessionstart, sessionend} = this.props;
       return (
         <View style={styles.mainViewStyle}>
           <View style={styles.sectionTitle}>
@@ -16,7 +18,7 @@ class SessionType extends Component {
 
             <TouchableOpacity style={styles.saveButton} onPress={Actions.onGoingSession}>
                 <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
-                    <Text style={styles.saveText}>Start New</Text>
+                    <Text style={styles.saveText}>{sessionstart ? "Current Session" : "Start New"}</Text>
                 </LinearGradient>
             </TouchableOpacity>
 
@@ -89,4 +91,13 @@ const styles = {
       },
  }
 
-export default SessionType;
+ const mapStateToProps = (state) => {
+  const { sessionstart, sessionend} = state.sessionForm;
+
+  return { sessionstart, sessionend };
+};
+
+export default connect(mapStateToProps, {
+
+})(SessionType);
+

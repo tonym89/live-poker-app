@@ -7,8 +7,8 @@ import {
 const INITIAL_STATE = {
   buyin: '',
   cashedout: '',
-  sessionstart: '',
-  sessionend: '',
+  sessionstart: 0,
+  sessionend: 0,
   time: '',
   gametype: '',
   bigblind: '',

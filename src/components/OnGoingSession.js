@@ -115,8 +115,6 @@ class OnGoingSession extends Component {
       isModalVisible: false,
       isLimitModalVisible: false,
       chosenDate: '',
-      startTime: 0,
-      endTime: 0,
       venue: '',
       venueDetails: '',
       start: 0,
@@ -152,7 +150,7 @@ class OnGoingSession extends Component {
             'Please enter valid blind values',
             );
       }
-      if (new Date(this.state.startTime) > new Date(this.state.endTime)) {
+      if (new Date(this.props.sessionstart) > new Date(this.props.sessionend)) {
         Alert.alert(
           'Please enter valid session times',
       );
@@ -167,8 +165,6 @@ class OnGoingSession extends Component {
 
       console.log(venue);
       console.log('hello');
-      console.log(this.state.startTime);
-      console.log(this.state.endTime);
       console.log(sessionend);
       console.log(sessionstart);
 
@@ -196,11 +192,10 @@ class OnGoingSession extends Component {
    console.log(now);
    const value = nowDate.toISOString();
    console.log(value)
-   this.props.sessionUpdate({ prop: 'sessionstart', value });
+   this.props.sessionUpdate({ prop: 'sessionstart', value: now });
    console.log(this.props.sessionstart);
    this.setState({
      start: now,
-     startTime: now,
      now,
      laps: [0],
    })
@@ -208,6 +203,19 @@ class OnGoingSession extends Component {
      this.setState({ now: new Date().getTime()})
    }, 100)
  }
+
+  componentWillMount() {
+    const {sessionstart, sessionend} = this.props;
+    this.setState({
+      start: sessionstart,
+      recording: sessionend ? 'end' : 'start',
+    })
+    if(sessionstart && !sessionend) {
+      this.timer = setInterval(() => {
+        this.setState({ now: new Date().getTime()})
+      }, 100);
+    }
+  }
 
  lap = () => {
    const timestamp = new Date().getTime()
@@ -225,7 +233,7 @@ class OnGoingSession extends Component {
    const timestamp = timestampDate.getTime()
    const value = timestampDate.toISOString();
    console.log(value)
-   this.props.sessionUpdate({ prop: 'sessionend', value });
+   this.props.sessionUpdate({ prop: 'sessionend', value: timestamp });
    console.log(this.props.sessionend);
    clearInterval(this.timer)
    const { laps, now, start } = this.state
@@ -235,17 +243,17 @@ class OnGoingSession extends Component {
      laps: [firstLap + now - start, ...other],
      start: 0,
      now: 0,
-     endTime: timestamp,
      recording: 'end'
    })
  }
+
  reset = () => {
+  this.props.sessionUpdate({ prop: 'sessionstart', value: 0 });
+  this.props.sessionUpdate({ prop: 'sessionend', value: 0 });
    this.setState({
      laps: [],
      start: 0,
      now: 0,
-     startTime: 0,
-     endTime: 0,
      recording: 'start'
    })
  }
@@ -261,7 +269,7 @@ class OnGoingSession extends Component {
  }
 
   onNextPress() {
-    if (new Date(this.state.startTime) > new Date(this.state.endTime)) {
+    if (new Date(this.props.sessionstart) > new Date(this.props.sessionend)) {
       Alert.alert(
         'Please enter valid session times',
     );
@@ -271,7 +279,7 @@ class OnGoingSession extends Component {
         );
     }
     else {
-      Actions.sessionCreate({ venue: this.state.venue, venueDetails: this.state.venueDetails, sessionBegin: this.state.startTime, sessionEnd: this.state.endTime  });
+      Actions.sessionCreate({ venue: this.state.venue, venueDetails: this.state.venueDetails, sessionBegin: this.props.sessionstart, sessionEnd: this.props.sessionend  });
     }
   };
 
@@ -279,13 +287,10 @@ class OnGoingSession extends Component {
     console.log('A start date has been picked: ', starttime);
     const value = starttime.toISOString();
     console.log(value)
-    this.props.sessionUpdate({ prop: 'sessionstart', value });
+    this.props.sessionUpdate({ prop: 'sessionstart', value: starttime.getTime()});
     this.setState({
         isStartVisible: false,
-        startTime: starttime,
     });
-    console.log(new Date(this.state.startTime));
-    console.log(this.props.sessionstart);
   }
 
   showPicker = () => {
@@ -304,10 +309,9 @@ class OnGoingSession extends Component {
   handleEndPicker = (endtime) => {
     console.log('An end date has been picked: ', endtime);
     const value = endtime.toISOString();
-    this.props.sessionUpdate({ prop: 'sessionend', value });
+    this.props.sessionUpdate({ prop: 'sessionend', value: endtime.getTime()});
     this.setState({
         isEndVisible: false,
-        endTime: new Date(value),
     });
   }
 
@@ -328,10 +332,10 @@ class OnGoingSession extends Component {
     const PickerItem = Picker.Item;
     const netResult = this.props.cashedout - this.props.buyin;
 
-    const { now, start, laps } = this.state
+    const { now, start, laps, recording } = this.state
     const timer = now - start
 
-    const differenceInMs = new Date(this.state.endTime) - new Date(this.state.startTime);
+    const differenceInMs = new Date(this.props.sessionend) - new Date(this.props.sessionstart);
 
     function msToTime(duration) {
       var milliseconds = parseInt((duration % 1000) / 100),
@@ -395,21 +399,17 @@ class OnGoingSession extends Component {
     return (
 
       <View style={styles.mainViewStyle}>
-
-
-
-
       <ScrollView style={{flex: 0.8}}>
       <View style={styles.statSection}>
         <Text style={styles.statTextStyle}>Start Time:</Text>
 
-        {this.state.startTime === 0 && (
+        {this.props.sessionstart === 0 && (
         <Text style={styles.startStatTextStyle}>Press 'Start'</Text>
         )}
 
-        {this.state.startTime > 0 && (
+        {this.props.sessionstart > 0 && (
           <TouchableOpacity onPress={this.showPicker}>
-                  <Text style={styles.startStatTextStyle}>{getFormattedDate(new Date(this.state.startTime))}</Text>
+                  <Text style={styles.startStatTextStyle}>{getFormattedDate(new Date(this.props.sessionstart))}</Text>
           </TouchableOpacity>
         )}
 
@@ -423,16 +423,16 @@ class OnGoingSession extends Component {
       </View>
       <View style={styles.statSection}>
         <Text style={styles.statTextStyle}>End Time:</Text>
-        {this.state.endTime === 0 && (
+        {this.props.sessionend === 0 && (
         <Text style={styles.statTextStyle}></Text>
         )}
 
-        {this.state.endTime === 0 && start > 0 && (
+        {this.props.sessionend === 0 && start > 0 && (
         <Text style={styles.endStatTextStyle}>Press 'Stop'</Text>
         )}
-        {this.state.endTime > 0 && (
+        {this.props.sessionend > 0 && (
           <TouchableOpacity onPress={this.showEndPicker}>
-                  <Text style={styles.endStatTextStyle}>{getFormattedDate(new Date(this.state.endTime))}</Text>
+                  <Text style={styles.endStatTextStyle}>{getFormattedDate(new Date(this.props.sessionend))}</Text>
           </TouchableOpacity>
         )}
         <DateTimePicker
@@ -690,45 +690,27 @@ class OnGoingSession extends Component {
 
       </ScrollView>
 
-
-            {laps.length === 0 && (
-            <TouchableOpacity style={styles.saveButton} onPress={this.start}>
-                <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
-                    <Text style={styles.saveText}>Start</Text>
-                </LinearGradient>
-            </TouchableOpacity>
-            )}
-
-            {start > 0 && (
-
+            {recording == 'start' && start == 0 &&
+              <TouchableOpacity style={styles.saveButton} onPress={this.start}>
+                  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#03ADB0', '#03ADB0', '#03ADB0']} style={styles.linearGradient}>
+                      <Text style={styles.saveText}>Start</Text>
+                  </LinearGradient>
+              </TouchableOpacity>}
+            {recording == 'start' && start > 0 && 
               <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
                   <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
                       <Text style={styles.saveText}>Stop</Text>
                   </LinearGradient>
-              </TouchableOpacity>
-
-
-                )}
-
-
-                {laps.length > 0 && start === 0 && (
-
-                  <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
-                      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
-                          <Text style={styles.saveText}>Save</Text>
-                      </LinearGradient>
-                  </TouchableOpacity>
-
-
-                    )}
-
-
-
-
-
+              </TouchableOpacity>}
+            {recording == 'end' && 
+              <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
+                  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
+                      <Text style={styles.saveText}>Save</Text>
+                  </LinearGradient>
+              </TouchableOpacity>}
 
       </View>
-);
+  );
 }
 
 saveStartTime(){
@@ -752,6 +734,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#274272',
+  },
+  resetBtn: {
+
   },
   startButton: {
     width: 150,
