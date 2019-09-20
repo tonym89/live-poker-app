@@ -43,7 +43,7 @@ const RouterComponent = () => {
     <View style={{flex: 1}}>
       <StatusBar barStyle="light-content" />
     <Router navigationBarStyle={{ backgroundColor: '#274272', color: '#FCFDFC', }} titleStyle={{color: '#FCFDFC'}} tintColor='#FCFDFC' >
-      <Scene key="root" hideNavBar>
+      <Scene key="root" hideNavBar headerLayoutPreset="center">
 
 
         <Scene key="auth">
