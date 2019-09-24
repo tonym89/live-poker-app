@@ -27,14 +27,16 @@ const styles = {
   inputStyle: {
     color: '#FCFDFC',
     backgroundColor: '#3B5889',
-    fontSize: 20,
-    lineHeight: 25,
+    fontSize: 18,
+    height: 35,
     width: 100,
-    height: 30,
     borderColor: '#FCFDFC',
     borderWidth: 0.6,
     borderRadius: 5,
-    paddingLeft: 5
+    paddingLeft: 10,
+    paddingTop: 0,
+    paddingBottom: 0
+
   },
   labelStyle: {
     color: '#FCFDFC',
