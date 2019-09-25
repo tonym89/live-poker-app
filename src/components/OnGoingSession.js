@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Alert, AsyncStorage } from 'react-native';
+import { Picker, Text, TouchableOpacity, StyleSheet, View, Dimensions, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Alert, AsyncStorage, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,7 +7,6 @@ import { Actions } from 'react-native-router-flux'
 import Modal from 'react-native-modal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
 import { sessionUpdate, sessionCreate } from '../actions';
 import { Card, CardSection, Button, NumericInput, NumericInputSb, Input, FormSectionBottomCard, TimerSvgLarge, EarthSvg, EarthSvgSmall, BuyinInput, BlindInputOngoing } from './common';
 import { Fonts } from '../utils/Fonts';
@@ -449,12 +448,17 @@ class OnGoingSession extends Component {
           )}
           {this.state.venueDetails.name == undefined && this.state.locationFocused === false && (start === 0 || recording === 'end') &&(
             <TouchableOpacity onPress={locationFocusFunction}>
-              <EarthSvgSmall />
+              <View>
+                <EarthSvgSmall />
+              </View>
             </TouchableOpacity>
           )}
           {this.state.venueDetails.name !== undefined && this.state.locationFocused === false && (
             <TouchableOpacity onPress={locationFocusFunction}>
-              <Text style={styles.venueStatTextStyle}>{this.state.venueDetails.name}  <EarthSvgSmall /></Text>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.venueStatTextStyle}>{this.state.venueDetails.name}  </Text>
+                  <EarthSvgSmall />
+                </View>
             </TouchableOpacity>
           )}
           {( this.state.locationFocused === true &&
@@ -485,7 +489,7 @@ class OnGoingSession extends Component {
                 language: 'en', // language of the results
                 // default: 'geocode'
               }}
-              styles={(this.state.locationFocused === false) ? 
+              styles={(this.state.locationFocused === false) ?
                 {
                   container: {
                     width: width - 50,
@@ -575,85 +579,191 @@ class OnGoingSession extends Component {
             </View>
           </View>
 
-          <View style={styles.statSection}>
-            <Text style={styles.statTextStyle}>Limit:</Text>
-            <TouchableOpacity onPress={this._toggleLimitModal}>
-              <View style={{justifyContent: 'flex-end'}}>
-                <Text style={styles.statTextStyle}>
-                {this.props.limit ? this.props.limit : 'No Limit'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <Modal
-              isVisible={this.state.isLimitModalVisible}
-              style={{ flexDirection: 'column', justifyContent: 'flex-end',
-                marginBottom: 100
-              }}
-            >
-              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <View style={{ width: 200,
-                  height: 200,
-                  bottom: 0,
-                  justifyContent: 'flex-end',
-                  margin: 20, 
-                }}>
-                  <Picker
-                    selectedValue={this.props.limit}
-                    onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
-                    itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
-                  >
-                    <PickerItem label="No Limit" value='No Limit' />
-                    <PickerItem label="Pot Limit" value="Pot Limit" />
-                    <PickerItem label="Fixed Limit" value="Fixed Limit" />
-                  </Picker>
-                  <TouchableOpacity onPress={this._toggleLimitModal}>
-                    <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-          </View>
 
-          <View style={styles.statSection}>
-            <Text style={styles.statTextStyle}>Game Type:</Text>
-            <TouchableOpacity onPress={this._toggleModal}>
+
+
+            {Platform.OS === 'android' && (
+              <View style={styles.statSection}>
+            <Text style={styles.statTextStyle}>Limit:</Text>
+
               <View style={{justifyContent: 'flex-end'}}>
-                <Text style={styles.statTextStyle}>
-                {this.props.gametype ? this.props.gametype : 'Hold em'}
-                </Text>
+
+                <Picker
+                  selectedValue={this.props.limit}
+                  style={{height: 45, width: 150, color: "#FCFDFC", fontFamily:"Cabin", fontSize:18, }}
+                  onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
+                  itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:18 }}
+
+                >
+                    <PickerItem color="black" label="No Limit" value='No Limit' />
+                    <PickerItem color="black" label="Pot Limit" value="Pot Limit" />
+                    <PickerItem color="black" label="Fixed Limit" value="Fixed Limit" />
+                </Picker>
+
               </View>
-            </TouchableOpacity>
-            <Modal
-              isVisible={this.state.isModalVisible}
-              style={{ flexDirection: 'column', justifyContent: 'flex-end',
+
+            <Modal isVisible={this.state.isLimitModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
                 marginBottom: 100
-            }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <View style={{ width: 200,
-                  height: 200, bottom: 0, justifyContent: 'flex-end',
-                  margin: 20,
-                }}>
-                  <Picker
-                    selectedValue={this.props.gametype}
-                    onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
-                    itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
-                  >
-                    <PickerItem label="Hold em" value='Hold em' />
-                    <PickerItem label="Omaha" value="Omaha" />
-                    <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
-                    <PickerItem label="Short Deck" value="Short Deck" />
-                    <PickerItem label="Mix" value="Mix" />
-                    <PickerItem label="Stud" value="Stud" />
-                    <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
-                    <PickerItem label="Razz" value="Razz" />
-                  </Picker>
-                  <TouchableOpacity onPress={this._toggleModal}>
-                    <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
-                  </TouchableOpacity>
+             }}>
+             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={{ width: 200,
+        height: 200, bottom: 0, justifyContent: 'flex-end',
+            margin: 20, }}>
+
+
+
                 </View>
               </View>
             </Modal>
           </View>
+            )}
+
+            {Platform.OS === 'ios' && (
+
+            <View style={styles.statSection}>
+              <Text style={styles.statTextStyle}>Limit:</Text>
+
+              <TouchableOpacity onPress={this._toggleLimitModal}>
+                <View style={{justifyContent: 'flex-end'}}>
+                  <Text style={styles.statTextStyle}>
+                  {this.props.limit ? this.props.limit : 'No Limit'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <Modal
+                isVisible={this.state.isLimitModalVisible}
+                style={{ flexDirection: 'column', justifyContent: 'flex-end',
+                  marginBottom: 100
+                }}
+              >
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                  <View style={{ width: 200,
+                    height: 200,
+                    bottom: 0,
+                    justifyContent: 'flex-end',
+                    margin: 20,
+                  }}>
+                    <Picker
+                      selectedValue={this.props.limit}
+                      onValueChange={value => this.props.sessionUpdate({ prop: 'limit', value })}
+                      itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+                    >
+                      <PickerItem label="No Limit" value='No Limit' />
+                      <PickerItem label="Pot Limit" value="Pot Limit" />
+                      <PickerItem label="Fixed Limit" value="Fixed Limit" />
+                    </Picker>
+                    <TouchableOpacity onPress={this._toggleLimitModal}>
+                      <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </View>
+            )}
+
+
+            {Platform.OS === 'android' && (
+              <View style={styles.statSection}>
+           <Text style={styles.statTextStyle}>Game Type:</Text>
+
+             <View style={{justifyContent: 'flex-end'}}>
+             <Picker
+               selectedValue={this.props.gametype}
+               style={{height: 45, width: 150, color: "#FCFDFC", fontFamily:"Cabin", fontSize:18, }}
+               onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
+               itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:18 }}
+             >
+               <PickerItem label="Hold em" value='Hold em' />
+               <PickerItem label="Omaha" value="Omaha" />
+               <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+               <PickerItem label="Short Deck" value="Short Deck" />
+               <PickerItem label="Mix" value="Mix" />
+               <PickerItem label="Stud" value="Stud" />
+               <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
+               <PickerItem label="Razz" value="Razz" />
+             </Picker>
+             </View>
+
+
+
+
+           <Modal isVisible={this.state.isModalVisible} style={{ flexDirection: 'column', justifyContent: 'flex-end',
+               marginBottom: 100
+            }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+             <View style={{ width: 200,
+       height: 200, bottom: 0, justifyContent: 'flex-end',
+           margin: 20, }}>
+
+ <Picker
+   selectedValue={this.props.gametype}
+   style={{height: 45, width: 150, color: "#FCFDFC", fontFamily:"Cabin", fontSize:18, }}
+   onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
+   itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+ >
+   <PickerItem label="Hold em" value='Hold em' />
+   <PickerItem label="Omaha" value="Omaha" />
+   <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+   <PickerItem label="Short Deck" value="Short Deck" />
+   <PickerItem label="Mix" value="Mix" />
+   <PickerItem label="Stud" value="Stud" />
+   <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
+   <PickerItem label="Razz" value="Razz" />
+ </Picker>
+
+
+               </View>
+             </View>
+           </Modal>
+         </View>
+            )}
+
+            {Platform.OS === 'ios' && (
+              <View style={styles.statSection}>
+                <Text style={styles.statTextStyle}>Game Type:</Text>
+                <TouchableOpacity onPress={this._toggleModal}>
+                  <View style={{justifyContent: 'flex-end'}}>
+                    <Text style={styles.statTextStyle}>
+                    {this.props.gametype ? this.props.gametype : 'Hold em'}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <Modal
+                  isVisible={this.state.isModalVisible}
+                  style={{ flexDirection: 'column', justifyContent: 'flex-end',
+                    marginBottom: 100
+                }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ width: 200,
+                      height: 200, bottom: 0, justifyContent: 'flex-end',
+                      margin: 20,
+                    }}>
+                      <Picker
+                        selectedValue={this.props.gametype}
+                        onValueChange={value => this.props.sessionUpdate({ prop: 'gametype', value })}
+                        itemStyle={{ color: "#FCFDFC", fontFamily:"Cabin", fontSize:17 }}
+                      >
+                        <PickerItem label="Hold em" value='Hold em' />
+                        <PickerItem label="Omaha" value="Omaha" />
+                        <PickerItem label="Omaha Hi/Lo" value="Omaha Hi/Lo" />
+                        <PickerItem label="Short Deck" value="Short Deck" />
+                        <PickerItem label="Mix" value="Mix" />
+                        <PickerItem label="Stud" value="Stud" />
+                        <PickerItem label="2-7 Triple Draw" value="2-7 Triple Draw" />
+                        <PickerItem label="Razz" value="Razz" />
+                      </Picker>
+                      <TouchableOpacity onPress={this._toggleModal}>
+                        <Text style={{ textAlign: 'center', color: '#FCFDFC'}}>Confirm</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </Modal>
+              </View>
+            )}
+
+
+
+
         </ScrollView>
         {recording == 'start' && start == 0 &&
           <TouchableOpacity style={styles.saveButton} onPress={this.start}>
@@ -661,13 +771,13 @@ class OnGoingSession extends Component {
                   <Text style={styles.saveText}>Start</Text>
               </LinearGradient>
           </TouchableOpacity>}
-        {recording == 'start' && start > 0 && 
+        {recording == 'start' && start > 0 &&
           <TouchableOpacity style={styles.saveButton} onPress={this.stop}>
               <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#FA7E7E', '#FA7E7E', '#FA7E7E']} style={styles.linearGradient}>
                   <Text style={styles.saveText}>Stop</Text>
               </LinearGradient>
           </TouchableOpacity>}
-        {recording == 'end' && 
+        {recording == 'end' &&
           <TouchableOpacity style={styles.saveButton} onPress={this.onButtonPress.bind(this)}>
               <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#2D6BEC', '#1888E5', '#04A6E0']} style={styles.linearGradient}>
                   <Text style={styles.saveText}>Save</Text>
