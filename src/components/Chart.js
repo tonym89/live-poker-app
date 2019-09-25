@@ -30,7 +30,7 @@ import LinearGradient2 from 'react-native-linear-gradient';
 
 import React, { Component } from 'react';
 import {
- StyleSheet, View, SafeAreaView, Dimensions, Animated, TextInput,
+ Platform, StyleSheet, View, SafeAreaView, Dimensions, Animated, TextInput,
 } from 'react-native';
 import * as path from 'svg-path-properties';
 import * as shape from 'd3-shape';
@@ -338,7 +338,14 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.CabinBold,
     margin: 0,
     padding: 0,
-    marginLeft: 20
+    ...Platform.select({
+      ios: {
+        marginLeft: 0
+      },
+      android: {
+        marginLeft: 20
+      },
+    }),
   },
   dateText: {
     color: '#CEFFF8',
