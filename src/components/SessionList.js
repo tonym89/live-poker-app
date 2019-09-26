@@ -1,16 +1,18 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, Image, Dimensions } from 'react-native';
 import { sessionsFetch } from '../actions';
 import ListItem from './ListItem';
 import HomeGraph from './HomeGraph';
 import Chart from './Chart';
 import { Fonts } from '../utils/Fonts';
+import mainIcon from './common/mainIcon.png';
 
+
+const { height } = Dimensions.get('window');
 
 class SessionList extends Component {
-
 
   componentDidMount() {
     this.props.sessionsFetch();
@@ -114,11 +116,13 @@ const ymax = Math.max.apply(null, results);
      <Chart data={cumulativeData} style={styles.homeGraphStyle}/>
      }
      { !this.props.sessions[0] &&
-    <View style={{height: 250}}>
-    <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 26, textAlign: 'center' }}>Welcome</Text>
-
-      <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20 }}>To add your first session, click the 'Add' button on the top right.</Text>
-        <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20 }}>If you are seeing this screen and it is not your first time using Poker Dex you may need to check your internet connection.</Text>
+    <View style={{height, margin: 0, backgroundColor: '#274272', color: '#FCFDFC', padding: 0}}>
+        <Text style={{color: '#FCFDFC', padding: 20, paddingBottom: 0, fontFamily: Fonts.Cabin, fontSize: 26, textAlign: 'center' }}>Welcome to</Text>
+        <View style={{alignSelf: 'center', marginTop: 0}}>
+          <Image style={{width: 250, height: 250}} source={mainIcon} />
+        </View>
+        <Text style={{color: '#FCFDFC', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20, textAlign: 'center' }}>To add your first session, click the 'Add' button on the top right.</Text>
+        <Text style={{color: '#FCFDFC', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20, textAlign: 'center' }}>If you are seeing this screen and it is not your first time using Poker Dex you may need to check your internet connection.</Text>
 
     </View>
       }
@@ -126,7 +130,7 @@ const ymax = Math.max.apply(null, results);
       { this.props.sessions[0] && !this.props.sessions[1] &&
      <View style={{height: 250, justifyContent: 'center', alignItems: 'center'}}>
 
-       <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20, textAlign: 'center' }}>A minimum of two sessions are required to render sessions chart.</Text>
+       <Text style={{color: 'black', padding: 20, fontFamily: Fonts.Cabin, fontSize: 20, textAlign: 'center', }}>A minimum of two sessions are required to render sessions graph.</Text>
 
      </View>
        }
